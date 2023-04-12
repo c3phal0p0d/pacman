@@ -5,6 +5,11 @@ import ch.aplu.jgamegrid.*;
 
 public class PacManGameGrid
 {
+  /*
+   * Class that represents the grid the game is to be played on
+   * x
+   */
+
   private int nbHorzCells;
   private int nbVertCells;
   private int[][] mazeArray;
@@ -28,7 +33,7 @@ public class PacManGameGrid
       "xxxxxxxxxxxxxxxxxxxx";// 10
 
 
-    // Copy structure into integer array
+    // Copy maze structure into integer array
     for (int i = 0; i < nbVertCells; i++)
     {
       for (int k = 0; k < nbHorzCells; k++) {
@@ -44,16 +49,16 @@ public class PacManGameGrid
   }
   private int toInt(char c)
   {
-    if (c == 'x')
+    if (c == 'x') // Maze Wall
       return 0;
-    if (c == '.')
+    if (c == '.') // Pill
       return 1;
-    if (c == ' ')
+    if (c == ' ') // Empty
       return 2;
-    if (c == 'g')
+    if (c == 'g') // Gold
       return 3;
-    if (c == 'i')
+    if (c == 'i') // Ice
       return 4;
-    return -1;
+    return -1;    // Not Recognised
   }
 }

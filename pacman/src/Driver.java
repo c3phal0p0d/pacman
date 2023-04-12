@@ -6,6 +6,11 @@ import src.utility.PropertiesLoader;
 import java.util.Properties;
 
 public class Driver {
+
+    /**
+     * This is the class responsible for running the game
+     */
+
     public static final String DEFAULT_PROPERTIES_PATH = "pacman/properties/test1.properties";
 
     /**
