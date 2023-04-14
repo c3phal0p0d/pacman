@@ -23,6 +23,7 @@ public class Monster extends Actor
     this.type = type;
   }
 
+  // Class Methods
   public void stopMoving(int seconds) {
     this.stopMoving = true;
     Timer timer = new Timer(); // Instantiate Timer Object
@@ -34,15 +35,6 @@ public class Monster extends Actor
         monster.stopMoving = false;
       }
     }, seconds * SECOND_TO_MILLISECONDS);
-  }
-
-  public void setSeed(int seed) {
-    this.seed = seed;
-    randomiser.setSeed(seed);
-  }
-
-  public void setStopMoving(boolean stopMoving) {
-    this.stopMoving = stopMoving;
   }
 
   public void act()
@@ -117,10 +109,6 @@ public class Monster extends Actor
     addVisitedList(next);
   }
 
-  public MonsterType getType() {
-    return type;
-  }
-
   private void addVisitedList(Location location)
   {
     visitedList.add(location);
@@ -145,4 +133,20 @@ public class Monster extends Actor
     else
       return true;
   }
+
+  // Getter and Setter Methods
+  public MonsterType getType() {
+    return type;
+  }
+
+  public void setSeed(int seed) {
+    this.seed = seed;
+    randomiser.setSeed(seed);
+  }
+
+  public void setStopMoving(boolean stopMoving) {
+    this.stopMoving = stopMoving;
+  }
 }
+
+
