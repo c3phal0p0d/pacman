@@ -3,5 +3,5 @@
 PacMan in the Multiverse
 # Team Members
 - 1145264 Natasha Chiorsac (<nchiorsac@student.unimelb.edu.au>)
-- 1234567 Student B (<student.b@student.unimelb.edu.au>)
+- 1085839 Jiachen Si (<jssi1@student.unimelb.edu.au>)
 - 1234567 Student C (<student.c@student.unimelb.edu.au>)

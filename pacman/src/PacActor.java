@@ -30,24 +30,10 @@ public class PacActor extends Actor implements GGKeyRepeatListener
   }
   private boolean isAuto = false;
 
-  public void setAuto(boolean auto) {
-    isAuto = auto;
-  }
-
-
-  public void setSeed(int seed) {
-    this.seed = seed;
-    randomiser.setSeed(seed);
-  }
-
-  public void setPropertyMoves(String propertyMoveString) {
-    if (propertyMoveString != null) {
-      this.propertyMoves = Arrays.asList(propertyMoveString.split(","));
-    }
-  }
-
   public void keyRepeated(int keyCode)
   {
+    // Handles Player Input
+
     if (isAuto) {
       return;
     }
@@ -192,16 +178,14 @@ public class PacActor extends Actor implements GGKeyRepeatListener
 
   private boolean canMove(Location location)
   {
+    // Checks if the player can traverse to the given tile.
     Color c = getBackground().getColor(location);
     if ( c.equals(Color.gray) || location.getX() >= game.getNumHorzCells()
             || location.getX() < 0 || location.getY() >= game.getNumVertCells() || location.getY() < 0)
+      // Tile is grey or is outside the board
       return false;
     else
       return true;
-  }
-
-  public int getNbPills() {
-    return nbPills;
   }
 
   private void eatPill(Location location)
@@ -228,5 +212,24 @@ public class PacActor extends Actor implements GGKeyRepeatListener
     gameGrid.setTitle(title);
   }
 
+  // Getter and Setter Methods
+  public int getNbPills() {
+    return nbPills;
+  }
+
+  public void setAuto(boolean auto) {
+    isAuto = auto;
+  }
+
+  public void setSeed(int seed) {
+    this.seed = seed;
+    randomiser.setSeed(seed);
+  }
+
+  public void setPropertyMoves(String propertyMoveString) {
+    if (propertyMoveString != null) {
+      this.propertyMoves = Arrays.asList(propertyMoveString.split(","));
+    }
+  }
 
 }
