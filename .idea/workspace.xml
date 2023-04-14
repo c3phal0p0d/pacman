@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6592bff1-c82d-44fd-9895-37a51bf4cc98" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pacman/src/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/Driver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pacman/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pacman/src/Monster.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/Monster.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pacman/src/PacActor.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/PacActor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pacman/src/PacManGameGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/PacManGameGrid.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,14 +24,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/Desktop/UoM/Year 4 Sem 1/Software Modelling and Design/A1/2023-sem1-projectassignment1-thu-11-00-team-01&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "JC",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "E:/Desktop/UoM/Year 4 Sem 1/Software Modelling and Design/A1/2023-sem1-projectassignment1-thu-11-00-team-01",
+    "settings.editor.selected.configurable": "preferences.editor"
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -63,7 +60,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/pacman/src/PacActor.java</url>
-          <line>82</line>
+          <line>68</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
