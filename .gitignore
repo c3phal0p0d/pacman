@@ -19,6 +19,7 @@ Log.txt
 # *.ipr
 
 # CMake
+.idea
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
