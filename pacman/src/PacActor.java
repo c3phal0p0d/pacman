@@ -3,14 +3,14 @@
 package src;
 
 import ch.aplu.jgamegrid.*;
-import java.awt.event.KeyEvent;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class PacActor extends Actor implements GGKeyRepeatListener
+public class PacActor extends Actor
 {
   private static final int nbSprites = 4;
   private int idSprite = 0;
@@ -23,48 +23,15 @@ public class PacActor extends Actor implements GGKeyRepeatListener
   private final int listLength = 10;
   private int seed;
   private Random randomiser = new Random();
+  private PlayerController playerController;
+
   public PacActor(Game game)
   {
     super(true, "sprites/pacpix.gif", nbSprites);  // Rotatable
     this.game = game;
+    this.playerController = new PlayerController(this);
   }
   private boolean isAuto = false;
-
-  public void keyRepeated(int keyCode)
-  {
-    // Handles Player Input
-
-    if (isAuto) {
-      return;
-    }
-    if (isRemoved())  // Already removed
-      return;
-    Location next = null;
-    switch (keyCode)
-    {
-      case KeyEvent.VK_LEFT:
-        next = getLocation().getNeighbourLocation(Location.WEST);
-        setDirection(Location.WEST);
-        break;
-      case KeyEvent.VK_UP:
-        next = getLocation().getNeighbourLocation(Location.NORTH);
-        setDirection(Location.NORTH);
-        break;
-      case KeyEvent.VK_RIGHT:
-        next = getLocation().getNeighbourLocation(Location.EAST);
-        setDirection(Location.EAST);
-        break;
-      case KeyEvent.VK_DOWN:
-        next = getLocation().getNeighbourLocation(Location.SOUTH);
-        setDirection(Location.SOUTH);
-        break;
-    }
-    if (next != null && canMove(next))
-    {
-      setLocation(next);
-      eatPill(next);
-    }
-  }
 
   public void act()
   {
@@ -176,7 +143,7 @@ public class PacActor extends Actor implements GGKeyRepeatListener
     return false;
   }
 
-  private boolean canMove(Location location)
+  protected boolean canMove(Location location)
   {
     // Checks if the player can traverse to the given tile.
     Color c = getBackground().getColor(location);
@@ -188,7 +155,7 @@ public class PacActor extends Actor implements GGKeyRepeatListener
       return true;
   }
 
-  private void eatPill(Location location)
+  protected void eatPill(Location location)
   {
     Color c = getBackground().getColor(location);
     if (c.equals(Color.white))
@@ -221,6 +188,10 @@ public class PacActor extends Actor implements GGKeyRepeatListener
     isAuto = auto;
   }
 
+  public boolean getAuto(){
+    return isAuto;
+  }
+
   public void setSeed(int seed) {
     this.seed = seed;
     randomiser.setSeed(seed);
@@ -230,6 +201,10 @@ public class PacActor extends Actor implements GGKeyRepeatListener
     if (propertyMoveString != null) {
       this.propertyMoves = Arrays.asList(propertyMoveString.split(","));
     }
+  }
+
+  public PlayerController getPlayerController(){
+    return playerController;
   }
 
 }
