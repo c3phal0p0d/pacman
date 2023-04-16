@@ -31,10 +31,7 @@ public abstract class Monster extends Actor
       return;
     }
     walkApproach();
-    if (getDirection() > 150 && getDirection() < 210)
-      setHorzMirror(false);
-    else
-      setHorzMirror(true);
+    setHorzMirror(!(getDirection() > 150) || !(getDirection() < 210));
   }
 
   protected abstract void walkApproach();
@@ -54,14 +51,14 @@ public abstract class Monster extends Actor
     return false;
   }
 
+  /*
+  Checks if the monster is able to move to a specified location. Returns true if yes, false if no.
+   */
   protected boolean canMove(Location location)
   {
     Color c = getBackground().getColor(location);
-    if (c.equals(Color.gray) || location.getX() >= game.getNumHorzCells()
-          || location.getX() < 0 || location.getY() >= game.getNumVertCells() || location.getY() < 0)
-      return false;
-    else
-      return true;
+    return !c.equals(Color.gray) && location.getX() < game.getNumHorzCells()
+            && location.getX() >= 0 && location.getY() < game.getNumVertCells() && location.getY() >= 0;
   }
 
   // Getter and Setter Methods
@@ -70,7 +67,6 @@ public abstract class Monster extends Actor
   }
 
   public void setSeed(int seed) {
-    System.out.println(seed);
     randomiser.setSeed(seed);
   }
 

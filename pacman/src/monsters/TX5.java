@@ -18,8 +18,7 @@ public class TX5 extends RandomWalkMonster {
 
         Location pacLocation = game.pacActor.getLocation();
         double oldDirection = getDirection();
-        Location.CompassDirection compassDir =
-                getLocation().get4CompassDirectionTo(pacLocation);
+        Location.CompassDirection compassDir = getLocation().get4CompassDirectionTo(pacLocation);
         Location next = getLocation().getNeighbourLocation(compassDir);
         setDirection(compassDir);
 

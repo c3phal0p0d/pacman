@@ -32,6 +32,25 @@ public class MonsterManager {
         game.addActor(tx5, new Location(tx5X, tx5Y), Location.NORTH);
         tx5.stopMoving(5); // TX-5 doesn't move for the first 5 seconds
         monsters.add(tx5);
+
+        // Multiverse exclusive monsters
+        String version = properties.getProperty("version");
+        if (version.equals("multiverse")) {
+
+            // Create Wizard
+            Wizard wizard = new Wizard(game, MonsterType.Wizard);
+            String[] wizardLocations = properties.getProperty("Wizard.location").split(",");
+            int wizardX = Integer.parseInt(wizardLocations[0]);
+            int wizardY = Integer.parseInt(wizardLocations[1]);
+            game.addActor(wizard, new Location(wizardX, wizardY), Location.NORTH);
+            monsters.add(wizard);
+
+            // Create Orion
+
+
+            // Create Alien
+
+        }
     }
 
     // Sets the random number seed for all monsters
@@ -55,9 +74,11 @@ public class MonsterManager {
         }
     }
 
-    // Checks for collisions between pacman and all the monsters
-    // returns true if yes
-    // returns false if no
+    /*
+        Checks for collisions between pacman and all the monsters
+        returns true if yes
+        returns false if no
+     */
     public boolean hasThereBeenACollision(PacActor pacActor) {
         for (Monster m: monsters) {
             if (m.getLocation().equals(pacActor.getLocation())) {

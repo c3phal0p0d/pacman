@@ -14,7 +14,6 @@ public class RandomWalkMonster extends Monster {
     protected Location randomWalk(double oldDirection) {
         // Random walk
         int sign = randomiser.nextDouble() < 0.5 ? 1 : -1;
-        System.out.println(sign);
         setDirection(oldDirection);
         turn(sign * 90);  // Try to turn left/right
         Location next = getNextMoveLocation();
