@@ -7,6 +7,15 @@
     <list default="true" id="6592bff1-c82d-44fd-9895-37a51bf4cc98" name="Changes" comment="created ItemManager class and moved relevant properties &amp; functions to it from Game class">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
+=======
+      <change beforePath="$PROJECT_DIR$/pacman/properties/test6.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pacman/src/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pacman/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pacman/src/monsters/Alien.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/monsters/Alien.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pacman/src/monsters/MonsterManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/monsters/MonsterManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pacman/src/monsters/Orion.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/monsters/Orion.java" afterDir="false" />
+>>>>>>> 36b10852ff1bf1408a1a77ded82dd83b24b87fac
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,8 +65,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "JC-monster-manager",
+    "git-widget-placeholder": "JC-working-on-monsters",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "/Users/jude-thaddeau-data/Desktop/swen30006-software-modelling-and-design/swen30006-assignments/2023-sem1-projectassignment1-thu-11-00-team-01",
     "node.js.detected.package.eslint": "true",
@@ -117,8 +125,25 @@
       </map>
     </option>
   </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="created ItemManager class and moved relevant properties &amp; functions to it from Game class" />
-    <option name="LAST_COMMIT_MESSAGE" value="created ItemManager class and moved relevant properties &amp; functions to it from Game class" />
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/pacman/src/PacActor.java</url>
+          <line>68</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/pacman/src/monsters/Alien.java</url>
+          <line>23</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/pacman/src/monsters/Alien.java</url>
+          <line>45</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

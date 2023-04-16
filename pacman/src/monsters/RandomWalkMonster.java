@@ -3,15 +3,9 @@ package src.monsters;
 import ch.aplu.jgamegrid.Location;
 import src.Game;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class RandomWalkMonster extends Monster {
-    private ArrayList<Location> visitedList = new ArrayList<Location>();
-    private final int listLength = 10;
-
-    private int seed = 0;
-    private Random randomiser = new Random(0);
 
     public RandomWalkMonster(Game game, MonsterType type) {
         super(game, type);
@@ -46,7 +40,6 @@ public class RandomWalkMonster extends Monster {
                 }
                 else
                 {
-
                     setDirection(oldDirection);
                     turn(180);  // Turn backward
                     next = getNextMoveLocation();
@@ -60,9 +53,7 @@ public class RandomWalkMonster extends Monster {
     protected void walkApproach()
     {
         double oldDirection = getDirection();
-        Location next = randomWalk(oldDirection);
-
+        randomWalk(oldDirection);
         game.getGameCallback().monsterLocationChanged(this);
-        addVisitedList(next);
     }
 }

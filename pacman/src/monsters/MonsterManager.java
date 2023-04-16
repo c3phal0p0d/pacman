@@ -10,32 +10,53 @@ public class MonsterManager {
     private ArrayList<Monster> monsters = new ArrayList<Monster>();
 
     // Creating an instance of monster manager creates all the monsters of the game along with it.
+    public MonsterManager(Game game, Properties properties, ArrayList<Location> goldLocations) {
 
-    //    public MonsterManager(ArrayList<Location> locations, ArrayList<Location> goldLocations, PacActor pacActor,
-//                          PacManGameGrid grid)
-
-    public MonsterManager(Game game, Properties properties) {
-
-        // Create
+        // Create Troll
         RandomWalkMonster troll = new RandomWalkMonster(game, MonsterType.Troll);
-        TX5 tx5 = new TX5(game, MonsterType.TX5);
-
-        // Convert into actor
         String[] trollLocations = properties.getProperty("Troll.location").split(",");
-        String[] tx5Locations = properties.getProperty("TX5.location").split(",");
         int trollX = Integer.parseInt(trollLocations[0]);
         int trollY = Integer.parseInt(trollLocations[1]);
+        game.addActor(troll, new Location(trollX, trollY), Location.NORTH);
+        monsters.add(troll);
+
+        // Create TX5
+        TX5 tx5 = new TX5(game, MonsterType.TX5);
+        String[] tx5Locations = properties.getProperty("TX5.location").split(",");
         int tx5X = Integer.parseInt(tx5Locations[0]);
         int tx5Y = Integer.parseInt(tx5Locations[1]);
-        game.addActor(troll, new Location(trollX, trollY), Location.NORTH);
         game.addActor(tx5, new Location(tx5X, tx5Y), Location.NORTH);
-
-        // TX-5 doesn't move for the first 5 seconds
-        tx5.stopMoving(5);
-
-        // Add
-        monsters.add(troll);
+        tx5.stopMoving(5); // TX-5 doesn't move for the first 5 seconds
         monsters.add(tx5);
+
+        // Multiverse exclusive monsters
+        String version = properties.getProperty("version");
+        if (version.equals("multiverse")) {
+
+            // Create Wizard
+            Wizard wizard = new Wizard(game, MonsterType.Wizard);
+            String[] wizardLocations = properties.getProperty("Wizard.location").split(",");
+            int wizardX = Integer.parseInt(wizardLocations[0]);
+            int wizardY = Integer.parseInt(wizardLocations[1]);
+            game.addActor(wizard, new Location(wizardX, wizardY), Location.NORTH);
+            monsters.add(wizard);
+
+            // Create Orion
+            Orion orion = new Orion(game, MonsterType.Orion, goldLocations);
+            String[] orionLocations = properties.getProperty("Orion.location").split(",");
+            int orionX = Integer.parseInt(orionLocations[0]);
+            int orionY = Integer.parseInt(orionLocations[1]);
+            game.addActor(orion, new Location(orionX, orionY), Location.NORTH);
+            monsters.add(orion);
+
+            // Create Alien
+            Alien alien = new Alien(game, MonsterType.Alien);
+            String[] alienLocations = properties.getProperty("Alien.location").split(",");
+            int alienX = Integer.parseInt(alienLocations[0]);
+            int alienY = Integer.parseInt(alienLocations[1]);
+            game.addActor(alien, new Location(alienX, alienY), Location.NORTH);
+            monsters.add(alien);
+        }
     }
 
     // Sets the random number seed for all monsters
@@ -59,9 +80,11 @@ public class MonsterManager {
         }
     }
 
-    // Checks for collisions between pacman and all the monsters
-    // returns true if yes
-    // returns false if no
+    /*
+        Checks for collisions between pacman and all the monsters
+        returns true if yes
+        returns false if no
+     */
     public boolean hasThereBeenACollision(PacActor pacActor) {
         for (Monster m: monsters) {
             if (m.getLocation().equals(pacActor.getLocation())) {
