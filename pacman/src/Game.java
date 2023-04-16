@@ -3,6 +3,7 @@
 package src;
 
 import ch.aplu.jgamegrid.*;
+import src.items.ItemManager;
 import src.monsters.MonsterManager;
 import src.utility.GameCallback;
 import src.monsters.Monster;
@@ -20,17 +21,11 @@ public class Game extends GameGrid
 
   public PacActor pacActor = new PacActor(this);
   private MonsterManager monsterManager;
-  //private Monster troll = new Monster(this, MonsterType.Troll);
-  //private Monster tx5 = new Monster(this, MonsterType.TX5);
+  private ItemManager itemManager;
 
-  private ArrayList<Location> pillAndItemLocations = new ArrayList<Location>();
-  private ArrayList<Actor> iceCubes = new ArrayList<Actor>();
-  private ArrayList<Actor> goldPieces = new ArrayList<Actor>();
   private GameCallback gameCallback;
   private Properties properties;
   private int seed = 30006;
-  private ArrayList<Location> propertyPillLocations = new ArrayList<>();
-  private ArrayList<Location> propertyGoldLocations = new ArrayList<>();
 
   // Constructor
   public Game(GameCallback gameCallback, Properties properties)
@@ -52,6 +47,7 @@ public class Game extends GameGrid
 
     // Setup Components
     monsterManager = new MonsterManager(this, properties);
+    itemManager = new ItemManager(this);
 
     //Setup Random seeds
     seed = Integer.parseInt(properties.getProperty("seed"));
@@ -63,8 +59,6 @@ public class Game extends GameGrid
     pacActor.setSlowDown(3);
     setupActorLocations();
 
-
-
     //Run the game
     doRun();
     show();
@@ -73,11 +67,10 @@ public class Game extends GameGrid
     boolean hasPacmanBeenHit;
     boolean hasPacmanEatAllPills;
     setupPillAndItemsLocations();
-    int maxPillsAndItems = countPillsAndItems();
     
     do {
       hasPacmanBeenHit = monsterManager.hasThereBeenACollision(pacActor);
-      hasPacmanEatAllPills = pacActor.getNbPills() >= maxPillsAndItems;
+      hasPacmanEatAllPills = pacActor.getNbPills() >= itemManager.getMaxPillsAndItems();
       delay(10);
     } while(!hasPacmanBeenHit && !hasPacmanEatAllPills);
     delay(120);
@@ -101,7 +94,6 @@ public class Game extends GameGrid
     doPause();
   }
 
-
   /*
    Reads in the locations of the various actors and initializes them
    */
@@ -111,32 +103,6 @@ public class Game extends GameGrid
     int pacManX = Integer.parseInt(pacManLocations[0]);
     int pacManY = Integer.parseInt(pacManLocations[1]);
     addActor(pacActor, new Location(pacManX, pacManY));
-  }
-
-  private int countPillsAndItems() {
-    int pillsAndItemsCount = 0;
-    for (int y = 0; y < nbVertCells; y++)
-    {
-      for (int x = 0; x < nbHorzCells; x++)
-      {
-        Location location = new Location(x, y);
-        int a = grid.getCell(location);
-        if (a == 1 && propertyPillLocations.size() == 0) { // Pill
-          pillsAndItemsCount++;
-        } else if (a == 3 && propertyGoldLocations.size() == 0) { // Gold
-          pillsAndItemsCount++;
-        }
-      }
-    }
-    if (propertyPillLocations.size() != 0) {
-      pillsAndItemsCount += propertyPillLocations.size();
-    }
-
-    if (propertyGoldLocations.size() != 0) {
-      pillsAndItemsCount += propertyGoldLocations.size();
-    }
-
-    return pillsAndItemsCount;
   }
 
   private void drawGrid(GGBackground bg)
@@ -152,22 +118,22 @@ public class Game extends GameGrid
         int a = grid.getCell(location);
         if (a > 0)
           bg.fillCell(location, Color.lightGray);
-        if (a == 1 && propertyPillLocations.size() == 0) { // Pill
-          putPill(bg, location);
-        } else if (a == 3 && propertyGoldLocations.size() == 0) { // Gold
-          putGold(bg, location);
+        if (a == 1 && itemManager.getPropertyPillLocations().size() == 0) { // Pill
+          itemManager.putPill(bg, location);
+        } else if (a == 3 && itemManager.getPropertyGoldLocations().size() == 0) { // Gold
+          itemManager.putGold(bg, location);
         } else if (a == 4) {
-          putIce(bg, location);
+          itemManager.putIce(bg, location);
         }
       }
     }
 
-    for (Location location : propertyPillLocations) {
-      putPill(bg, location);
+    for (Location location : itemManager.getPropertyPillLocations()) {
+      itemManager.putPill(bg, location);
     }
 
-    for (Location location : propertyGoldLocations) {
-      putGold(bg, location);
+    for (Location location : itemManager.getPropertyGoldLocations()) {
+      itemManager.putGold(bg, location);
     }
   }
 
@@ -178,7 +144,7 @@ public class Game extends GameGrid
       String[] singlePillLocationStrings = pillsLocationString.split(";");
       for (String singlePillLocationString: singlePillLocationStrings) {
         String[] locationStrings = singlePillLocationString.split(",");
-        propertyPillLocations.add(new Location(Integer.parseInt(locationStrings[0]), Integer.parseInt(locationStrings[1])));
+        itemManager.getPropertyPillLocations().add(new Location(Integer.parseInt(locationStrings[0]), Integer.parseInt(locationStrings[1])));
       }
     }
 
@@ -187,7 +153,7 @@ public class Game extends GameGrid
       String[] singleGoldLocationStrings = goldLocationString.split(";");
       for (String singleGoldLocationString: singleGoldLocationStrings) {
         String[] locationStrings = singleGoldLocationString.split(",");
-        propertyGoldLocations.add(new Location(Integer.parseInt(locationStrings[0]), Integer.parseInt(locationStrings[1])));
+        itemManager.getPropertyGoldLocations().add(new Location(Integer.parseInt(locationStrings[0]), Integer.parseInt(locationStrings[1])));
       }
     }
   }
@@ -199,64 +165,27 @@ public class Game extends GameGrid
       {
         Location location = new Location(x, y);
         int a = grid.getCell(location);
-        if (a == 1 && propertyPillLocations.size() == 0) {
-          pillAndItemLocations.add(location);
+        if (a == 1 && itemManager.getPropertyPillLocations().size() == 0) {
+          itemManager.getPillAndItemLocations().add(location);
         }
-        if (a == 3 &&  propertyGoldLocations.size() == 0) {
-          pillAndItemLocations.add(location);
+        if (a == 3 && itemManager.getPropertyGoldLocations().size() == 0) {
+          itemManager.getPillAndItemLocations().add(location);
         }
         if (a == 4) {
-          pillAndItemLocations.add(location);
+          itemManager.getPillAndItemLocations().add(location);
         }
       }
     }
 
 
-    if (propertyPillLocations.size() > 0) {
-      for (Location location : propertyPillLocations) {
-        pillAndItemLocations.add(location);
+    if (itemManager.getPropertyPillLocations().size() > 0) {
+      for (Location location : itemManager.getPropertyPillLocations()) {
+        itemManager.getPillAndItemLocations().add(location);
       }
     }
-    if (propertyGoldLocations.size() > 0) {
-      for (Location location : propertyGoldLocations) {
-        pillAndItemLocations.add(location);
-      }
-    }
-  }
-
-  // Item Methods
-  private void putPill(GGBackground bg, Location location){
-    bg.fillCircle(toPoint(location), 5);
-  }
-
-  private void putGold(GGBackground bg, Location location){
-    bg.setPaintColor(Color.yellow);
-    bg.fillCircle(toPoint(location), 5);
-    Actor gold = new Actor("sprites/gold.png");
-    this.goldPieces.add(gold);
-    addActor(gold, location);
-  }
-
-  private void putIce(GGBackground bg, Location location){
-    bg.setPaintColor(Color.blue);
-    bg.fillCircle(toPoint(location), 5);
-    Actor ice = new Actor("sprites/ice.png");
-    this.iceCubes.add(ice);
-    addActor(ice, location);
-  }
-
-  public void removeItem(String type,Location location){
-    if(type.equals("gold")){
-      for (Actor item : this.goldPieces){
-        if (location.getX() == item.getLocation().getX() && location.getY() == item.getLocation().getY()) {
-          item.hide();
-        }
-      }
-    }else if(type.equals("ice")){
-      for (Actor item : this.iceCubes){
-        if (location.getX() == item.getLocation().getX() && location.getY() == item.getLocation().getY()) {
-          item.hide();
-        }
+    if (itemManager.getPropertyGoldLocations().size() > 0) {
+      for (Location location : itemManager.getPropertyGoldLocations()) {
+        itemManager.getPillAndItemLocations().add(location);
       }
     }
   }
@@ -265,5 +194,10 @@ public class Game extends GameGrid
   public int getNumHorzCells(){ return this.nbHorzCells; }
   public int getNumVertCells(){ return this.nbVertCells; }
   public GameCallback getGameCallback() { return gameCallback; }
-  public ArrayList<Location> getPillAndItemLocations() { return pillAndItemLocations; }
+  public PacManGameGrid getGrid() {
+    return grid;
+  }
+  public ItemManager getItemManager(){
+    return itemManager;
+  }
 }
