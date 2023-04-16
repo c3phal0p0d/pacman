@@ -1,18 +1,20 @@
 // Monster.java
 // Used for PacMan
-package src;
+package src.monsters;
 
 import ch.aplu.jgamegrid.*;
 import java.awt.Color;
 import java.util.*;
+import src.Game;
+import src.PacActor;
 
 public class Monster extends Actor
 {
-  private Game game;
-  private MonsterType type;
+  protected Game game;
+  protected MonsterType type;
   private ArrayList<Location> visitedList = new ArrayList<Location>();
   private final int listLength = 10;
-  private boolean stopMoving = false;
+  protected boolean stopMoving = false;
   private int seed = 0;
   private Random randomiser = new Random(0);
 
@@ -24,19 +26,9 @@ public class Monster extends Actor
   }
 
   // Class Methods
-  public void stopMoving(int seconds) {
-    this.stopMoving = true;
-    Timer timer = new Timer(); // Instantiate Timer Object
-    int SECOND_TO_MILLISECONDS = 1000;
-    final Monster monster = this;
-    timer.schedule(new TimerTask() {
-      @Override
-      public void run() {
-        monster.stopMoving = false;
-      }
-    }, seconds * SECOND_TO_MILLISECONDS);
-  }
 
+
+  // This method is called upon every cycle of the jgamegrid simulation loop
   public void act()
   {
     if (stopMoving) {
@@ -109,14 +101,14 @@ public class Monster extends Actor
     addVisitedList(next);
   }
 
-  private void addVisitedList(Location location)
+  protected void addVisitedList(Location location)
   {
     visitedList.add(location);
     if (visitedList.size() == listLength)
       visitedList.remove(0);
   }
 
-  private boolean isVisited(Location location)
+  protected boolean isVisited(Location location)
   {
     for (Location loc : visitedList)
       if (loc.equals(location))
@@ -124,7 +116,7 @@ public class Monster extends Actor
     return false;
   }
 
-  private boolean canMove(Location location)
+  protected boolean canMove(Location location)
   {
     Color c = getBackground().getColor(location);
     if (c.equals(Color.gray) || location.getX() >= game.getNumHorzCells()

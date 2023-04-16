@@ -6,12 +6,23 @@
   <component name="ChangeListManager">
     <list default="true" id="6592bff1-c82d-44fd-9895-37a51bf4cc98" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pacman/src/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pacman/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pacman/src/Monster.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pacman/src/MonsterType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pacman/src/utility/GameCallback.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/utility/GameCallback.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -20,6 +31,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2Nr4uWGV3PRuqGaK8MCuzRS87zD" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -27,7 +41,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "JC",
+    "git-widget-placeholder": "JC-monster-manager",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "E:/Desktop/UoM/Year 4 Sem 1/Software Modelling and Design/A1/2023-sem1-projectassignment1-thu-11-00-team-01",
     "settings.editor.selected.configurable": "preferences.editor"
