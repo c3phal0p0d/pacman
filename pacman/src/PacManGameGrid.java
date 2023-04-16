@@ -9,7 +9,7 @@ public class PacManGameGrid
 {
   /*
    * Class that represents the grid the game is to be played on
-   * x
+   *
    */
 
   private Game game;
@@ -48,10 +48,17 @@ public class PacManGameGrid
     }
   }
 
+  /*
+   Get cell at a specified location on the grid
+   */
   public int getCell(Location location)
   {
     return mazeArray[location.y][location.x];
   }
+
+  /*
+   Convert character representing an element in the maze to a corresponding integer
+   */
   private int toInt(char c)
   {
     if (c == 'x') // Maze Wall
@@ -67,6 +74,9 @@ public class PacManGameGrid
     return -1;    // Not Recognised
   }
 
+  /*
+   Draw the game grid
+   */
   public void drawGrid(GGBackground bg)
   {
     bg.clear(Color.gray);

@@ -67,12 +67,12 @@ public class Game extends GameGrid
     //Run the game
     doRun();
     show();
+
     // Loop to look for collision in the application thread
     // This makes it improbable that we miss a hit
     boolean hasPacmanBeenHit;
     boolean hasPacmanEatAllPills;
     setupPillAndItemsLocations();
-    
     do {
       hasPacmanBeenHit = monsterManager.hasThereBeenACollision(pacActor);
       hasPacmanEatAllPills = pacActor.getNbPills() >= itemManager.getMaxPillsAndItems();
@@ -108,38 +108,6 @@ public class Game extends GameGrid
     int pacManX = Integer.parseInt(pacManLocations[0]);
     int pacManY = Integer.parseInt(pacManLocations[1]);
     addActor(pacActor, new Location(pacManX, pacManY));
-  }
-
-  private void drawGrid(GGBackground bg)
-  {
-    bg.clear(Color.gray);
-    bg.setPaintColor(Color.white);
-    for (int y = 0; y < nbVertCells; y++)
-    {
-      for (int x = 0; x < nbHorzCells; x++)
-      {
-        bg.setPaintColor(Color.white);
-        Location location = new Location(x, y);
-        int a = grid.getCell(location);
-        if (a > 0)
-          bg.fillCell(location, Color.lightGray);
-        if (a == 1 && itemManager.getPropertyPillLocations().size() == 0) { // Pill
-          itemManager.putPill(bg, location);
-        } else if (a == 3 && itemManager.getPropertyGoldLocations().size() == 0) { // Gold
-          itemManager.putGold(bg, location);
-        } else if (a == 4) {
-          itemManager.putIce(bg, location);
-        }
-      }
-    }
-
-    for (Location location : itemManager.getPropertyPillLocations()) {
-      itemManager.putPill(bg, location);
-    }
-
-    for (Location location : itemManager.getPropertyGoldLocations()) {
-      itemManager.putGold(bg, location);
-    }
   }
 
   // Properties Methods
@@ -181,7 +149,6 @@ public class Game extends GameGrid
         }
       }
     }
-
 
     if (itemManager.getPropertyPillLocations().size() > 0) {
       for (Location location : itemManager.getPropertyPillLocations()) {
