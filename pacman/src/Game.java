@@ -17,9 +17,9 @@ public class Game extends GameGrid
 {
   private final static int nbHorzCells = 20;
   private final static int nbVertCells = 11;
-  public PacManGameGrid grid = new PacManGameGrid(nbHorzCells, nbVertCells);
+  public PacManGameGrid grid;
 
-  public PacActor pacActor = new PacActor(this);
+  public PacActor pacActor;
   private MonsterManager monsterManager;
   private ItemManager itemManager;
 
@@ -37,17 +37,21 @@ public class Game extends GameGrid
     setSimulationPeriod(100);
     setTitle("[PacMan in the Multiverse]");
 
+    // Setup Components
+    monsterManager = new MonsterManager(this, properties);
+    itemManager = new ItemManager(this);
+    grid = new PacManGameGrid(this, nbHorzCells, nbVertCells);
+    pacActor = new PacActor(this);
+    itemManager.setMaxPillsAndItems(itemManager.countPillsAndItems());
+
     //Setup for auto test
     pacActor.setPropertyMoves(properties.getProperty("PacMan.move"));
     pacActor.setAuto(Boolean.parseBoolean(properties.getProperty("PacMan.isAuto")));
     loadPillAndItemsLocations();
 
+    // Draw grid
     GGBackground bg = getBg();
-    drawGrid(bg);
-
-    // Setup Components
-    monsterManager = new MonsterManager(this, properties);
-    itemManager = new ItemManager(this);
+    grid.drawGrid(bg);
 
     //Setup Random seeds
     seed = Integer.parseInt(properties.getProperty("seed"));
@@ -58,6 +62,7 @@ public class Game extends GameGrid
     monsterManager.setSlowDown(3);
     pacActor.setSlowDown(3);
     setupActorLocations();
+
 
     //Run the game
     doRun();

@@ -3,6 +3,8 @@ package src;
 
 import ch.aplu.jgamegrid.*;
 
+import java.awt.*;
+
 public class PacManGameGrid
 {
   /*
@@ -10,12 +12,15 @@ public class PacManGameGrid
    * x
    */
 
+  private Game game;
+
   private int nbHorzCells;
   private int nbVertCells;
   private int[][] mazeArray;
 
-  public PacManGameGrid(int nbHorzCells, int nbVertCells)
+  public PacManGameGrid(Game game, int nbHorzCells, int nbVertCells)
   {
+    this.game = game;
     this.nbHorzCells = nbHorzCells;
     this.nbVertCells = nbVertCells;
     mazeArray = new int[nbVertCells][nbHorzCells];
@@ -60,5 +65,37 @@ public class PacManGameGrid
     if (c == 'i') // Ice
       return 4;
     return -1;    // Not Recognised
+  }
+
+  public void drawGrid(GGBackground bg)
+  {
+    bg.clear(Color.gray);
+    bg.setPaintColor(Color.white);
+    for (int y = 0; y < nbVertCells; y++)
+    {
+      for (int x = 0; x < nbHorzCells; x++)
+      {
+        bg.setPaintColor(Color.white);
+        Location location = new Location(x, y);
+        int a = getCell(location);
+        if (a > 0)
+          bg.fillCell(location, Color.lightGray);
+        if (a == 1 && game.getItemManager().getPropertyPillLocations().size() == 0) { // Pill
+          game.getItemManager().putPill(bg, location);
+        } else if (a == 3 && game.getItemManager().getPropertyGoldLocations().size() == 0) { // Gold
+          game.getItemManager().putGold(bg, location);
+        } else if (a == 4) {
+          game.getItemManager().putIce(bg, location);
+        }
+      }
+    }
+
+    for (Location location : game.getItemManager().getPropertyPillLocations()) {
+      game.getItemManager().putPill(bg, location);
+    }
+
+    for (Location location : game.getItemManager().getPropertyGoldLocations()) {
+      game.getItemManager().putGold(bg, location);
+    }
   }
 }

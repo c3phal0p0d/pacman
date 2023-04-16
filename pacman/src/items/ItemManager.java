@@ -23,10 +23,9 @@ public class ItemManager {
 
     public ItemManager(Game game) {
         this.game = game;
-        maxPillsAndItems = countPillsAndItems();
     }
 
-    private int countPillsAndItems() {
+    public int countPillsAndItems() {
         int pillsAndItemsCount = 0;
         for (int y = 0; y < game.getNumVertCells(); y++)
         {
@@ -89,13 +88,17 @@ public class ItemManager {
         }
     }
 
-    // Getter methods
+    // Getter & setter methods
     public ArrayList<Location> getPillAndItemLocations() {
         return pillAndItemLocations;
     }
 
     public int getMaxPillsAndItems() {
         return maxPillsAndItems;
+    }
+
+    public void setMaxPillsAndItems(int maxPillsAndItems){
+        this.maxPillsAndItems = maxPillsAndItems;
     }
 
     public ArrayList<Location> getPropertyPillLocations() {
