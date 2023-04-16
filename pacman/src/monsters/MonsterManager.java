@@ -10,11 +10,7 @@ public class MonsterManager {
     private ArrayList<Monster> monsters = new ArrayList<Monster>();
 
     // Creating an instance of monster manager creates all the monsters of the game along with it.
-
-    //    public MonsterManager(ArrayList<Location> locations, ArrayList<Location> goldLocations, PacActor pacActor,
-//                          PacManGameGrid grid)
-
-    public MonsterManager(Game game, Properties properties) {
+    public MonsterManager(Game game, Properties properties, ArrayList<Location> goldLocations) {
 
         // Create Troll
         RandomWalkMonster troll = new RandomWalkMonster(game, MonsterType.Troll);
@@ -46,10 +42,20 @@ public class MonsterManager {
             monsters.add(wizard);
 
             // Create Orion
-
+            Orion orion = new Orion(game, MonsterType.Orion, goldLocations);
+            String[] orionLocations = properties.getProperty("Orion.location").split(",");
+            int orionX = Integer.parseInt(orionLocations[0]);
+            int orionY = Integer.parseInt(orionLocations[1]);
+            game.addActor(orion, new Location(orionX, orionY), Location.NORTH);
+            monsters.add(orion);
 
             // Create Alien
-
+            Alien alien = new Alien(game, MonsterType.Alien);
+            String[] alienLocations = properties.getProperty("Alien.location").split(",");
+            int alienX = Integer.parseInt(alienLocations[0]);
+            int alienY = Integer.parseInt(alienLocations[1]);
+            game.addActor(alien, new Location(alienX, alienY), Location.NORTH);
+            monsters.add(alien);
         }
     }
 

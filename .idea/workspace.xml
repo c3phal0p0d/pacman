@@ -6,15 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="6592bff1-c82d-44fd-9895-37a51bf4cc98" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pacman/properties/test1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pacman/properties/test6.properties" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pacman/src/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pacman/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pacman/src/monsters/Alien.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/monsters/Alien.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pacman/src/monsters/Monster.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/monsters/Monster.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pacman/src/monsters/MonsterManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/monsters/MonsterManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pacman/src/monsters/Orion.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/monsters/Orion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pacman/src/monsters/RandomWalkMonster.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/monsters/RandomWalkMonster.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pacman/src/monsters/TX5.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/monsters/TX5.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pacman/src/monsters/Wizard.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/monsters/Wizard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,6 +78,16 @@
           <url>file://$PROJECT_DIR$/pacman/src/PacActor.java</url>
           <line>68</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/pacman/src/monsters/Alien.java</url>
+          <line>23</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/pacman/src/monsters/Alien.java</url>
+          <line>45</line>
+          <option name="timeStamp" value="27" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

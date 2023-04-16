@@ -51,7 +51,7 @@ public class Game extends GameGrid
     drawGrid(bg);
 
     // Setup Components
-    monsterManager = new MonsterManager(this, properties);
+    monsterManager = new MonsterManager(this, properties, propertyGoldLocations);
 
     //Setup Random seeds
     seed = Integer.parseInt(properties.getProperty("seed"));
