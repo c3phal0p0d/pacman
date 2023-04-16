@@ -16,25 +16,21 @@ public class MonsterManager {
 
     public MonsterManager(Game game, Properties properties) {
 
-        // Create
+        // Create Troll
         RandomWalkMonster troll = new RandomWalkMonster(game, MonsterType.Troll);
-        TX5 tx5 = new TX5(game, MonsterType.TX5);
-
-        // Convert into actor
         String[] trollLocations = properties.getProperty("Troll.location").split(",");
-        String[] tx5Locations = properties.getProperty("TX5.location").split(",");
         int trollX = Integer.parseInt(trollLocations[0]);
         int trollY = Integer.parseInt(trollLocations[1]);
+        game.addActor(troll, new Location(trollX, trollY), Location.NORTH);
+        monsters.add(troll);
+
+        // Create TX5
+        TX5 tx5 = new TX5(game, MonsterType.TX5);
+        String[] tx5Locations = properties.getProperty("TX5.location").split(",");
         int tx5X = Integer.parseInt(tx5Locations[0]);
         int tx5Y = Integer.parseInt(tx5Locations[1]);
-        game.addActor(troll, new Location(trollX, trollY), Location.NORTH);
         game.addActor(tx5, new Location(tx5X, tx5Y), Location.NORTH);
-
-        // TX-5 doesn't move for the first 5 seconds
-        tx5.stopMoving(5);
-
-        // Add
-        monsters.add(troll);
+        tx5.stopMoving(5); // TX-5 doesn't move for the first 5 seconds
         monsters.add(tx5);
     }
 

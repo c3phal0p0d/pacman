@@ -6,10 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="6592bff1-c82d-44fd-9895-37a51bf4cc98" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pacman/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pacman/src/Monster.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pacman/src/MonsterType.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pacman/src/utility/GameCallback.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/utility/GameCallback.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pacman/src/monsters/Monster.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/monsters/Monster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pacman/src/monsters/MonsterManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/monsters/MonsterManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pacman/src/monsters/RandomWalkMonster.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/monsters/RandomWalkMonster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pacman/src/monsters/TX5.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/monsters/TX5.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +41,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "JC-monster-manager",
+    "git-widget-placeholder": "JC-working-on-monsters",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "E:/Desktop/UoM/Year 4 Sem 1/Software Modelling and Design/A1/2023-sem1-projectassignment1-thu-11-00-team-01",
     "settings.editor.selected.configurable": "preferences.editor"
