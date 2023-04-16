@@ -82,7 +82,7 @@ public class PacActor extends Actor implements GGKeyRepeatListener
   private Location closestPillLocation() {
     int currentDistance = 1000;
     Location currentLocation = null;
-    List<Location> pillAndItemLocations = game.getPillAndItemLocations();
+    List<Location> pillAndItemLocations = game.getItemManager().getPillAndItemLocations();
     for (Location location: pillAndItemLocations) {
       int distanceToPill = location.getDistanceTo(getLocation());
       if (distanceToPill < currentDistance) {
@@ -202,11 +202,11 @@ public class PacActor extends Actor implements GGKeyRepeatListener
       score+= 5;
       getBackground().fillCell(location, Color.lightGray);
       game.getGameCallback().pacManEatPillsAndItems(location, "gold");
-      game.removeItem("gold",location);
+      game.getItemManager().removeItem("gold",location);
     } else if (c.equals(Color.blue)) {
       getBackground().fillCell(location, Color.lightGray);
       game.getGameCallback().pacManEatPillsAndItems(location, "ice");
-      game.removeItem("ice",location);
+      game.getItemManager().removeItem("ice",location);
     }
     String title = "[PacMan in the Multiverse] Current score: " + score;
     gameGrid.setTitle(title);

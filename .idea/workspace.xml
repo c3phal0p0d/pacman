@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6592bff1-c82d-44fd-9895-37a51bf4cc98" name="Changes" comment="">
+    <list default="true" id="6592bff1-c82d-44fd-9895-37a51bf4cc98" name="Changes" comment="created ItemManager class and moved relevant properties &amp; functions to it from Game class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pacman/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pacman/src/Monster.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pacman/src/MonsterType.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pacman/src/utility/GameCallback.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/utility/GameCallback.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pacman/src/PacManGameGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/PacManGameGrid.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +23,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -41,12 +44,30 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "JC-monster-manager",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "E:/Desktop/UoM/Year 4 Sem 1/Software Modelling and Design/A1/2023-sem1-projectassignment1-thu-11-00-team-01",
-    "settings.editor.selected.configurable": "preferences.editor"
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.editor",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="19" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="src.Driver" />
+      <module name="2023-sem1-projectassignment1-thu-11-00-team-01" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -55,8 +76,20 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680409089901</updated>
+      <workItem from="1681612645535" duration="7115000" />
     </task>
+    <task id="LOCAL-00001" summary="created ItemManager class and moved relevant properties &amp; functions to it from Game class">
+      <created>1681631067839</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1681631067839</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -69,15 +102,8 @@
       </map>
     </option>
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/pacman/src/PacActor.java</url>
-          <line>68</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="created ItemManager class and moved relevant properties &amp; functions to it from Game class" />
+    <option name="LAST_COMMIT_MESSAGE" value="created ItemManager class and moved relevant properties &amp; functions to it from Game class" />
   </component>
 </project>
