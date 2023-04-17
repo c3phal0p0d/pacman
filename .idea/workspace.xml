@@ -4,18 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6592bff1-c82d-44fd-9895-37a51bf4cc98" name="Changes" comment="created ItemManager class and moved relevant properties &amp; functions to it from Game class">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-<<<<<<< HEAD
-=======
       <change beforePath="$PROJECT_DIR$/pacman/properties/test6.properties" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pacman/src/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/Driver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pacman/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pacman/src/monsters/Alien.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/monsters/Alien.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pacman/src/monsters/MonsterManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/monsters/MonsterManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pacman/src/monsters/Orion.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/monsters/Orion.java" afterDir="false" />
->>>>>>> 36b10852ff1bf1408a1a77ded82dd83b24b87fac
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +27,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="natasha-game-and-pacman-game-grid" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -79,7 +73,7 @@
     "settings.editor.selected.configurable": "preferences.editor",
     "vue.rearranger.settings.migration": "true"
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="19" />
@@ -128,11 +122,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/pacman/src/PacActor.java</url>
-          <line>68</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/pacman/src/monsters/Alien.java</url>
           <line>23</line>
