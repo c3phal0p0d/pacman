@@ -38,8 +38,8 @@ public class Game extends GameGrid
     setTitle("[PacMan in the Multiverse]");
 
     // Setup Components
-    monsterManager = new MonsterManager(this, properties);
     itemManager = new ItemManager(this);
+    monsterManager = new MonsterManager(this, properties, itemManager.getPropertyGoldLocations());
     grid = new PacManGameGrid(this, nbHorzCells, nbVertCells);
     pacActor = new PacActor(this);
     itemManager.setMaxPillsAndItems(itemManager.countPillsAndItems());
@@ -54,13 +54,13 @@ public class Game extends GameGrid
     grid.drawGrid(bg);
     
     // Setup Components
-    monsterManager = new MonsterManager(this, properties, propertyGoldLocations);
+    monsterManager = new MonsterManager(this, properties, itemManager.getPropertyGoldLocations());
 
     //Setup Random seeds
     seed = Integer.parseInt(properties.getProperty("seed"));
     pacActor.setSeed(seed);
     monsterManager.setSeed(seed);
-    addKeyRepeatListener(pacActor);
+    addKeyRepeatListener(pacActor.getPlayerController());
     setKeyRepeatPeriod(150);
     monsterManager.setSlowDown(3);
     pacActor.setSlowDown(3);

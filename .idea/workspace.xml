@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6592bff1-c82d-44fd-9895-37a51bf4cc98" name="Changes" comment="created ItemManager class and moved relevant properties &amp; functions to it from Game class">
+    <list default="true" id="6592bff1-c82d-44fd-9895-37a51bf4cc98" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pacman/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pacman/src/PacActor.java" beforeDir="false" afterPath="$PROJECT_DIR$/pacman/src/PacActor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
