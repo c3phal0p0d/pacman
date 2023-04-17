@@ -17,9 +17,9 @@ public class Game extends GameGrid
 {
   private final static int nbHorzCells = 20;
   private final static int nbVertCells = 11;
-  public PacManGameGrid grid;
+  private PacManGameGrid grid;
 
-  public PacActor pacActor;
+  private PacActor pacActor;
   private MonsterManager monsterManager;
   private ItemManager itemManager;
 
@@ -171,6 +171,11 @@ public class Game extends GameGrid
   public PacManGameGrid getGrid() {
     return grid;
   }
+
+  public PacActor getPacActor() {
+    return pacActor;
+  }
+  
   public ItemManager getItemManager(){
     return itemManager;
   }

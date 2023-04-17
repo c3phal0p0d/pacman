@@ -18,7 +18,7 @@ public class Alien extends Monster {
      */
     protected void walkApproach() {
         ArrayList<LocationDistance> candidates = new ArrayList<LocationDistance>();
-        Location pacManLocation = monsterManager.game.pacActor.getLocation();
+        Location pacManLocation = monsterManager.getGame().getPacActor().getLocation();
 
         // Calc distance from all surrounding non-mazewall locations
         for (int i = 0; i < 8; i++) {

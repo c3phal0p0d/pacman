@@ -13,8 +13,8 @@ public class Wizard extends RandomWalkMonster {
 
     public Wizard(MonsterManager monsterManager, MonsterType type) {
         super(monsterManager, type);
-        this.horzLimit = monsterManager.game.getNumHorzCells();
-        this.vertLimit = monsterManager.game.getNumVertCells();
+        this.horzLimit = monsterManager.getGame().getNumHorzCells();
+        this.vertLimit = monsterManager.getGame().getNumVertCells();
     }
 
     /*

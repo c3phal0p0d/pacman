@@ -24,9 +24,7 @@ public class Gold extends Item {
      * @param itemManager An instance of the 'MonsterManager'
      */
     public void infurate(ItemManager itemManager) {
-        for (Monster monster: itemManager.getGame().getMonsterManager().getMonsters()) {
-            monster.setFurious(true);
-        }
+        itemManager.getGame().getMonsterManager().setFuriousState(true);
     }
 
     /**
@@ -34,8 +32,6 @@ public class Gold extends Item {
      * @param itemManager An instance of the 'MonsterManager'
      */
     public void soothe(ItemManager itemManager) {
-        for (Monster monster: itemManager.getGame().getMonsterManager().getMonsters()) {
-            monster.setFurious(false);
-        }
+        itemManager.getGame().getMonsterManager().setFuriousState(false);
     }
 }

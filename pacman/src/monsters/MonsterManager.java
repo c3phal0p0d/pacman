@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class MonsterManager {
 
-    public Game game;
+    private Game game;
     public Properties properties;
     private ArrayList<Monster> monsters = new ArrayList<Monster>();
 
@@ -34,7 +34,7 @@ public class MonsterManager {
     private void createSimpleMonsters() {
 
         // Create Troll
-        RandomWalkMonster troll = new RandomWalkMonster(this, MonsterType.Troll);
+        Troll troll = new Troll(this, MonsterType.Troll);
         String[] trollLocations = properties.getProperty("Troll.location").split(",");
         int trollX = Integer.parseInt(trollLocations[0]);
         int trollY = Integer.parseInt(trollLocations[1]);
@@ -116,6 +116,10 @@ public class MonsterManager {
         for (Monster m: monsters) {
             m.setFurious(state);
         }
+    }
+
+    public Game getGame() {
+        return game;
     }
 
 }
