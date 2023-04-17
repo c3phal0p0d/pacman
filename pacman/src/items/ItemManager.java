@@ -97,6 +97,10 @@ public class ItemManager {
         return maxPillsAndItems;
     }
 
+    public Game getGame() {
+        return game;
+    }
+
     public void setMaxPillsAndItems(int maxPillsAndItems){
         this.maxPillsAndItems = maxPillsAndItems;
     }

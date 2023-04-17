@@ -21,20 +21,20 @@ public class Gold extends Item {
 
     /**
      * Sets the monsters into a 'furious' state.
-     * @param monsterManager An instance of the 'MonsterManager'
+     * @param itemManager An instance of the 'MonsterManager'
      */
-    public void infurate(MonsterManager monsterManager) {
-        for (Monster monster: monsterManager.getMonsters()) {
+    public void infurate(ItemManager itemManager) {
+        for (Monster monster: itemManager.getGame().getMonsterManager().getMonsters()) {
             monster.setFurious(true);
         }
     }
 
     /**
      * Calms the monster down by resetting it's 'furious' state.
-     * @param monsterManager An instance of the 'MonsterManager'
+     * @param itemManager An instance of the 'MonsterManager'
      */
-    public void soothe(MonsterManager monsterManager) {
-        for (Monster monster: monsterManager.getMonsters()) {
+    public void soothe(ItemManager itemManager) {
+        for (Monster monster: itemManager.getGame().getMonsterManager().getMonsters()) {
             monster.setFurious(true);
         }
     }
