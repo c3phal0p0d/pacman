@@ -10,17 +10,18 @@ import src.Game;
 
 public abstract class Monster extends Actor
 {
-  protected Game game;
-  protected MonsterType type;
+  protected MonsterManager monsterManager;
+  private MonsterType type;
   private ArrayList<Location> visitedList = new ArrayList<Location>();
   private final int listLength = 10;
   protected boolean stopMoving = false;
   protected Random randomiser = new Random(0);
+  private boolean isFurious = false;
 
-  public Monster(Game game, MonsterType type)
+  public Monster(MonsterManager monsterManager, MonsterType type)
   {
     super("sprites/" + type.getImageName());
-    this.game = game;
+    this.monsterManager = monsterManager;
     this.type = type;
   }
 
@@ -57,8 +58,8 @@ public abstract class Monster extends Actor
   protected boolean canMove(Location location)
   {
     Color c = getBackground().getColor(location);
-    return !c.equals(Color.gray) && location.getX() < game.getNumHorzCells()
-            && location.getX() >= 0 && location.getY() < game.getNumVertCells() && location.getY() >= 0;
+    return !c.equals(Color.gray) && location.getX() < monsterManager.game.getNumHorzCells()
+            && location.getX() >= 0 && location.getY() < monsterManager.game.getNumVertCells() && location.getY() >= 0;
   }
 
   // Getter and Setter Methods
@@ -72,6 +73,10 @@ public abstract class Monster extends Actor
 
   public void setStopMoving(boolean stopMoving) {
     this.stopMoving = stopMoving;
+  }
+
+  public void setFurious(boolean state) {
+    this.isFurious = state;
   }
 }
 

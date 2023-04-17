@@ -39,7 +39,6 @@ public class Game extends GameGrid
 
     // Setup Components
     itemManager = new ItemManager(this);
-    monsterManager = new MonsterManager(this, properties, itemManager.getPropertyGoldLocations());
     grid = new PacManGameGrid(this, nbHorzCells, nbVertCells);
     pacActor = new PacActor(this);
     itemManager.setMaxPillsAndItems(itemManager.countPillsAndItems());

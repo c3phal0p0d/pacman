@@ -7,8 +7,8 @@ import java.util.Random;
 
 public class RandomWalkMonster extends Monster {
 
-    public RandomWalkMonster(Game game, MonsterType type) {
-        super(game, type);
+    public RandomWalkMonster(MonsterManager monsterManager, MonsterType type) {
+        super(monsterManager, type);
     }
 
     protected Location randomWalk(double oldDirection) {
@@ -54,6 +54,6 @@ public class RandomWalkMonster extends Monster {
     {
         double oldDirection = getDirection();
         randomWalk(oldDirection);
-        game.getGameCallback().monsterLocationChanged(this);
+        monsterManager.game.getGameCallback().monsterLocationChanged(this);
     }
 }

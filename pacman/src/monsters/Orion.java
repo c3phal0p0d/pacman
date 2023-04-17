@@ -9,8 +9,8 @@ import java.util.Properties;
 public class Orion extends Monster {
 
     final private ArrayList<Location> goldLocations;
-    public Orion(Game game, MonsterType type, ArrayList<Location> goldLocations) {
-        super(game, type);
+    public Orion(MonsterManager monsterManager, MonsterType type, ArrayList<Location> goldLocations) {
+        super(monsterManager, type);
         this.goldLocations = goldLocations;
     }
 

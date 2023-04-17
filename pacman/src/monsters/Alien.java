@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class Alien extends Monster {
 
-    public Alien(Game game, MonsterType type) {
-        super(game, type);
+    public Alien(MonsterManager monsterManager, MonsterType type) {
+        super(monsterManager, type);
     }
 
     /*
@@ -16,9 +16,9 @@ public class Alien extends Monster {
     excluding maze walls. Then, it will move to the neighbouring location that has the shortest distance to PacMan.
     If more than one neighbouring location has the shortest distance, it will randomly select one.
      */
-    public void walkApproach() {
+    protected void walkApproach() {
         ArrayList<LocationDistance> candidates = new ArrayList<LocationDistance>();
-        Location pacManLocation = game.pacActor.getLocation();
+        Location pacManLocation = monsterManager.game.pacActor.getLocation();
 
         // Calc distance from all surrounding non-mazewall locations
         for (int i = 0; i < 8; i++) {

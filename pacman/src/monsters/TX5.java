@@ -10,13 +10,13 @@ import java.util.TimerTask;
 
 public class TX5 extends RandomWalkMonster {
 
-    public TX5 (Game game, MonsterType type) {
-        super(game, type);
+    public TX5 (MonsterManager monsterManager, MonsterType type) {
+        super(monsterManager, type);
     }
 
     public void walkApproach() {
 
-        Location pacLocation = game.pacActor.getLocation();
+        Location pacLocation = monsterManager.game.pacActor.getLocation();
         double oldDirection = getDirection();
         Location.CompassDirection compassDir = getLocation().get4CompassDirectionTo(pacLocation);
         Location next = getLocation().getNeighbourLocation(compassDir);
@@ -28,7 +28,7 @@ public class TX5 extends RandomWalkMonster {
             next = randomWalk(oldDirection);
         }
 
-        game.getGameCallback().monsterLocationChanged(this);
+        monsterManager.game.getGameCallback().monsterLocationChanged(this);
         addVisitedList(next);
     }
 
