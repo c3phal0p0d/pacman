@@ -35,7 +35,7 @@ public class Gold extends Item {
      */
     public void soothe(ItemManager itemManager) {
         for (Monster monster: itemManager.getGame().getMonsterManager().getMonsters()) {
-            monster.setFurious(true);
+            monster.setFurious(false);
         }
     }
 }
