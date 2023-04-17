@@ -1,6 +1,7 @@
 package src.items;
 
 import ch.aplu.jgamegrid.Location;
+import src.PacActor;
 
 import java.awt.*;
 
@@ -31,6 +32,4 @@ public abstract class Item {
     public void setLocation(Location newLocation) { this.location = newLocation; }
     public void setImageName(String newImageName) { this.imageName = newImageName; }
     public void setPaintColor(Color newPaintColor) { this.paintColor = newPaintColor; }
-
-    //public abstract void causeEffect();
 }

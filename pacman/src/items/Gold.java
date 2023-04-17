@@ -1,6 +1,9 @@
 package src.items;
 
 import ch.aplu.jgamegrid.Location;
+import src.monsters.Monster;
+import src.monsters.MonsterManager;
+import src.monsters.MonsterType;
 
 import java.awt.*;
 
@@ -14,5 +17,25 @@ public class Gold extends Item {
      */
     public Gold(Location location, String imageName, Color paintColor) {
         super(location, imageName, paintColor);
+    }
+
+    /**
+     * Sets the monsters into a 'furious' state.
+     * @param monsterManager An instance of the 'MonsterManager'
+     */
+    public void infurate(MonsterManager monsterManager) {
+        for (Monster monster: monsterManager.getMonsters()) {
+            monster.setFurious(true);
+        }
+    }
+
+    /**
+     * Calms the monster down by resetting it's 'furious' state.
+     * @param monsterManager An instance of the 'MonsterManager'
+     */
+    public void soothe(MonsterManager monsterManager) {
+        for (Monster monster: monsterManager.getMonsters()) {
+            monster.setFurious(true);
+        }
     }
 }

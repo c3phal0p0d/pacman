@@ -27,6 +27,10 @@ public class MonsterManager {
         }
     }
 
+    public ArrayList<Monster> getMonsters() {
+        return monsters;
+    }
+
     private void createSimpleMonsters() {
 
         // Create Troll
