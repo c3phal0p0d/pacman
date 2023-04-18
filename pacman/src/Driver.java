@@ -21,7 +21,6 @@ public class Driver {
             propertiesPath = args[0];
         }
         final Properties properties = PropertiesLoader.loadPropertiesFile(propertiesPath);
-        System.out.println(properties);
         GameCallback gameCallback = new GameCallback();
         new Game(gameCallback, properties);
     }

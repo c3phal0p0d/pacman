@@ -22,7 +22,6 @@ public class Alien extends Monster {
 
         // Calc distance from all surrounding non-mazewall locations
         for (int i = 0; i < 8; i++) {
-            //System.out.println("fuck u");
             Location nextLocation = getNextMoveLocation();
             if (canMove(nextLocation)) { // Location isn't a wall
                 int distance = nextLocation.getDistanceTo(pacManLocation);
@@ -47,7 +46,6 @@ public class Alien extends Monster {
         if (size == 1) { // Only 1 candidate
             setLocation(candidates.get(0).location());
         } else if (size > 1) { // Randomly choose one
-            System.out.println(size);
             int index = randomiser.nextInt(size - 1);
 
             Location newLocation = candidates.get(index).location();
