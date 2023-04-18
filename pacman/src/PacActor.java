@@ -30,6 +30,12 @@ public class PacActor extends Actor
     super(true, "sprites/pacpix.gif", nbSprites);  // Rotatable
     this.game = game;
     this.playerController = new PlayerController(this);
+
+    // Setup PacActor
+    String[] pacManLocations = game.getProperties().getProperty("PacMan.location").split(",");
+    int pacManX = Integer.parseInt(pacManLocations[0]);
+    int pacManY = Integer.parseInt(pacManLocations[1]);
+    game.addActor(this, new Location(pacManX, pacManY));
   }
   private boolean isAuto = false;
 

@@ -9,14 +9,15 @@ import java.util.Properties;
 public class MonsterManager {
 
     private Game game;
-    public Properties properties;
+
+    private Properties properties;
     private ArrayList<Monster> monsters = new ArrayList<Monster>();
 
     // Creating an instance of monster manager creates all the monsters of the game along with it.
-    public MonsterManager(Game game, Properties properties, ArrayList<Location> goldLocations) {
+    public MonsterManager(Game game, ArrayList<Location> goldLocations) {
 
         this.game = game;
-        this.properties = properties;
+        this.properties = game.getProperties();
 
         createSimpleMonsters();
 
