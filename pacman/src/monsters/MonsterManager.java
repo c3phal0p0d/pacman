@@ -8,15 +8,16 @@ import java.util.Properties;
 
 public class MonsterManager {
 
-    public Game game;
-    public Properties properties;
+    private Game game;
+
+    private Properties properties;
     private ArrayList<Monster> monsters = new ArrayList<Monster>();
 
     // Creating an instance of monster manager creates all the monsters of the game along with it.
-    public MonsterManager(Game game, Properties properties, ArrayList<Location> goldLocations) {
+    public MonsterManager(Game game, ArrayList<Location> goldLocations) {
 
         this.game = game;
-        this.properties = properties;
+        this.properties = game.getProperties();
 
         createSimpleMonsters();
 
@@ -34,7 +35,7 @@ public class MonsterManager {
     private void createSimpleMonsters() {
 
         // Create Troll
-        RandomWalkMonster troll = new RandomWalkMonster(this, MonsterType.Troll);
+        Troll troll = new Troll(this, MonsterType.Troll);
         String[] trollLocations = properties.getProperty("Troll.location").split(",");
         int trollX = Integer.parseInt(trollLocations[0]);
         int trollY = Integer.parseInt(trollLocations[1]);
@@ -116,6 +117,10 @@ public class MonsterManager {
         for (Monster m: monsters) {
             m.setFurious(state);
         }
+    }
+
+    public Game getGame() {
+        return game;
     }
 
 }

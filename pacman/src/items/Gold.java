@@ -26,4 +26,12 @@ public class Gold extends Item {
     public void infuriate(ItemManager itemManager) {
         itemManager.getGame().getMonsterManager().setFuriousState(true);
     }
+
+    /**
+     * Calms the monster down by resetting it's 'furious' state.
+     * @param itemManager An instance of the 'MonsterManager'
+     */
+    public void soothe(ItemManager itemManager) {
+        itemManager.getGame().getMonsterManager().setFuriousState(false);
+    }
 }

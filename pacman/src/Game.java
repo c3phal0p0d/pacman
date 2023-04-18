@@ -17,9 +17,9 @@ public class Game extends GameGrid
 {
   private final static int nbHorzCells = 20;
   private final static int nbVertCells = 11;
-  public PacManGameGrid grid;
+  private PacManGameGrid grid;
 
-  public PacActor pacActor;
+  private PacActor pacActor;
   private MonsterManager monsterManager;
   private ItemManager itemManager;
 
@@ -53,7 +53,7 @@ public class Game extends GameGrid
     grid.drawGrid(bg);
     
     // Setup Components
-    monsterManager = new MonsterManager(this, properties, itemManager.getPropertyGoldLocations());
+    monsterManager = new MonsterManager(this, itemManager.getPropertyGoldLocations());
 
     //Setup Random seeds
     seed = Integer.parseInt(properties.getProperty("seed"));
@@ -63,8 +63,6 @@ public class Game extends GameGrid
     setKeyRepeatPeriod(150);
     monsterManager.setSlowDown(3);
     pacActor.setSlowDown(3);
-    setupActorLocations();
-
 
     //Run the game
     doRun();
@@ -101,18 +99,6 @@ public class Game extends GameGrid
     doPause();
   }
 
-  /*
-   Reads in the locations of the various actors and initializes them
-   */
-  private void setupActorLocations() {
-    // Setup Pacman
-    String[] pacManLocations = this.properties.getProperty("PacMan.location").split(",");
-    int pacManX = Integer.parseInt(pacManLocations[0]);
-    int pacManY = Integer.parseInt(pacManLocations[1]);
-    addActor(pacActor, new Location(pacManX, pacManY));
-  }
-
-  // Properties Methods
   private void loadPillAndItemsLocations() {
     String pillsLocationString = properties.getProperty("Pills.location");
     if (pillsLocationString != null) {
@@ -175,6 +161,11 @@ public class Game extends GameGrid
   public PacManGameGrid getGrid() {
     return grid;
   }
+
+  public PacActor getPacActor() {
+    return pacActor;
+  }
+  
   public ItemManager getItemManager(){
     return itemManager;
   }

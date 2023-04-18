@@ -54,6 +54,6 @@ public class RandomWalkMonster extends Monster {
     {
         double oldDirection = getDirection();
         randomWalk(oldDirection);
-        monsterManager.game.getGameCallback().monsterLocationChanged(this);
+        monsterManager.getGame().getGameCallback().monsterLocationChanged(this);
     }
 }
