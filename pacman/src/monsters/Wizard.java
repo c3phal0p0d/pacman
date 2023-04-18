@@ -35,21 +35,48 @@ public class Wizard extends RandomWalkMonster {
 
         // Check all directions
         for (int i = 0; i < 8; i++) {
+
+            // Check adjacent tiles
             Location nextLocation = getNextMoveLocation();
-            if (canMove(nextLocation)) { // Location is not a maze wall
-                setLocation(nextLocation);
-            } else { // Location is a maze wall
-                Location.CompassDirection compassDir = getLocation().get4CompassDirectionTo(nextLocation);
-                Location adjLocation = calcAdjacentLocation(nextLocation, compassDir);
-                Color c = getBackground().getColor(adjLocation);
-                if (insideBorder(adjLocation) && !c.equals(Color.gray)) { // Inside border and not maze wall
-                    setLocation(adjLocation);
-                    break; // End loop, move has been found
-                }
+            if (wizardCanMove(nextLocation)) {
+                break;
             }
+
             // Move hasn't been found, check next direction
             turn(45);
         }
+    }
+
+    @Override
+    protected void furiousWalkApproach() {
+
+        // Move once
+        walkApproach();
+
+        // Try to travel in the same direction again
+        Location next = getNextMoveLocation();
+        if (wizardCanMove(next)) {
+            setLocation(next);
+        }
+        else {
+            walkApproach();
+        }
+    }
+
+    private boolean wizardCanMove(Location nextLocation) {
+        if (canMove(nextLocation)) { // Location is not a maze wall
+            setLocation(nextLocation);
+            return true;
+        } else { // Location is a maze wall
+            Location.CompassDirection compassDir = getLocation().get4CompassDirectionTo(nextLocation);
+            Location adjLocation = calcAdjacentLocation(nextLocation, compassDir);
+            Color c = getBackground().getColor(adjLocation);
+            if (insideBorder(adjLocation) && !c.equals(Color.gray)) { // Inside border and not maze wall
+                setLocation(adjLocation);
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean insideBorder(Location location) {

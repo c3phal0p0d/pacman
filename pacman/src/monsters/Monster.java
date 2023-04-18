@@ -29,11 +29,40 @@ public abstract class Monster extends Actor
     if (stopMoving) {
       return;
     }
-    walkApproach();
+
+    if (isFurious) {
+      System.out.println("I am very angi");
+      furiousWalkApproach();
+    } else {
+      walkApproach();
+    }
+
     setHorzMirror(!(getDirection() > 150) || !(getDirection() < 210));
   }
 
+  /*
+    When furious monsters determine the moving direction once based on their walking approach and move towards that
+    direction for 2 cells if possible. Otherwise, determining the new direction again using their own walking approach
+    until it can move by 2 cells.
+   */
+  protected void furiousWalkApproach() {
+
+    // Move once
+    walkApproach();
+
+    // Try to travel in the same direction again
+    Location next = getNextMoveLocation();
+    if (canMove(next)) {
+      setLocation(next);
+    }
+    else {
+      walkApproach();
+    }
+    System.out.println("Walk twice");
+  }
+
   protected abstract void walkApproach();
+
 
   /*
   Checks if the monster is able to move to a specified location. Returns true if yes, false if no.
@@ -54,6 +83,19 @@ public abstract class Monster extends Actor
       @Override
       public void run() {
         monster.stopMoving = false;
+      }
+    }, seconds * SECOND_TO_MILLISECONDS);
+  }
+
+  public void makeFurious(int seconds) {
+    this.isFurious = true;
+    Timer timer = new Timer(); // Instantiate Timer Object
+    int SECOND_TO_MILLISECONDS = 1000;
+    final Monster monster = this;
+    timer.schedule(new TimerTask() {
+      @Override
+      public void run() {
+        monster.isFurious = false;
       }
     }, seconds * SECOND_TO_MILLISECONDS);
   }

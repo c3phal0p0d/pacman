@@ -20,7 +20,7 @@ public class MonsterManager {
         this.game = game;
         this.properties = properties;
 
-        createSimpleMonsters();
+        //createSimpleMonsters();
 
         // Multiverse exclusive monsters
         String version = properties.getProperty("version");
@@ -93,6 +93,14 @@ public class MonsterManager {
     public void freezeMonsters(int time) {
         for (Monster m: monsters) {
             m.stopMoving(time);
+        }
+    }
+
+    // Make all monsters furious for a period of time
+    public void makeFurious(int time) {
+        System.out.println("angi time");
+        for (Monster m: monsters) {
+            m.makeFurious(time);
         }
     }
 

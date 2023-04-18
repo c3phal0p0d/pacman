@@ -22,8 +22,8 @@ public class Gold extends Item {
     }
 
     public void infuriate() {
-        itemManager.getGame().getMonsterManager().setFuriousState(true);
-        this.claimed = false;
+        final int FURIOUS_TIME = 3;
+        itemManager.getGame().getMonsterManager().makeFurious(FURIOUS_TIME);
     }
 
     // Getter and Setter Method

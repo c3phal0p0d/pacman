@@ -19,8 +19,8 @@ public class Ice extends Item {
     }
 
     public void freeze() {
-        int ice_freeze_time = 3;
-        itemManager.getGame().getMonsterManager().freezeMonsters(ice_freeze_time);
+        final int ICE_FREEZE_TIME = 3;
+        itemManager.getGame().getMonsterManager().freezeMonsters(ICE_FREEZE_TIME);
     }
 
 }
