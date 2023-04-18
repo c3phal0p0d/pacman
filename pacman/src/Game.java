@@ -173,6 +173,4 @@ public class Game extends GameGrid
   public MonsterManager getMonsterManager() {
     return monsterManager;
   }
-
-  public Properties getProperties() {return properties; }
 }

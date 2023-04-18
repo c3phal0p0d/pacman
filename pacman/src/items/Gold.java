@@ -23,7 +23,7 @@ public class Gold extends Item {
      * Sets the monsters into a 'furious' state.
      * @param itemManager An instance of the 'MonsterManager'
      */
-    public void infurate(ItemManager itemManager) {
+    public void infuriate(ItemManager itemManager) {
         itemManager.getGame().getMonsterManager().setFuriousState(true);
     }
 
