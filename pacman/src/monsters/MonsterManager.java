@@ -3,6 +3,8 @@ package src.monsters;
 import ch.aplu.jgamegrid.*;
 
 import src.*;
+import src.items.Gold;
+
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -13,7 +15,7 @@ public class MonsterManager {
     private ArrayList<Monster> monsters = new ArrayList<Monster>();
 
     // Creating an instance of monster manager creates all the monsters of the game along with it.
-    public MonsterManager(Game game, Properties properties, ArrayList<Location> goldLocations) {
+    public MonsterManager(Game game, Properties properties, ArrayList<Gold> goldPieces) {
 
         this.game = game;
         this.properties = properties;
@@ -23,18 +25,14 @@ public class MonsterManager {
         // Multiverse exclusive monsters
         String version = properties.getProperty("version");
         if (version.equals("multiverse")) {
-            createMultiverseMonsters(goldLocations);
+            createMultiverseMonsters(goldPieces);
         }
-    }
-
-    public ArrayList<Monster> getMonsters() {
-        return monsters;
     }
 
     private void createSimpleMonsters() {
 
         // Create Troll
-        RandomWalkMonster troll = new RandomWalkMonster(this, MonsterType.Troll);
+        Troll troll = new Troll(this);
         String[] trollLocations = properties.getProperty("Troll.location").split(",");
         int trollX = Integer.parseInt(trollLocations[0]);
         int trollY = Integer.parseInt(trollLocations[1]);
@@ -42,7 +40,7 @@ public class MonsterManager {
         monsters.add(troll);
 
         // Create TX5
-        TX5 tx5 = new TX5(this, MonsterType.TX5);
+        TX5 tx5 = new TX5(this);
         String[] tx5Locations = properties.getProperty("TX5.location").split(",");
         int tx5X = Integer.parseInt(tx5Locations[0]);
         int tx5Y = Integer.parseInt(tx5Locations[1]);
@@ -51,9 +49,9 @@ public class MonsterManager {
         monsters.add(tx5);
     }
 
-    private void createMultiverseMonsters(ArrayList<Location> goldLocations) {
+    private void createMultiverseMonsters(ArrayList<Gold> goldPieces) {
         // Create Wizard
-        Wizard wizard = new Wizard(this, MonsterType.Wizard);
+        Wizard wizard = new Wizard(this);
         String[] wizardLocations = properties.getProperty("Wizard.location").split(",");
         int wizardX = Integer.parseInt(wizardLocations[0]);
         int wizardY = Integer.parseInt(wizardLocations[1]);
@@ -61,15 +59,15 @@ public class MonsterManager {
         monsters.add(wizard);
 
         // Create Orion
-//        Orion orion = new Orion(this, MonsterType.Orion, goldLocations);
-//        String[] orionLocations = properties.getProperty("Orion.location").split(",");
-//        int orionX = Integer.parseInt(orionLocations[0]);
-//        int orionY = Integer.parseInt(orionLocations[1]);
-//        game.addActor(orion, new Location(orionX, orionY), Location.NORTH);
-//        monsters.add(orion);
+        Orion orion = new Orion(this, goldPieces);
+        String[] orionLocations = properties.getProperty("Orion.location").split(",");
+        int orionX = Integer.parseInt(orionLocations[0]);
+        int orionY = Integer.parseInt(orionLocations[1]);
+        game.addActor(orion, new Location(orionX, orionY), Location.NORTH);
+        monsters.add(orion);
 
         // Create Alien
-        Alien alien = new Alien(this, MonsterType.Alien);
+        Alien alien = new Alien(this);
         String[] alienLocations = properties.getProperty("Alien.location").split(",");
         int alienX = Integer.parseInt(alienLocations[0]);
         int alienY = Integer.parseInt(alienLocations[1]);
@@ -91,7 +89,14 @@ public class MonsterManager {
         }
     }
 
-    // Stops all monsters in place
+    // Freeze all monsters for a period of time
+    public void freezeMonsters(int time) {
+        for (Monster m: monsters) {
+            m.stopMoving(time);
+        }
+    }
+
+    // Stops all monsters in place, only called when game ends or player dies
     public void stopMonsters() {
         for (Monster m: monsters) {
             m.setStopMoving(true);

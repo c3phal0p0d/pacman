@@ -14,15 +14,13 @@ public class Ice extends Item {
      * @param imageName the filename of the ice's sprite
      * @param paintColor the color of the ice
      */
-    public Ice(Location location, String imageName, Color paintColor) {
-        super(location, imageName, paintColor);
+    public Ice(ItemManager itemManager, Location location, String imageName, Color paintColor) {
+        super(itemManager, location, imageName, paintColor);
     }
 
-    /**
-     * Freezes all monster entities, makes them stop moving
-     * @param itemManager An instance of the 'ItemManager'
-     */
-    public void freeze(ItemManager itemManager) {
-        itemManager.getGame().getMonsterManager().stopMonsters();
+    public void freeze() {
+        int ice_freeze_time = 3;
+        itemManager.getGame().getMonsterManager().freezeMonsters(ice_freeze_time);
     }
+
 }

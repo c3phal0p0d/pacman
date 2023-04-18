@@ -11,9 +11,7 @@ import src.Game;
 public abstract class Monster extends Actor
 {
   protected MonsterManager monsterManager;
-  private MonsterType type;
-  private ArrayList<Location> visitedList = new ArrayList<Location>();
-  private final int listLength = 10;
+  protected MonsterType type;
   protected boolean stopMoving = false;
   protected Random randomiser = new Random(0);
   private boolean isFurious = false;
@@ -37,21 +35,6 @@ public abstract class Monster extends Actor
 
   protected abstract void walkApproach();
 
-  protected void addVisitedList(Location location)
-  {
-    visitedList.add(location);
-    if (visitedList.size() == listLength)
-      visitedList.remove(0);
-  }
-
-  protected boolean isVisited(Location location)
-  {
-    for (Location loc : visitedList)
-      if (loc.equals(location))
-        return true;
-    return false;
-  }
-
   /*
   Checks if the monster is able to move to a specified location. Returns true if yes, false if no.
    */
@@ -60,6 +43,19 @@ public abstract class Monster extends Actor
     Color c = getBackground().getColor(location);
     return !c.equals(Color.gray) && location.getX() < monsterManager.game.getNumHorzCells()
             && location.getX() >= 0 && location.getY() < monsterManager.game.getNumVertCells() && location.getY() >= 0;
+  }
+
+  public void stopMoving(int seconds) {
+    this.stopMoving = true;
+    Timer timer = new Timer(); // Instantiate Timer Object
+    int SECOND_TO_MILLISECONDS = 1000;
+    final Monster monster = this;
+    timer.schedule(new TimerTask() {
+      @Override
+      public void run() {
+        monster.stopMoving = false;
+      }
+    }, seconds * SECOND_TO_MILLISECONDS);
   }
 
   // Getter and Setter Methods

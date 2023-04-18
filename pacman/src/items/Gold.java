@@ -9,21 +9,25 @@ import java.awt.*;
 
 public class Gold extends Item {
 
+    protected boolean claimed;
+
     /**
      * Instantiates a new 'Pill'.
      * @param location the location of the pill on the board
      * @param imageName the filename of the item's sprite
      * @param paintColor the color of the item
      */
-    public Gold(Location location, String imageName, Color paintColor) {
-        super(location, imageName, paintColor);
+    public Gold(ItemManager itemManager, Location location, String imageName, Color paintColor) {
+        super(itemManager, location, imageName, paintColor);
     }
 
-    /**
-     * Sets the monsters into a 'furious' state.
-     * @param itemManager An instance of the 'MonsterManager'
-     */
-    public void infuriate(ItemManager itemManager) {
+    public void infuriate() {
         itemManager.getGame().getMonsterManager().setFuriousState(true);
+        this.claimed = false;
     }
+
+    // Getter and Setter Method
+    protected void claim() { this.claimed = true; };
+
+    public boolean isClaimed() { return this.claimed; }
 }

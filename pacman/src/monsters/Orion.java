@@ -4,14 +4,22 @@ import ch.aplu.jgamegrid.Location;
 import src.Game;
 
 import java.util.ArrayList;
+import src.items.Gold;
 import java.util.Properties;
 
-public class Orion extends Monster {
+public class Orion extends ShortestDistanceMonster {
 
-    final private ArrayList<Location> goldLocations;
-    public Orion(MonsterManager monsterManager, MonsterType type, ArrayList<Location> goldLocations) {
-        super(monsterManager, type);
-        this.goldLocations = goldLocations;
+    final private ArrayList<Gold> goldList;
+
+    private ArrayList<Gold> toVisitList = new ArrayList<Gold>();
+
+    private ArrayList<Gold> claimedList = new ArrayList<Gold>();
+    private ArrayList<Gold> unclaimedList = new ArrayList<Gold>();
+    private Gold currentTarget = null; // Stores current gold piece that Orion is going towards
+
+    public Orion(MonsterManager monsterManager, ArrayList<Gold> goldList) {
+        super(monsterManager, MonsterType.Orion);
+        this.goldList = goldList;
     }
 
     /*
@@ -28,6 +36,53 @@ public class Orion extends Monster {
      */
 
     public void walkApproach() {
+        if (currentTarget != null) { // Walking towards target
+            Location targetLocation = currentTarget.getLocation();
+            walkApproach(targetLocation);
+            if (this.getLocation().equals(currentTarget.getLocation())) { // Arrived at target
+                currentTarget = null;
+            }
+        }
+        else { // Find new target
+            currentTarget = findClosestGold();
+        }
+    }
 
+    private Gold findClosestGold() {
+        if (toVisitList.isEmpty()) { // All gold pieces visited
+            toVisitList.addAll(goldList);
+            sortGoldPieces();
+        }
+
+        int index;
+        if (!claimedList.isEmpty()) { // Prioritize unclaimed gold pieces first
+            index = randomiser.nextInt(claimedList.size());
+            currentTarget = claimedList.get(index);
+            claimedList.remove(currentTarget);
+        }
+        else {
+            index = randomiser.nextInt(unclaimedList.size());
+            currentTarget = unclaimedList.get(index);
+            unclaimedList.remove(currentTarget);
+        }
+        toVisitList.remove(currentTarget); // Remove from pool of unvisited gold pieces
+        return currentTarget;
+    }
+
+    /*
+    Called once Orion has reached its target location
+
+    Sorts the gold pieces into two lists:
+        1. Claimed by pacActor
+        2. Unclaimed
+     */
+    private void sortGoldPieces() {
+        for (Gold gold: toVisitList) {
+            if (gold.isClaimed()) {
+                claimedList.add(gold);
+            } else {
+                unclaimedList.add(gold);
+            }
+        }
     }
 }

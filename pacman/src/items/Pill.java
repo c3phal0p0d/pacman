@@ -12,7 +12,7 @@ public class Pill extends Item {
      * @param imageName the filename of the item's sprite
      * @param paintColor the color of the item
      */
-    public Pill(Location location, String imageName, Color paintColor) {
-        super(location, imageName, paintColor);
+    public Pill(ItemManager itemManager, Location location, String imageName, Color paintColor) {
+        super(itemManager, location, imageName, paintColor);
     }
 }
