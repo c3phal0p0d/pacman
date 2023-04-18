@@ -1,14 +1,14 @@
 package src.items;
 
+import ch.aplu.jgamegrid.Actor;
 import ch.aplu.jgamegrid.Location;
 import src.PacActor;
 
 import java.awt.*;
 
-public abstract class Item {
+public abstract class Item extends Actor {
 
     private Location location;
-    private String imageName;
     private Color paintColor;
 
     /**
@@ -18,18 +18,16 @@ public abstract class Item {
      * @param paintColor the color of the item
      */
     public Item(Location location, String imageName, Color paintColor) {
+        super(imageName);
         this.location = location;
-        this.imageName = imageName;
         this.paintColor = paintColor;
     }
 
     // Getter Methods:
     public Location getLocation() { return this.location; }
-    public String getImageName() { return this.imageName; }
     public Color getPaintColor() { return this.paintColor; }
 
     // Setter Methods:
     public void setLocation(Location newLocation) { this.location = newLocation; }
-    public void setImageName(String newImageName) { this.imageName = newImageName; }
     public void setPaintColor(Color newPaintColor) { this.paintColor = newPaintColor; }
 }
