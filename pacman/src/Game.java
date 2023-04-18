@@ -165,6 +165,10 @@ public class Game extends GameGrid
   }
 
   // Getter Methods
+
+  public Properties getProperties() {
+    return properties;
+  }
   public int getNumHorzCells(){ return this.nbHorzCells; }
   public int getNumVertCells(){ return this.nbVertCells; }
   public GameCallback getGameCallback() { return gameCallback; }

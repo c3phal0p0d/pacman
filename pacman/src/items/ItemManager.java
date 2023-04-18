@@ -11,8 +11,8 @@ import java.util.Properties;
 
 public class ItemManager {
     private ArrayList<Location> pillAndItemLocations = new ArrayList<Location>();
-    private ArrayList<Actor> iceCubes = new ArrayList<Actor>();
-    private ArrayList<Actor> goldPieces = new ArrayList<Actor>();
+    private ArrayList<Item> iceCubes = new ArrayList<Item>();
+    private ArrayList<Item> goldPieces = new ArrayList<Item>();
 
     private ArrayList<Location> propertyPillLocations = new ArrayList<>();
     private ArrayList<Location> propertyGoldLocations = new ArrayList<>();
@@ -59,7 +59,7 @@ public class ItemManager {
     public void putGold(GGBackground bg, Location location){
         bg.setPaintColor(Color.yellow);
         bg.fillCircle(game.toPoint(location), 5);
-        Actor gold = new Actor("sprites/gold.png");
+        Gold gold = new Gold(location, "sprites/gold.png", Color.yellow);
         this.goldPieces.add(gold);
         game.addActor(gold, location);
     }
@@ -67,7 +67,7 @@ public class ItemManager {
     public void putIce(GGBackground bg, Location location){
         bg.setPaintColor(Color.blue);
         bg.fillCircle(game.toPoint(location), 5);
-        Actor ice = new Actor("sprites/ice.png");
+        Ice ice = new Ice(location,"sprites/ice.png", Color.blue);
         this.iceCubes.add(ice);
         game.addActor(ice, location);
     }
@@ -77,12 +77,18 @@ public class ItemManager {
             for (Actor item : this.goldPieces){
                 if (location.getX() == item.getLocation().getX() && location.getY() == item.getLocation().getY()) {
                     item.hide();
+                    if (this.game.getProperties().getProperty("version").equals("multiverse")) {
+                        ((Gold) item).infuriate(this);
+                    }
                 }
             }
         } else if(type.equals("ice")){
-            for (Actor item : this.iceCubes){
+            for (Item item : this.iceCubes){
                 if (location.getX() == item.getLocation().getX() && location.getY() == item.getLocation().getY()) {
                     item.hide();
+                    if (this.game.getProperties().getProperty("version").equals("multiverse")) {
+                        ((Ice) item).freeze(this);
+                    }
                 }
             }
         }

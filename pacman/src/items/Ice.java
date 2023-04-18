@@ -23,18 +23,6 @@ public class Ice extends Item {
      * @param itemManager An instance of the 'ItemManager'
      */
     public void freeze(ItemManager itemManager) {
-        for (Monster monster: itemManager.getGame().getMonsterManager().getMonsters()) {
-            monster.setStopMoving(true);
-        }
-    }
-
-    /**
-     * Un-freezes all monster entities, makes them move again
-     * @param itemManager An instance of the 'ItemManager'
-     */
-    public void defrost(ItemManager itemManager) {
-        for (Monster monster: itemManager.getGame().getMonsterManager().getMonsters()) {
-            monster.setStopMoving(false);
-        }
+        itemManager.getGame().getMonsterManager().stopMonsters();
     }
 }
