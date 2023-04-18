@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class PacActor extends Actor
+public class PacActor extends Actor implements LocationVisitedList
 {
   private static final int nbSprites = 4;
   private int idSprite = 0;
@@ -99,7 +99,7 @@ public class PacActor extends Actor
             getLocation().get4CompassDirectionTo(closestPill);
     Location next = getLocation().getNeighbourLocation(compassDir);
     setDirection(compassDir);
-    if (!isVisited(next) && canMove(next)) {
+    if (!isVisited(next, visitedList) && canMove(next)) {
       setLocation(next);
     } else {
       // normal movement
@@ -131,22 +131,7 @@ public class PacActor extends Actor
       }
     }
     eatPill(next);
-    addVisitedList(next);
-  }
-
-  private void addVisitedList(Location location)
-  {
-    visitedList.add(location);
-    if (visitedList.size() == listLength)
-      visitedList.remove(0);
-  }
-
-  private boolean isVisited(Location location)
-  {
-    for (Location loc : visitedList)
-      if (loc.equals(location))
-        return true;
-    return false;
+    addVisitedList(next, visitedList);
   }
 
   protected boolean canMove(Location location)

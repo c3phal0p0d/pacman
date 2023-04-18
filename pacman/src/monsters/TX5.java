@@ -1,17 +1,11 @@
 package src.monsters;
 
 import ch.aplu.jgamegrid.Location;
-import src.Game;
-import src.VisitedListUtil;
+import src.LocationVisitedList;
 
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
-public class TX5 extends RandomWalkMonster {
-
-    private final int listLength = 10;
+public class TX5 extends RandomWalkMonster implements LocationVisitedList {
 
     public ArrayList<Location> visitedList = new ArrayList<Location>();
 
@@ -27,13 +21,13 @@ public class TX5 extends RandomWalkMonster {
         Location next = getLocation().getNeighbourLocation(compassDir);
         setDirection(compassDir);
 
-        if (!VisitedListUtil.isVisited(next, visitedList) && canMove(next)) {
+        if (!isVisited(next, visitedList) && canMove(next)) {
             setLocation(next);
         } else {
             next = randomWalk(oldDirection);
         }
 
         monsterManager.game.getGameCallback().monsterLocationChanged(this);
-        VisitedListUtil.addVisitedList(next, visitedList, listLength);
+        addVisitedList(next, visitedList);
     }
 }

@@ -20,12 +20,12 @@ public class MonsterManager {
         this.game = game;
         this.properties = properties;
 
-        //createSimpleMonsters();
+        createSimpleMonsters();
 
         // Multiverse exclusive monsters
         String version = properties.getProperty("version");
         if (version.equals("multiverse")) {
-            createMultiverseMonsters(goldPieces);
+            //createMultiverseMonsters(goldPieces);
         }
     }
 
