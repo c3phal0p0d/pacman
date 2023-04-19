@@ -4,6 +4,7 @@ import ch.aplu.jgamegrid.*;
 
 import src.*;
 import src.items.Gold;
+import src.items.Item;
 
 import java.util.ArrayList;
 import java.util.Properties;
@@ -13,10 +14,11 @@ public class MonsterManager {
     private Game game;
 
     private Properties properties;
+
     private ArrayList<Monster> monsters = new ArrayList<Monster>();
 
     // Creating an instance of monster manager creates all the monsters of the game along with it.
-    public MonsterManager(Game game, Properties properties, ArrayList<Gold> goldPieces) {
+    public MonsterManager(Game game, Properties properties, ArrayList<Item> goldPieces) {
 
         this.game = game;
         this.properties = game.getProperties();
@@ -50,7 +52,7 @@ public class MonsterManager {
         monsters.add(tx5);
     }
 
-    private void createMultiverseMonsters(ArrayList<Gold> goldPieces) {
+    private void createMultiverseMonsters(ArrayList<Item> goldPieces) {
         // Create Wizard
         Wizard wizard = new Wizard(this);
         String[] wizardLocations = properties.getProperty("Wizard.location").split(",");
@@ -123,12 +125,6 @@ public class MonsterManager {
             }
         }
         return false;
-    }
-
-    public void setFuriousState(boolean state) {
-        for (Monster m: monsters) {
-            m.setFurious(state);
-        }
     }
 
     public Game getGame() {

@@ -14,7 +14,7 @@ public abstract class Item extends Actor {
 
     protected ItemManager itemManager;
 
-    protected boolean claimed;
+    private boolean claimed;
 
     /**
      * Instantiates a new 'Item'
@@ -31,8 +31,8 @@ public abstract class Item extends Actor {
     // Getter and Setter Methods:
     public Location getLocation() { return this.location; }
 
-    public void setLocation(Location newLocation) { this.location = newLocation; }
-    // Getter and Setter Method
+    //public void setLocation(Location newLocation) { this.location = newLocation; }
+
     protected void claim() { this.claimed = true; };
 
     public boolean isClaimed() { return this.claimed; }

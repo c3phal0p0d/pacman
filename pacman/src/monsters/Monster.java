@@ -11,8 +11,9 @@ import src.Game;
 public abstract class Monster extends Actor
 {
   protected MonsterManager monsterManager;
+
   protected MonsterType type;
-  protected boolean stopMoving = false;
+  private boolean stopMoving = false;
   protected Random randomiser = new Random(0);
   private boolean isFurious = false;
 
@@ -110,10 +111,6 @@ public abstract class Monster extends Actor
 
   public void setStopMoving(boolean stopMoving) {
     this.stopMoving = stopMoving;
-  }
-
-  public void setFurious(boolean state) {
-    this.isFurious = state;
   }
 }
 

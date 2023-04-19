@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class TX5 extends RandomWalkMonster implements LocationVisitedList {
 
-    public ArrayList<Location> visitedList = new ArrayList<Location>();
+    private ArrayList<Location> visitedList = new ArrayList<Location>();
 
     public TX5 (MonsterManager monsterManager) {
         super(monsterManager, MonsterType.TX5);

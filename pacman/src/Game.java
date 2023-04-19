@@ -101,9 +101,13 @@ public class Game extends GameGrid
   public Properties getProperties() {
     return properties;
   }
+
   public int getNumHorzCells(){ return this.nbHorzCells; }
+
   public int getNumVertCells(){ return this.nbVertCells; }
+
   public GameCallback getGameCallback() { return gameCallback; }
+
   public PacManGameGrid getGrid() {
     return grid;
   }

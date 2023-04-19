@@ -4,20 +4,19 @@ import ch.aplu.jgamegrid.Location;
 import src.Game;
 
 import java.util.ArrayList;
-import src.items.Gold;
-import java.util.Properties;
+import src.items.Item;
 
 public class Orion extends ShortestDistanceMonster {
 
-    final private ArrayList<Gold> goldList;
+    final private ArrayList<Item> goldList;
 
-    private ArrayList<Gold> toVisitList = new ArrayList<Gold>();
+    private ArrayList<Item> toVisitList = new ArrayList<Item>();
 
-    private ArrayList<Gold> claimedList = new ArrayList<Gold>();
-    private ArrayList<Gold> unclaimedList = new ArrayList<Gold>();
-    private Gold currentTarget = null; // Stores current gold piece that Orion is going towards
+    private ArrayList<Item> claimedList = new ArrayList<Item>();
+    private ArrayList<Item> unclaimedList = new ArrayList<Item>();
+    private Item currentTarget = null; // Stores current gold piece that Orion is going towards
 
-    public Orion(MonsterManager monsterManager, ArrayList<Gold> goldList) {
+    public Orion(MonsterManager monsterManager, ArrayList<Item> goldList) {
         super(monsterManager, MonsterType.Orion);
         this.goldList = goldList;
     }
@@ -35,7 +34,7 @@ public class Orion extends ShortestDistanceMonster {
     Orion is on the way there.
      */
 
-    public void walkApproach() {
+    protected void walkApproach() {
         if (currentTarget != null) { // Walking towards target
             Location targetLocation = currentTarget.getLocation();
             walkApproach(targetLocation);
@@ -44,14 +43,14 @@ public class Orion extends ShortestDistanceMonster {
             }
         }
         else { // Find new target
-            currentTarget = findClosestGold();
+            currentTarget = findClosestItem();
         }
     }
 
-    private Gold findClosestGold() {
+    private Item findClosestItem() {
         if (toVisitList.isEmpty()) { // All gold pieces visited
             toVisitList.addAll(goldList);
-            sortGoldPieces();
+            sortItemPieces();
         }
 
         int index;
@@ -76,12 +75,12 @@ public class Orion extends ShortestDistanceMonster {
         1. Claimed by pacActor
         2. Unclaimed
      */
-    private void sortGoldPieces() {
+    private void sortItemPieces() {
 
         claimedList.clear();
         unclaimedList.clear();
 
-        for (Gold gold: toVisitList) {
+        for (Item gold: toVisitList) {
             if (gold.isClaimed()) {
                 claimedList.add(gold);
             } else {

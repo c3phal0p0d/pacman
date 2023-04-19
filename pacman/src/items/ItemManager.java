@@ -21,8 +21,6 @@ public class ItemManager {
 
     private ArrayList<Item> pills = new ArrayList<Item>();
 
-    private ArrayList<Item> itemList = new ArrayList<Item>();
-
     private ArrayList<Location> propertyPillLocations = new ArrayList<>();
 
     private ArrayList<Location> propertyGoldLocations = new ArrayList<>();
