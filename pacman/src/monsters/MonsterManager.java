@@ -10,15 +10,16 @@ import java.util.Properties;
 
 public class MonsterManager {
 
-    public Game game;
-    public Properties properties;
+    private Game game;
+
+    private Properties properties;
     private ArrayList<Monster> monsters = new ArrayList<Monster>();
 
     // Creating an instance of monster manager creates all the monsters of the game along with it.
     public MonsterManager(Game game, Properties properties, ArrayList<Gold> goldPieces) {
 
         this.game = game;
-        this.properties = properties;
+        this.properties = game.getProperties();
 
         createSimpleMonsters();
 
@@ -128,6 +129,10 @@ public class MonsterManager {
         for (Monster m: monsters) {
             m.setFurious(state);
         }
+    }
+
+    public Game getGame() {
+        return game;
     }
 
 }

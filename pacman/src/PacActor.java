@@ -32,7 +32,7 @@ public class PacActor extends Actor implements LocationVisitedList
     this.game = game;
     this.playerController = new PlayerController(this);
 
-    // Setup Actor
+    // Setup PacActor
     String[] pacManLocations = game.getProperties().getProperty("PacMan.location").split(",");
     int pacManX = Integer.parseInt(pacManLocations[0]);
     int pacManY = Integer.parseInt(pacManLocations[1]);

@@ -68,8 +68,9 @@ public abstract class Monster extends Actor
   protected boolean canMove(Location location)
   {
     Color c = getBackground().getColor(location);
-    return !c.equals(Color.gray) && location.getX() < monsterManager.game.getNumHorzCells()
-            && location.getX() >= 0 && location.getY() < monsterManager.game.getNumVertCells() && location.getY() >= 0;
+    return !c.equals(Color.gray) && location.getX() < monsterManager.getGame().getNumHorzCells()
+            && location.getX() >= 0 && location.getY() < monsterManager.getGame().getNumVertCells()
+            && location.getY() >= 0;
   }
 
   public void stopMoving(int seconds) {

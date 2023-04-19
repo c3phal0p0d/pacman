@@ -15,7 +15,7 @@ public class TX5 extends RandomWalkMonster implements LocationVisitedList {
 
     public void walkApproach() {
 
-        Location pacLocation = monsterManager.game.pacActor.getLocation();
+        Location pacLocation = monsterManager.getGame().getPacActor().getLocation();
         double oldDirection = getDirection();
         Location.CompassDirection compassDir = getLocation().get4CompassDirectionTo(pacLocation);
         Location next = getLocation().getNeighbourLocation(compassDir);

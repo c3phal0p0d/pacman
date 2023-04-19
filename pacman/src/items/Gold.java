@@ -17,4 +17,12 @@ public class Gold extends Item {
         final int FURIOUS_TIME = 3;
         itemManager.getGame().getMonsterManager().makeFurious(FURIOUS_TIME);
     }
+
+    /**
+     * Calms the monster down by resetting it's 'furious' state.
+     * @param itemManager An instance of the 'MonsterManager'
+     */
+    public void soothe(ItemManager itemManager) {
+        itemManager.getGame().getMonsterManager().setFuriousState(false);
+    }
 }
