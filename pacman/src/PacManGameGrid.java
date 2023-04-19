@@ -91,21 +91,21 @@ public class PacManGameGrid
         if (a > 0)
           bg.fillCell(location, Color.lightGray);
         if (a == 1 && game.getItemManager().getPropertyPillLocations().size() == 0) { // Pill
-          game.getItemManager().putPill(bg, location);
+          game.getItemManager().putPill(location);
         } else if (a == 3 && game.getItemManager().getPropertyGoldLocations().size() == 0) { // Gold
-          game.getItemManager().putGold(bg, location);
+          game.getItemManager().putGold(location);
         } else if (a == 4) {
-          game.getItemManager().putIce(bg, location);
+          game.getItemManager().putIce(location);
         }
       }
     }
 
     for (Location location : game.getItemManager().getPropertyPillLocations()) {
-      game.getItemManager().putPill(bg, location);
+      game.getItemManager().putPill(location);
     }
 
     for (Location location : game.getItemManager().getPropertyGoldLocations()) {
-      game.getItemManager().putGold(bg, location);
+      game.getItemManager().putGold(location);
     }
   }
 }

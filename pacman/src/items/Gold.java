@@ -1,11 +1,6 @@
 package src.items;
 
 import ch.aplu.jgamegrid.Location;
-import src.monsters.Monster;
-import src.monsters.MonsterManager;
-import src.monsters.MonsterType;
-
-import java.awt.*;
 
 public class Gold extends Item {
 
@@ -13,18 +8,14 @@ public class Gold extends Item {
      * Instantiates a new 'Pill'.
      * @param location the location of the pill on the board
      * @param imageName the filename of the item's sprite
-     * @param paintColor the color of the item
      */
-    public Gold(Location location, String imageName, Color paintColor) {
-        super(location, imageName, paintColor);
+    public Gold(ItemManager itemManager, Location location, ItemType type) {
+        super(itemManager, location, type);
     }
 
-    /**
-     * Sets the monsters into a 'furious' state.
-     * @param itemManager An instance of the 'MonsterManager'
-     */
-    public void infuriate(ItemManager itemManager) {
-        itemManager.getGame().getMonsterManager().setFuriousState(true);
+    public void infuriate() {
+        final int FURIOUS_TIME = 3;
+        itemManager.getGame().getMonsterManager().makeFurious(FURIOUS_TIME);
     }
 
     /**

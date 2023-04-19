@@ -6,11 +6,8 @@ import ch.aplu.jgamegrid.*;
 import src.items.ItemManager;
 import src.monsters.MonsterManager;
 import src.utility.GameCallback;
-import src.monsters.Monster;
-import src.monsters.MonsterType;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Properties;
 
 public class Game extends GameGrid
@@ -46,14 +43,14 @@ public class Game extends GameGrid
     //Setup for auto test
     pacActor.setPropertyMoves(properties.getProperty("PacMan.move"));
     pacActor.setAuto(Boolean.parseBoolean(properties.getProperty("PacMan.isAuto")));
-    loadPillAndItemsLocations();
+    itemManager.loadPillAndItemsLocations();
 
     // Draw grid
     GGBackground bg = getBg();
     grid.drawGrid(bg);
     
     // Setup Components
-    monsterManager = new MonsterManager(this, itemManager.getPropertyGoldLocations());
+    monsterManager = new MonsterManager(this, properties, itemManager.getGoldPieces());
 
     //Setup Random seeds
     seed = Integer.parseInt(properties.getProperty("seed"));
@@ -72,7 +69,7 @@ public class Game extends GameGrid
     // This makes it improbable that we miss a hit
     boolean hasPacmanBeenHit;
     boolean hasPacmanEatAllPills;
-    setupPillAndItemsLocations();
+    itemManager.setupPillAndItemsLocations();
     do {
       hasPacmanBeenHit = monsterManager.hasThereBeenACollision(pacActor);
       hasPacmanEatAllPills = pacActor.getNbPills() >= itemManager.getMaxPillsAndItems();
@@ -97,57 +94,6 @@ public class Game extends GameGrid
     gameCallback.endOfGame(title);
 
     doPause();
-  }
-
-  private void loadPillAndItemsLocations() {
-    String pillsLocationString = properties.getProperty("Pills.location");
-    if (pillsLocationString != null) {
-      String[] singlePillLocationStrings = pillsLocationString.split(";");
-      for (String singlePillLocationString: singlePillLocationStrings) {
-        String[] locationStrings = singlePillLocationString.split(",");
-        itemManager.getPropertyPillLocations().add(new Location(Integer.parseInt(locationStrings[0]), Integer.parseInt(locationStrings[1])));
-      }
-    }
-
-    String goldLocationString = properties.getProperty("Gold.location");
-    if (goldLocationString != null) {
-      String[] singleGoldLocationStrings = goldLocationString.split(";");
-      for (String singleGoldLocationString: singleGoldLocationStrings) {
-        String[] locationStrings = singleGoldLocationString.split(",");
-        itemManager.getPropertyGoldLocations().add(new Location(Integer.parseInt(locationStrings[0]), Integer.parseInt(locationStrings[1])));
-      }
-    }
-  }
-
-  private void setupPillAndItemsLocations() {
-    for (int y = 0; y < nbVertCells; y++)
-    {
-      for (int x = 0; x < nbHorzCells; x++)
-      {
-        Location location = new Location(x, y);
-        int a = grid.getCell(location);
-        if (a == 1 && itemManager.getPropertyPillLocations().size() == 0) {
-          itemManager.getPillAndItemLocations().add(location);
-        }
-        if (a == 3 && itemManager.getPropertyGoldLocations().size() == 0) {
-          itemManager.getPillAndItemLocations().add(location);
-        }
-        if (a == 4) {
-          itemManager.getPillAndItemLocations().add(location);
-        }
-      }
-    }
-
-    if (itemManager.getPropertyPillLocations().size() > 0) {
-      for (Location location : itemManager.getPropertyPillLocations()) {
-        itemManager.getPillAndItemLocations().add(location);
-      }
-    }
-    if (itemManager.getPropertyGoldLocations().size() > 0) {
-      for (Location location : itemManager.getPropertyGoldLocations()) {
-        itemManager.getPillAndItemLocations().add(location);
-      }
-    }
   }
 
   // Getter Methods

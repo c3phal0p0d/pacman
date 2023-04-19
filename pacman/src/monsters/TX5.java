@@ -1,17 +1,16 @@
 package src.monsters;
 
 import ch.aplu.jgamegrid.Location;
-import src.Game;
+import src.LocationVisitedList;
 
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
-public class TX5 extends RandomWalkMonster {
+public class TX5 extends RandomWalkMonster implements LocationVisitedList {
 
-    public TX5 (MonsterManager monsterManager, MonsterType type) {
-        super(monsterManager, type);
+    public ArrayList<Location> visitedList = new ArrayList<Location>();
+
+    public TX5 (MonsterManager monsterManager) {
+        super(monsterManager, MonsterType.TX5);
     }
 
     public void walkApproach() {
@@ -22,26 +21,13 @@ public class TX5 extends RandomWalkMonster {
         Location next = getLocation().getNeighbourLocation(compassDir);
         setDirection(compassDir);
 
-        if (!isVisited(next) && canMove(next)) {
+        if (!isVisited(next, visitedList) && canMove(next)) {
             setLocation(next);
         } else {
             next = randomWalk(oldDirection);
         }
 
-        monsterManager.getGame().getGameCallback().monsterLocationChanged(this);
-        addVisitedList(next);
-    }
-
-    public void stopMoving(int seconds) {
-        this.stopMoving = true;
-        Timer timer = new Timer(); // Instantiate Timer Object
-        int SECOND_TO_MILLISECONDS = 1000;
-        final Monster monster = this;
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                monster.stopMoving = false;
-            }
-        }, seconds * SECOND_TO_MILLISECONDS);
+        monsterManager.game.getGameCallback().monsterLocationChanged(this);
+        addVisitedList(next, visitedList);
     }
 }

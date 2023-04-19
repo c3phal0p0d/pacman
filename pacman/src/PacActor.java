@@ -3,6 +3,7 @@
 package src;
 
 import ch.aplu.jgamegrid.*;
+import src.items.ItemType;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class PacActor extends Actor
+public class PacActor extends Actor implements LocationVisitedList
 {
   private static final int nbSprites = 4;
   private int idSprite = 0;
@@ -99,7 +100,7 @@ public class PacActor extends Actor
             getLocation().get4CompassDirectionTo(closestPill);
     Location next = getLocation().getNeighbourLocation(compassDir);
     setDirection(compassDir);
-    if (!isVisited(next) && canMove(next)) {
+    if (!isVisited(next, visitedList) && canMove(next)) {
       setLocation(next);
     } else {
       // normal movement
@@ -131,22 +132,7 @@ public class PacActor extends Actor
       }
     }
     eatPill(next);
-    addVisitedList(next);
-  }
-
-  private void addVisitedList(Location location)
-  {
-    visitedList.add(location);
-    if (visitedList.size() == listLength)
-      visitedList.remove(0);
-  }
-
-  private boolean isVisited(Location location)
-  {
-    for (Location loc : visitedList)
-      if (loc.equals(location))
-        return true;
-    return false;
+    addVisitedList(next, visitedList);
   }
 
   protected boolean canMove(Location location)
@@ -161,25 +147,65 @@ public class PacActor extends Actor
       return true;
   }
 
+//  protected void eatPill(Location location)
+//  {
+//    Color c = getBackground().getColor(location);
+//    if (c.equals(Color.white))
+//    {
+//      System.out.println("eat pill");
+//
+//      nbPills++;
+//      score++;
+//      getBackground().fillCell(location, Color.lightGray);
+//      game.getGameCallback().pacManEatPillsAndItems(location, "pills");
+//    } else if (c.equals(Color.yellow)) {
+//
+//      System.out.println("eat gold");
+//
+//      nbPills++;
+//      score+= 5;
+//      getBackground().fillCell(location, Color.lightGray);
+//      game.getGameCallback().pacManEatPillsAndItems(location, "gold");
+//      game.getItemManager().removeItem("gold",location);
+//    } else if (c.equals(Color.blue)) {
+//
+//      System.out.println("eat ice");
+//
+//      getBackground().fillCell(location, Color.lightGray);
+//      game.getGameCallback().pacManEatPillsAndItems(location, "ice");
+//      game.getItemManager().removeItem("ice",location);
+//    }
+//    String title = "[PacMan in the Multiverse] Current score: " + score;
+//    gameGrid.setTitle(title);
+//  }
+
   protected void eatPill(Location location)
   {
-    Color c = getBackground().getColor(location);
-    if (c.equals(Color.white))
+    ItemType type = game.getItemManager().getItemByLocation(location);
+    if (type.equals(ItemType.Pill))
     {
+      System.out.println("eat pill");
+
       nbPills++;
       score++;
-      getBackground().fillCell(location, Color.lightGray);
       game.getGameCallback().pacManEatPillsAndItems(location, "pills");
-    } else if (c.equals(Color.yellow)) {
+      game.getItemManager().removeItem(ItemType.Pill, location);
+    } else if (type.equals(ItemType.Gold)) {
+
+      System.out.println("eat gold");
+
       nbPills++;
       score+= 5;
       getBackground().fillCell(location, Color.lightGray);
       game.getGameCallback().pacManEatPillsAndItems(location, "gold");
-      game.getItemManager().removeItem("gold",location);
-    } else if (c.equals(Color.blue)) {
+      game.getItemManager().removeItem(ItemType.Gold, location);
+    } else if (type.equals(ItemType.Ice)) {
+
+      System.out.println("eat ice");
+
       getBackground().fillCell(location, Color.lightGray);
       game.getGameCallback().pacManEatPillsAndItems(location, "ice");
-      game.getItemManager().removeItem("ice",location);
+      game.getItemManager().removeItem(ItemType.Ice, location);
     }
     String title = "[PacMan in the Multiverse] Current score: " + score;
     gameGrid.setTitle(title);

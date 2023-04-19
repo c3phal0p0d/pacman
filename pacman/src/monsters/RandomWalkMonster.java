@@ -5,7 +5,7 @@ import src.Game;
 
 import java.util.Random;
 
-public class RandomWalkMonster extends Monster {
+public abstract class RandomWalkMonster extends Monster {
 
     public RandomWalkMonster(MonsterManager monsterManager, MonsterType type) {
         super(monsterManager, type);
