@@ -15,11 +15,11 @@ import java.util.Properties;
 public class ItemManager {
     private ArrayList<Location> pillAndItemLocations = new ArrayList<Location>();
 
-    private ArrayList<Ice> iceCubes = new ArrayList<Ice>();
+    private ArrayList<Item> iceCubes = new ArrayList<Item>();
 
-    private ArrayList<Gold> goldPieces = new ArrayList<Gold>();
+    private ArrayList<Item> goldPieces = new ArrayList<Item>();
 
-    private ArrayList<Pill> pills = new ArrayList<Pill>();
+    private ArrayList<Item> pills = new ArrayList<Item>();
 
     private ArrayList<Item> itemList = new ArrayList<Item>();
 
@@ -65,46 +65,43 @@ public class ItemManager {
     public void putPill(Location location){
         Pill pill = new Pill(this, location, ItemType.Pill);
         pills.add(pill);
-        itemList.add(pill);
         game.addActor(pill, location);
     }
 
     public void putGold(Location location){
         Gold gold = new Gold(this, location, ItemType.Gold);
         goldPieces.add(gold);
-        itemList.add(gold);
         game.addActor(gold, location);
     }
 
     public void putIce(Location location){
         Ice ice = new Ice(this, location,ItemType.Ice);
         iceCubes.add(ice);
-        itemList.add(ice);
         game.addActor(ice, location);
     }
 
     public void removeItem(ItemType type, Location location){
         if(type.equals(ItemType.Gold)){
-            for (Gold gold : this.goldPieces){
+            for (Item gold : this.goldPieces){
                 if (location.getX() == gold.getLocation().getX() && location.getY() == gold.getLocation().getY()) {
                     gold.hide();
                     if (this.game.getProperties().getProperty("version").equals("multiverse")) {
-                        gold.infuriate();
+                        ((Gold) gold).infuriate();
                         gold.claim();
                     }
                 }
             }
         } else if(type.equals(ItemType.Ice)){
-            for (Ice ice : this.iceCubes){
+            for (Item ice : this.iceCubes){
                 if (location.getX() == ice.getLocation().getX() && location.getY() == ice.getLocation().getY()) {
                     ice.hide();
                     if (this.game.getProperties().getProperty("version").equals("multiverse")) {
-                        ice.freeze();
+                        ((Ice) ice).freeze();
                     }
                 }
             }
         } else if(type.equals(ItemType.Pill)){
-            for (Pill pill : this.pills){
+            for (Item pill : this.pills){
                 if (location.getX() == pill.getLocation().getX() && location.getY() == pill.getLocation().getY()) {
                     pill.hide();
                 }
@@ -175,7 +172,7 @@ public class ItemManager {
         return game;
     }
 
-    public ArrayList<Gold> getGoldPieces() { return this.goldPieces; }
+    public ArrayList<Item> getGoldPieces() { return this.goldPieces; }
 
     public void setMaxPillsAndItems(int maxPillsAndItems){
         this.maxPillsAndItems = maxPillsAndItems;
@@ -190,7 +187,14 @@ public class ItemManager {
     }
 
     public ItemType getItemByLocation(Location location) {
-        for (Item item: itemList) {
+
+        // Check through all items lists to find a match
+        ArrayList<Item> items = new ArrayList<Item>();
+        items.addAll(iceCubes);
+        items.addAll(goldPieces);
+        items.addAll(pills);
+
+        for (Item item: items) {
             if (item.getLocation().equals(location)) {
                 return item.getType();
             }
