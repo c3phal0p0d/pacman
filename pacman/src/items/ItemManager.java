@@ -83,7 +83,7 @@ public class ItemManager {
         game.addActor(ice, location);
     }
 
-    public void removeItem(ItemType type,Location location){
+    public void removeItem(ItemType type, Location location){
         if(type.equals(ItemType.Gold)){
             for (Gold gold : this.goldPieces){
                 if (location.getX() == gold.getLocation().getX() && location.getY() == gold.getLocation().getY()) {

@@ -27,7 +27,7 @@ public class TX5 extends RandomWalkMonster implements LocationVisitedList {
             next = randomWalk(oldDirection);
         }
 
-        monsterManager.game.getGameCallback().monsterLocationChanged(this);
+        monsterManager.getGame().getGameCallback().monsterLocationChanged(this);
         addVisitedList(next, visitedList);
     }
 }

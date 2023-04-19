@@ -12,7 +12,7 @@ public class Alien extends ShortestDistanceMonster {
     }
 
     protected void walkApproach() {
-        Location pacManLocation = monsterManager.game.pacActor.getLocation();
+        Location pacManLocation = monsterManager.getGame().getPacActor().getLocation();
         walkApproach(pacManLocation);
     }
 }
