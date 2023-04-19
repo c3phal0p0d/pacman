@@ -6,11 +6,8 @@ import ch.aplu.jgamegrid.*;
 import src.items.ItemManager;
 import src.monsters.MonsterManager;
 import src.utility.GameCallback;
-import src.monsters.Monster;
-import src.monsters.MonsterType;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Properties;
 
 public class Game extends GameGrid

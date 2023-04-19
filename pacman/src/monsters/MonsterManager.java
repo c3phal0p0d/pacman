@@ -25,7 +25,7 @@ public class MonsterManager {
         // Multiverse exclusive monsters
         String version = properties.getProperty("version");
         if (version.equals("multiverse")) {
-            //createMultiverseMonsters(goldPieces);
+            createMultiverseMonsters(goldPieces);
         }
     }
 
@@ -98,7 +98,6 @@ public class MonsterManager {
 
     // Make all monsters furious for a period of time
     public void makeFurious(int time) {
-        System.out.println("angi time");
         for (Monster m: monsters) {
             m.makeFurious(time);
         }

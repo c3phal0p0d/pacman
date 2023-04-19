@@ -31,7 +31,6 @@ public abstract class Monster extends Actor
     }
 
     if (isFurious) {
-      System.out.println("I am very angi");
       furiousWalkApproach();
     } else {
       walkApproach();
@@ -58,7 +57,6 @@ public abstract class Monster extends Actor
     else {
       walkApproach();
     }
-    System.out.println("Walk twice");
   }
 
   protected abstract void walkApproach();

@@ -77,6 +77,10 @@ public class Orion extends ShortestDistanceMonster {
         2. Unclaimed
      */
     private void sortGoldPieces() {
+
+        claimedList.clear();
+        unclaimedList.clear();
+
         for (Gold gold: toVisitList) {
             if (gold.isClaimed()) {
                 claimedList.add(gold);

@@ -8,14 +8,23 @@ import src.PacManGameGrid;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Properties;
 
 public class ItemManager {
     private ArrayList<Location> pillAndItemLocations = new ArrayList<Location>();
+
     private ArrayList<Ice> iceCubes = new ArrayList<Ice>();
+
     private ArrayList<Gold> goldPieces = new ArrayList<Gold>();
 
+    private ArrayList<Pill> pills = new ArrayList<Pill>();
+
+    private ArrayList<Item> itemList = new ArrayList<Item>();
+
     private ArrayList<Location> propertyPillLocations = new ArrayList<>();
+
     private ArrayList<Location> propertyGoldLocations = new ArrayList<>();
 
     private Game game;
@@ -53,28 +62,29 @@ public class ItemManager {
     }
 
     // Item Methods
-    public void putPill(GGBackground bg, Location location){
-        bg.fillCircle(game.toPoint(location), 5);
+    public void putPill(Location location){
+        Pill pill = new Pill(this, location, ItemType.Pill);
+        pills.add(pill);
+        itemList.add(pill);
+        game.addActor(pill, location);
     }
 
-    public void putGold(GGBackground bg, Location location){
-        bg.setPaintColor(Color.yellow);
-        bg.fillCircle(game.toPoint(location), 5);
-        Gold gold = new Gold(this, location, "sprites/gold.png", Color.yellow);
-        this.goldPieces.add(gold);
+    public void putGold(Location location){
+        Gold gold = new Gold(this, location, ItemType.Gold);
+        goldPieces.add(gold);
+        itemList.add(gold);
         game.addActor(gold, location);
     }
 
-    public void putIce(GGBackground bg, Location location){
-        bg.setPaintColor(Color.blue);
-        bg.fillCircle(game.toPoint(location), 5);
-        Ice ice = new Ice(this, location,"sprites/ice.png", Color.blue);
-        this.iceCubes.add(ice);
+    public void putIce(Location location){
+        Ice ice = new Ice(this, location,ItemType.Ice);
+        iceCubes.add(ice);
+        itemList.add(ice);
         game.addActor(ice, location);
     }
 
-    public void removeItem(String type,Location location){
-        if(type.equals("gold")){
+    public void removeItem(ItemType type,Location location){
+        if(type.equals(ItemType.Gold)){
             for (Gold gold : this.goldPieces){
                 if (location.getX() == gold.getLocation().getX() && location.getY() == gold.getLocation().getY()) {
                     gold.hide();
@@ -84,13 +94,19 @@ public class ItemManager {
                     }
                 }
             }
-        } else if(type.equals("ice")){
+        } else if(type.equals(ItemType.Ice)){
             for (Ice ice : this.iceCubes){
                 if (location.getX() == ice.getLocation().getX() && location.getY() == ice.getLocation().getY()) {
                     ice.hide();
                     if (this.game.getProperties().getProperty("version").equals("multiverse")) {
                         ice.freeze();
                     }
+                }
+            }
+        } else if(type.equals(ItemType.Pill)){
+            for (Pill pill : this.pills){
+                if (location.getX() == pill.getLocation().getX() && location.getY() == pill.getLocation().getY()) {
+                    pill.hide();
                 }
             }
         }
@@ -173,4 +189,12 @@ public class ItemManager {
         return propertyGoldLocations;
     }
 
+    public ItemType getItemByLocation(Location location) {
+        for (Item item: itemList) {
+            if (item.getLocation().equals(location)) {
+                return item.getType();
+            }
+        }
+        return null;
+    }
 }

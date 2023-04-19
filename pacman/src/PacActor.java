@@ -3,6 +3,7 @@
 package src;
 
 import ch.aplu.jgamegrid.*;
+import src.items.ItemType;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -146,25 +147,65 @@ public class PacActor extends Actor implements LocationVisitedList
       return true;
   }
 
+//  protected void eatPill(Location location)
+//  {
+//    Color c = getBackground().getColor(location);
+//    if (c.equals(Color.white))
+//    {
+//      System.out.println("eat pill");
+//
+//      nbPills++;
+//      score++;
+//      getBackground().fillCell(location, Color.lightGray);
+//      game.getGameCallback().pacManEatPillsAndItems(location, "pills");
+//    } else if (c.equals(Color.yellow)) {
+//
+//      System.out.println("eat gold");
+//
+//      nbPills++;
+//      score+= 5;
+//      getBackground().fillCell(location, Color.lightGray);
+//      game.getGameCallback().pacManEatPillsAndItems(location, "gold");
+//      game.getItemManager().removeItem("gold",location);
+//    } else if (c.equals(Color.blue)) {
+//
+//      System.out.println("eat ice");
+//
+//      getBackground().fillCell(location, Color.lightGray);
+//      game.getGameCallback().pacManEatPillsAndItems(location, "ice");
+//      game.getItemManager().removeItem("ice",location);
+//    }
+//    String title = "[PacMan in the Multiverse] Current score: " + score;
+//    gameGrid.setTitle(title);
+//  }
+
   protected void eatPill(Location location)
   {
-    Color c = getBackground().getColor(location);
-    if (c.equals(Color.white))
+    ItemType type = game.getItemManager().getItemByLocation(location);
+    if (type.equals(ItemType.Pill))
     {
+      System.out.println("eat pill");
+
       nbPills++;
       score++;
-      getBackground().fillCell(location, Color.lightGray);
       game.getGameCallback().pacManEatPillsAndItems(location, "pills");
-    } else if (c.equals(Color.yellow)) {
+      game.getItemManager().removeItem(ItemType.Pill, location);
+    } else if (type.equals(ItemType.Gold)) {
+
+      System.out.println("eat gold");
+
       nbPills++;
       score+= 5;
       getBackground().fillCell(location, Color.lightGray);
       game.getGameCallback().pacManEatPillsAndItems(location, "gold");
-      game.getItemManager().removeItem("gold",location);
-    } else if (c.equals(Color.blue)) {
+      game.getItemManager().removeItem(ItemType.Gold, location);
+    } else if (type.equals(ItemType.Ice)) {
+
+      System.out.println("eat ice");
+
       getBackground().fillCell(location, Color.lightGray);
       game.getGameCallback().pacManEatPillsAndItems(location, "ice");
-      game.getItemManager().removeItem("ice",location);
+      game.getItemManager().removeItem(ItemType.Ice, location);
     }
     String title = "[PacMan in the Multiverse] Current score: " + score;
     gameGrid.setTitle(title);
