@@ -2,9 +2,6 @@ package src.items;
 
 import ch.aplu.jgamegrid.Actor;
 import ch.aplu.jgamegrid.Location;
-import src.PacActor;
-
-import java.awt.*;
 
 public class Item extends Actor {
 

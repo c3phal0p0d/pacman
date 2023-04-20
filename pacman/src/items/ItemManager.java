@@ -1,16 +1,10 @@
 package src.items;
 
-import ch.aplu.jgamegrid.Actor;
-import ch.aplu.jgamegrid.GGBackground;
 import ch.aplu.jgamegrid.Location;
 import src.Game;
 import src.PacManGameGrid;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Properties;
 
 public class ItemManager {
 

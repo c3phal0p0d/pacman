@@ -2,13 +2,14 @@ package src.monsters;
 
 import ch.aplu.jgamegrid.Location;
 import src.Game;
+import src.utility.GameCallback;
 
 import java.util.Random;
 
 public abstract class RandomWalkMonster extends Monster {
 
-    public RandomWalkMonster(MonsterManager monsterManager, MonsterType type) {
-        super(monsterManager, type);
+    public RandomWalkMonster(GameCallback gameCallback, MonsterType type, int numHorzCells, int numVertCells) {
+        super(gameCallback, type, numHorzCells, numVertCells);
     }
 
     protected Location randomWalk(double oldDirection) {
@@ -54,6 +55,6 @@ public abstract class RandomWalkMonster extends Monster {
     {
         double oldDirection = getDirection();
         randomWalk(oldDirection);
-        monsterManager.getGame().getGameCallback().monsterLocationChanged(this);
+        gameCallback.monsterLocationChanged(this);
     }
 }

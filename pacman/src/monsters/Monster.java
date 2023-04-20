@@ -7,21 +7,30 @@ import java.awt.Color;
 import java.io.Console;
 import java.util.*;
 import src.Game;
+import src.utility.GameCallback;
 
 public abstract class Monster extends Actor
 {
-  protected MonsterManager monsterManager;
-
   protected MonsterType type;
+
   private boolean stopMoving = false;
+
   protected Random randomiser = new Random(0);
+
+  protected GameCallback gameCallback;
   private boolean isFurious = false;
 
-  public Monster(MonsterManager monsterManager, MonsterType type)
+  protected int numHorzCells;
+
+  protected int numVertCells;
+
+  public Monster(GameCallback gameCallback, MonsterType type, int numHorzCells, int numVertCells)
   {
     super("sprites/" + type.getImageName());
-    this.monsterManager = monsterManager;
     this.type = type;
+    this.gameCallback = gameCallback;
+    this.numHorzCells = numHorzCells;
+    this.numVertCells = numVertCells;
   }
 
   // This method is called upon every cycle of the jgamegrid simulation loop
@@ -69,8 +78,8 @@ public abstract class Monster extends Actor
   protected boolean canMove(Location location)
   {
     Color c = getBackground().getColor(location);
-    return !c.equals(Color.gray) && location.getX() < monsterManager.getGame().getNumHorzCells()
-            && location.getX() >= 0 && location.getY() < monsterManager.getGame().getNumVertCells()
+    return !c.equals(Color.gray) && location.getX() < numHorzCells
+            && location.getX() >= 0 && location.getY() < numVertCells
             && location.getY() >= 0;
   }
 
