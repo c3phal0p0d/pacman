@@ -8,7 +8,7 @@ import java.util.Properties;
 public class Driver {
 
     /* This is the class responsible for running the game */
-    public static final String DEFAULT_PROPERTIES_PATH = "pacman/properties/mytest.properties";
+    public static final String DEFAULT_PROPERTIES_PATH = "pacman/properties/test5.properties";
 
     /**
      * Starting point

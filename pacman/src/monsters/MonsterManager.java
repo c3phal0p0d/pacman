@@ -6,6 +6,7 @@ import src.*;
 import src.Game;
 import src.items.Item;
 import src.items.ItemManager;
+import src.utility.GameCallback;
 
 import java.util.ArrayList;
 import java.util.Properties;
@@ -120,16 +121,18 @@ public class MonsterManager {
     }
 
     // Freeze all monsters for a period of time
-    public void freezeMonsters(int time) {
+    public void freezeMonsters() {
+        int FREEZE_TIME_INTERVAL = 3;
         for (Monster m: monsters) {
-            m.stopMoving(time);
+            m.stopMoving(FREEZE_TIME_INTERVAL);
         }
     }
 
     // Make all monsters furious for a period of time
-    public void makeFurious(int time) {
+    public void makeFurious() {
+        int FURIOUS_TIME_INTERVAL = 3;
         for (Monster m: monsters) {
-            m.makeFurious(time);
+            m.makeFurious(FURIOUS_TIME_INTERVAL);
         }
     }
 
@@ -154,7 +157,10 @@ public class MonsterManager {
         return false;
     }
 
-    public boolean hasEatenAllPills() { return pacActor.getNbPills() >= itemManager.getMaxPillsAndItems(); }
+    public boolean hasEatenAllPills() {
+        System.out.println(pacActor.getNbPills() + " " + itemManager.getMaxPillsAndItems());
+        return pacActor.getNbPills() >= itemManager.getMaxPillsAndItems();
+    }
 
     public Location getPacActorLocation() {
         return pacActor.getLocation();
@@ -162,5 +168,9 @@ public class MonsterManager {
 
     public void removePacActor() {
         pacActor.removeSelf();
+    }
+
+    public ItemManager getItemManager() {
+        return itemManager;
     }
 }

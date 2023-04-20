@@ -111,4 +111,8 @@ public class Game extends GameGrid
   public ItemManager getItemManager(){
     return itemManager;
   }
+
+  public MonsterManager getMonsterManager() {
+    return monsterManager;
+  }
 }

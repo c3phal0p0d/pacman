@@ -21,7 +21,7 @@ public class ItemManager {
     /**
      * INSTANTIATES an instance of 'ItemManager'.
      */
-    public ItemManager() {}
+    public ItemManager() { }
 
     /**
      * CALCULATES the number of pill & gold items on the boards.
@@ -108,6 +108,7 @@ public class ItemManager {
                 if (location.getX() == gold.getLocation().getX() && location.getY() == gold.getLocation().getY()) {
                     gold.hide();
                     gold.claim();
+                    return;
                 }
             }
         // CASE B: Removing an ICE item
@@ -115,6 +116,8 @@ public class ItemManager {
             for (Item ice : this.iceCubes){
                 if (location.getX() == ice.getLocation().getX() && location.getY() == ice.getLocation().getY()) {
                     ice.hide();
+                    ice.claim();
+                    return;
                 }
             }
         // CASE C: Removing a PILL
@@ -122,6 +125,8 @@ public class ItemManager {
             for (Item pill : this.pills){
                 if (location.getX() == pill.getLocation().getX() && location.getY() == pill.getLocation().getY()) {
                     pill.hide();
+                    pill.claim();
+                    return;
                 }
             }
         }
@@ -203,7 +208,7 @@ public class ItemManager {
     public ArrayList<Location> getPropertyPillLocations() { return propertyPillLocations; }
     public ArrayList<Location> getPropertyGoldLocations() { return propertyGoldLocations; }
 
-    public ItemType getItemByLocation(Location location) {
+    public Item getItemByLocation(Location location) {
 
         // STEP 1: Check through all items lists to find a match
         ArrayList<Item> items = new ArrayList<Item>();
@@ -216,7 +221,7 @@ public class ItemManager {
 
             // CASE 3A: The item was found
             if (item.getLocation().equals(location)) {
-                return item.getType();
+                return item;
             }
         }
         // CASE 3B: No item found

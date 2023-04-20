@@ -3,7 +3,10 @@
 package src;
 
 import ch.aplu.jgamegrid.*;
+import src.items.Item;
 import src.items.ItemType;
+import src.monsters.MonsterManager;
+import src.utility.GameCallback;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -17,7 +20,6 @@ public class PacActor extends Actor implements LocationVisitedList
   private int idSprite = 0;
   private int nbPills = 0;
   private int score = 0;
-  private Game game;
   private ArrayList<Location> visitedList = new ArrayList<Location>();
   private List<String> propertyMoves = new ArrayList<>();
   private int propertyMoveIndex = 0;
@@ -25,10 +27,25 @@ public class PacActor extends Actor implements LocationVisitedList
   private Random randomiser = new Random();
   private PlayerController playerController;
 
+  private String version;
+
+  private MonsterManager monsterManager;
+
+  private GameCallback gameCallback;
+
+  private int numHorzCells;
+  private int numVertCells;
+
+
+
   public PacActor(Game game)
   {
     super(true, "sprites/pacpix.gif", nbSprites);  // Rotatable
-    this.game = game;
+    this.version = game.getProperties().getProperty("version");
+    this.gameCallback = game.getGameCallback();
+    this.numHorzCells = game.getNumHorzCells();
+    this.numVertCells = game.getNumVertCells();
+    this.monsterManager = game.getMonsterManager();
     this.playerController = new PlayerController(this);
 
     // Setup PacActor
@@ -49,13 +66,13 @@ public class PacActor extends Actor implements LocationVisitedList
     if (isAuto) {
       moveInAutoMode();
     }
-    this.game.getGameCallback().pacManLocationChanged(getLocation(), score, nbPills);
+    gameCallback.pacManLocationChanged(getLocation(), score, nbPills);
   }
 
   private Location closestPillLocation() {
     int currentDistance = 1000;
     Location currentLocation = null;
-    List<Location> pillAndItemLocations = game.getItemManager().getPillAndItemLocations();
+    List<Location> pillAndItemLocations = monsterManager.getItemManager().getPillAndItemLocations();
     for (Location location: pillAndItemLocations) {
       int distanceToPill = location.getDistanceTo(getLocation());
       if (distanceToPill < currentDistance) {
@@ -138,8 +155,8 @@ public class PacActor extends Actor implements LocationVisitedList
   {
     // Checks if the player can traverse to the given tile.
     Color c = getBackground().getColor(location);
-    if ( c.equals(Color.gray) || location.getX() >= game.getNumHorzCells()
-            || location.getX() < 0 || location.getY() >= game.getNumVertCells() || location.getY() < 0)
+    if ( c.equals(Color.gray) || location.getX() >= numHorzCells
+            || location.getX() < 0 || location.getY() >= numVertCells || location.getY() < 0)
       // Tile is grey or is outside the board
       return false;
     else
@@ -148,32 +165,44 @@ public class PacActor extends Actor implements LocationVisitedList
 
   protected void eatPill(Location location)
   {
-    ItemType type = game.getItemManager().getItemByLocation(location);
-    if (type.equals(ItemType.Pill))
-    {
-      System.out.println("eat pill");
+    Item item = monsterManager.getItemManager().getItemByLocation(location);
+    if(item != null) {
+      if(item.isClaimed()) {
+        return;
+      }
 
-      nbPills++;
-      score++;
-      game.getGameCallback().pacManEatPillsAndItems(location, "pills");
-      game.getItemManager().removeItem(ItemType.Pill, location);
-    } else if (type.equals(ItemType.Gold)) {
+      ItemType type = item.getType();
 
-      System.out.println("eat gold");
+      if (type.equals(ItemType.Pill))
+      {
+        System.out.println("eat pill");
 
-      nbPills++;
-      score+= 5;
-      getBackground().fillCell(location, Color.lightGray);
-      game.getGameCallback().pacManEatPillsAndItems(location, "gold");
-      game.getItemManager().removeItem(ItemType.Gold, location);
-    } else if (type.equals(ItemType.Ice)) {
+        nbPills++;
+        score++;
+        gameCallback.pacManEatPillsAndItems(location, "pills");
+        game.getItemManager().removeItem(ItemType.Pill, location);
+      } else if (type.equals(ItemType.Gold)) {
 
-      System.out.println("eat ice");
+        System.out.println("eat gold");
 
-      getBackground().fillCell(location, Color.lightGray);
-      game.getGameCallback().pacManEatPillsAndItems(location, "ice");
-      game.getItemManager().removeItem(ItemType.Ice, location);
+        nbPills++;
+        score+= 5;
+        getBackground().fillCell(location, Color.lightGray);
+        gameCallback.pacManEatPillsAndItems(location, "gold");
+        game.getItemManager().removeItem(ItemType.Gold, location);
+        if(version.equals("multiverse")) {
+          monsterManager.makeFurious();
+        }
+      } else if (type.equals(ItemType.Ice)) {
+
+        System.out.println("eat ice");
+
+        getBackground().fillCell(location, Color.lightGray);
+        gameCallback.pacManEatPillsAndItems(location, "ice");
+        game.getItemManager().removeItem(ItemType.Ice, location);
+      }
     }
+
     String title = "[PacMan in the Multiverse] Current score: " + score;
     gameGrid.setTitle(title);
   }
