@@ -16,7 +16,6 @@ public class Game extends GameGrid
   private final static int nbVertCells = 11;
   private PacManGameGrid grid;
 
-  private PacActor pacActor;
   private MonsterManager monsterManager;
   private ItemManager itemManager;
 
@@ -37,12 +36,9 @@ public class Game extends GameGrid
     // Setup Components
     itemManager = new ItemManager(this);
     grid = new PacManGameGrid(this, nbHorzCells, nbVertCells);
-    pacActor = new PacActor(this);
     itemManager.setMaxPillsAndItems(itemManager.countPillsAndItems());
 
     //Setup for auto test
-    pacActor.setPropertyMoves(properties.getProperty("PacMan.move")); // can be moved
-    pacActor.setAuto(Boolean.parseBoolean(properties.getProperty("PacMan.isAuto"))); // can be moved
     itemManager.loadPillAndItemsLocations();
 
     // Draw grid
@@ -54,12 +50,9 @@ public class Game extends GameGrid
 
     //Setup Random seeds
     seed = Integer.parseInt(properties.getProperty("seed"));
-    pacActor.setSeed(seed); // can be moved
     monsterManager.setSeed(seed);
-    addKeyRepeatListener(pacActor.getPlayerController()); // can be moved
     setKeyRepeatPeriod(150);
     monsterManager.setSlowDown(3);
-    pacActor.setSlowDown(3); // can be moved
 
     //Run the game
     doRun();
@@ -69,17 +62,20 @@ public class Game extends GameGrid
     // This makes it improbable that we miss a hit
     boolean hasPacmanBeenHit;
     boolean hasPacmanEatAllPills;
+
     itemManager.setupPillAndItemsLocations();
     do {
-      hasPacmanBeenHit = monsterManager.hasThereBeenACollision(pacActor); // can be moved
-      hasPacmanEatAllPills = pacActor.getNbPills() >= itemManager.getMaxPillsAndItems(); // can be moved
+
+
+      hasPacmanBeenHit = monsterManager.hasThereBeenACollision();
+      hasPacmanEatAllPills = monsterManager.hasEatenAllPills();
       delay(10);
     } while(!hasPacmanBeenHit && !hasPacmanEatAllPills);
     delay(120);
 
-    Location loc = pacActor.getLocation(); // can be moved
+    Location loc = monsterManager.getPacActorLocation();
     monsterManager.stopMonsters();
-    pacActor.removeSelf(); // can be moved
+    monsterManager.removePacActor();
 
     String title = "";
     if (hasPacmanBeenHit) {
@@ -110,10 +106,6 @@ public class Game extends GameGrid
 
   public PacManGameGrid getGrid() {
     return grid;
-  }
-
-  public PacActor getPacActor() {
-    return pacActor;
   }
   
   public ItemManager getItemManager(){

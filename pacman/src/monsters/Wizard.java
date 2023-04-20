@@ -2,19 +2,15 @@ package src.monsters;
 
 import ch.aplu.jgamegrid.Location;
 import src.Game;
+import src.utility.GameCallback;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Wizard extends RandomWalkMonster {
 
-    private int horzLimit;
-    private int vertLimit;
-
-    public Wizard(MonsterManager monsterManager) {
-        super(monsterManager, MonsterType.Wizard);
-        this.horzLimit = monsterManager.getGame().getNumHorzCells();
-        this.vertLimit = monsterManager.getGame().getNumVertCells();
+    public Wizard(GameCallback gameCallback, int numHorzCells, int numVertCells) {
+        super(gameCallback, MonsterType.Wizard, numHorzCells, numVertCells);
     }
 
     /*
@@ -81,8 +77,8 @@ public class Wizard extends RandomWalkMonster {
 
     private boolean insideBorder(Location location) {
         // Location is outside the grid border
-        return location.getX() < horzLimit && location.getX() >= 0 &&
-                location.getY() < vertLimit && location.getY() >= 0;
+        return location.getX() < numHorzCells && location.getX() >= 0 &&
+                location.getY() < numVertCells && location.getY() >= 0;
     }
 
     private Location calcAdjacentLocation(Location next, Location.CompassDirection compassDir) {

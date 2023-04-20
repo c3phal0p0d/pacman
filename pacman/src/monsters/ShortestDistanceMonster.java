@@ -1,13 +1,14 @@
 package src.monsters;
 
 import ch.aplu.jgamegrid.Location;
+import src.utility.GameCallback;
 
 import java.util.ArrayList;
 
 public abstract class ShortestDistanceMonster extends Monster {
 
-    public ShortestDistanceMonster(MonsterManager monsterManager, MonsterType type) {
-        super(monsterManager, type);
+    public ShortestDistanceMonster(GameCallback gameCallback, MonsterType type, int numHorzCells, int numVertCells) {
+        super(gameCallback, type, numHorzCells, numVertCells);
     }
 
     private record LocationDistance(Location location, int distance) {}

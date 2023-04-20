@@ -21,7 +21,6 @@ public class PacActor extends Actor implements LocationVisitedList
   private ArrayList<Location> visitedList = new ArrayList<Location>();
   private List<String> propertyMoves = new ArrayList<>();
   private int propertyMoveIndex = 0;
-  private final int listLength = 10;
   private int seed;
   private Random randomiser = new Random();
   private PlayerController playerController;
@@ -146,38 +145,6 @@ public class PacActor extends Actor implements LocationVisitedList
     else
       return true;
   }
-
-//  protected void eatPill(Location location)
-//  {
-//    Color c = getBackground().getColor(location);
-//    if (c.equals(Color.white))
-//    {
-//      System.out.println("eat pill");
-//
-//      nbPills++;
-//      score++;
-//      getBackground().fillCell(location, Color.lightGray);
-//      game.getGameCallback().pacManEatPillsAndItems(location, "pills");
-//    } else if (c.equals(Color.yellow)) {
-//
-//      System.out.println("eat gold");
-//
-//      nbPills++;
-//      score+= 5;
-//      getBackground().fillCell(location, Color.lightGray);
-//      game.getGameCallback().pacManEatPillsAndItems(location, "gold");
-//      game.getItemManager().removeItem("gold",location);
-//    } else if (c.equals(Color.blue)) {
-//
-//      System.out.println("eat ice");
-//
-//      getBackground().fillCell(location, Color.lightGray);
-//      game.getGameCallback().pacManEatPillsAndItems(location, "ice");
-//      game.getItemManager().removeItem("ice",location);
-//    }
-//    String title = "[PacMan in the Multiverse] Current score: " + score;
-//    gameGrid.setTitle(title);
-//  }
 
   protected void eatPill(Location location)
   {

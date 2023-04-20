@@ -5,6 +5,7 @@ import src.Game;
 
 import java.util.ArrayList;
 import src.items.Item;
+import src.utility.GameCallback;
 
 public class Orion extends ShortestDistanceMonster {
 
@@ -16,8 +17,8 @@ public class Orion extends ShortestDistanceMonster {
     private ArrayList<Item> unclaimedList = new ArrayList<Item>();
     private Item currentTarget = null; // Stores current gold piece that Orion is going towards
 
-    public Orion(MonsterManager monsterManager, ArrayList<Item> goldList) {
-        super(monsterManager, MonsterType.Orion);
+    public Orion(GameCallback gameCallback, int numHorzCells, int numVertCells, ArrayList<Item> goldList) {
+        super(gameCallback, MonsterType.Orion, numHorzCells, numVertCells);
         this.goldList = goldList;
     }
 
