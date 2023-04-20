@@ -4,6 +4,7 @@ package src;
 
 import ch.aplu.jgamegrid.*;
 import src.items.Item;
+import src.items.ItemManager;
 import src.items.ItemType;
 import src.monsters.MonsterManager;
 import src.utility.GameCallback;
@@ -26,13 +27,10 @@ public class PacActor extends Actor implements LocationVisitedList
   private int seed;
   private Random randomiser = new Random();
   private PlayerController playerController;
-
   private String version;
-
   private MonsterManager monsterManager;
-
+  private ItemManager itemManager;
   private GameCallback gameCallback;
-
   private int numHorzCells;
   private int numVertCells;
 
@@ -46,6 +44,7 @@ public class PacActor extends Actor implements LocationVisitedList
     this.numHorzCells = game.getNumHorzCells();
     this.numVertCells = game.getNumVertCells();
     this.monsterManager = game.getMonsterManager();
+    this.itemManager = game.getItemManager();
     this.playerController = new PlayerController(this);
 
     // Setup PacActor
@@ -72,7 +71,7 @@ public class PacActor extends Actor implements LocationVisitedList
   private Location closestPillLocation() {
     int currentDistance = 1000;
     Location currentLocation = null;
-    List<Location> pillAndItemLocations = monsterManager.getItemManager().getPillAndItemLocations();
+    List<Location> pillAndItemLocations = itemManager.getPillAndItemLocations();
     for (Location location: pillAndItemLocations) {
       int distanceToPill = location.getDistanceTo(getLocation());
       if (distanceToPill < currentDistance) {
@@ -165,7 +164,7 @@ public class PacActor extends Actor implements LocationVisitedList
 
   protected void eatPill(Location location)
   {
-    Item item = monsterManager.getItemManager().getItemByLocation(location);
+    Item item = itemManager.getItemByLocation(location);
     if(item != null) {
       if(item.isClaimed()) {
         return;
@@ -180,7 +179,7 @@ public class PacActor extends Actor implements LocationVisitedList
         nbPills++;
         score++;
         gameCallback.pacManEatPillsAndItems(location, "pills");
-        game.getItemManager().removeItem(ItemType.Pill, location);
+        itemManager.removeItem(ItemType.Pill, location);
       } else if (type.equals(ItemType.Gold)) {
 
         System.out.println("eat gold");
@@ -189,7 +188,7 @@ public class PacActor extends Actor implements LocationVisitedList
         score+= 5;
         getBackground().fillCell(location, Color.lightGray);
         gameCallback.pacManEatPillsAndItems(location, "gold");
-        game.getItemManager().removeItem(ItemType.Gold, location);
+        itemManager.removeItem(ItemType.Gold, location);
         if(version.equals("multiverse")) {
           monsterManager.makeFurious();
         }
@@ -199,7 +198,7 @@ public class PacActor extends Actor implements LocationVisitedList
 
         getBackground().fillCell(location, Color.lightGray);
         gameCallback.pacManEatPillsAndItems(location, "ice");
-        game.getItemManager().removeItem(ItemType.Ice, location);
+        itemManager.removeItem(ItemType.Ice, location);
       }
     }
 
