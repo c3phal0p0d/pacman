@@ -5,6 +5,10 @@ public enum ItemType {
     Ice,
     Pill;
 
+    /**
+     * EXTRACTS the filepath of the item's sprite.
+     * @return the item sprite filepath
+     */
     public String getImageName() {
         switch (this) {
             case Gold: return "sprites/gold.png";

@@ -6,20 +6,19 @@ import src.PacActor;
 
 import java.awt.*;
 
-public abstract class Item extends Actor {
+public class Item extends Actor {
 
+    // ATTRIBUTES:
     private Location location;
-
     private ItemType type;
-
     protected ItemManager itemManager;
-
     private boolean claimed;
 
     /**
-     * Instantiates a new 'Item'
-     * @param location the location of the item on the board
-     * @param imageName the filename of the item's sprite
+     * INSTANTIATES an instance of 'Item'.
+     * @param itemManager   The manager responsible for item creation, placement & removal
+     * @param location      The coordinates of the item on the grid
+     * @param type          The enumeration the item is (i.e. Pill, Gold or Ice)
      */
     public Item(ItemManager itemManager, Location location, ItemType type) {
         super(type.getImageName());
@@ -28,14 +27,9 @@ public abstract class Item extends Actor {
         this.type = type;
     }
 
-    // Getter and Setter Methods:
+    // GETTER & SETTER methods:
     public Location getLocation() { return this.location; }
-
-    //public void setLocation(Location newLocation) { this.location = newLocation; }
-
     protected void claim() { this.claimed = true; };
-
-    public boolean isClaimed() { return this.claimed; }
-
+    public boolean isClaimed() { return this.claimed; }\
     public ItemType getType() { return this.type; }
 }
