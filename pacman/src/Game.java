@@ -34,16 +34,16 @@ public class Game extends GameGrid
     setTitle("[PacMan in the Multiverse]");
 
     // Setup Components
-    itemManager = new ItemManager(this);
-    grid = new PacManGameGrid(this, nbHorzCells, nbVertCells);
-    itemManager.setMaxPillsAndItems(itemManager.countPillsAndItems());
+    itemManager = new ItemManager();
+    grid = new PacManGameGrid(nbHorzCells, nbVertCells);
+    itemManager.setMaxPillsAndItems(itemManager.countPillsAndItems(this));
 
     //Setup for auto test
-    itemManager.loadPillAndItemsLocations();
+    itemManager.loadPillAndItemsLocations(properties);
 
     // Draw grid
     GGBackground bg = getBg();
-    grid.drawGrid(bg);
+    grid.drawGrid(this, bg);
     
     // Setup Components
     monsterManager = new MonsterManager(this, itemManager);
@@ -63,7 +63,7 @@ public class Game extends GameGrid
     boolean hasPacmanBeenHit;
     boolean hasPacmanEatAllPills;
 
-    itemManager.setupPillAndItemsLocations();
+    itemManager.setupPillAndItemsLocations(this);
     do {
 
 

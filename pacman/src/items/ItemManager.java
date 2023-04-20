@@ -5,6 +5,7 @@ import src.Game;
 import src.PacManGameGrid;
 
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class ItemManager {
 
@@ -20,8 +21,7 @@ public class ItemManager {
     /**
      * INSTANTIATES an instance of 'ItemManager'.
      */
-    public ItemManager() {
-    }
+    public ItemManager() {}
 
     /**
      * CALCULATES the number of pill & gold items on the boards.
@@ -97,20 +97,17 @@ public class ItemManager {
 
     /**
      * REMOVES an item from the board after it has been consumed by an instance of 'PacActor'
-     * @param property  The custom configuration & settings of the game
      * @param type      The 'ItemType' enumeration of the item to be removed
      * @param location  The location of the item to be removed
      */
-    public void removeItem(Properties property, ItemType type, Location location){
+    public void removeItem(ItemType type, Location location){
 
         // CASE A: Removing a GOLD item
         if (type.equals(ItemType.Gold)){
             for (Item gold : this.goldPieces){
                 if (location.getX() == gold.getLocation().getX() && location.getY() == gold.getLocation().getY()) {
                     gold.hide();
-                    if (property.getProperty("version").equals("multiverse")) {
-                        gold.claim();
-                    }
+                    gold.claim();
                 }
             }
         // CASE B: Removing an ICE item
@@ -132,12 +129,12 @@ public class ItemManager {
 
     /**
      * READS the pill & gold locations given to the 'Game' class.
-     * @param game  An instance of the 'Game' class to read properties from
+     * @param properties  The properties to be read from
      */
-    public void loadPillAndItemsLocations(Game game) {
+    public void loadPillAndItemsLocations(Properties properties) {
 
         // STEP 1: Read the pills into 'propertyPillLocations'
-        String pillsLocationString = game.getProperties().getProperty("Pills.location");
+        String pillsLocationString = properties.getProperty("Pills.location");
         if (pillsLocationString != null) {
             String[] singlePillLocationStrings = pillsLocationString.split(";");
             for (String singlePillLocationString: singlePillLocationStrings) {
@@ -147,7 +144,7 @@ public class ItemManager {
             }
         }
         // STEP 2: Read the pills into 'propertyGoldLocations'
-        String goldLocationString = game.getProperties().getProperty("Gold.location");
+        String goldLocationString = properties.getProperty("Gold.location");
         if (goldLocationString != null) {
             String[] singleGoldLocationStrings = goldLocationString.split(";");
             for (String singleGoldLocationString: singleGoldLocationStrings) {

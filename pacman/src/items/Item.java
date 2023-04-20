@@ -27,6 +27,6 @@ public class Item extends Actor {
     // GETTER & SETTER methods:
     public Location getLocation() { return this.location; }
     protected void claim() { this.claimed = true; };
-    public boolean isClaimed() { return this.claimed; }\
+    public boolean isClaimed() { return this.claimed; }
     public ItemType getType() { return this.type; }
 }
