@@ -6,7 +6,6 @@ import src.*;
 import src.Game;
 import src.items.Item;
 import src.items.ItemManager;
-import src.utility.GameCallback;
 
 import java.util.ArrayList;
 import java.util.Properties;
@@ -27,8 +26,6 @@ public class MonsterManager {
         this.properties = game.getProperties();
         this.itemManager = itemManager;
 
-        createPacActor(game);
-
         // Simple version
         createTroll(game);
         createTX5(game);
@@ -38,11 +35,11 @@ public class MonsterManager {
         if (version.equals("multiverse")) {
             createWizard(game);
             createOrion(game);
-            createAlien(game);
+            //createAlien(game);
         }
     }
 
-    private void createPacActor(Game game) {
+    public void createPacActor(Game game) {
         pacActor = new PacActor(game);
 
         //Setup for auto test

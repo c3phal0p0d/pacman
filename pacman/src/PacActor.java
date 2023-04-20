@@ -199,6 +199,9 @@ public class PacActor extends Actor implements LocationVisitedList
         getBackground().fillCell(location, Color.lightGray);
         gameCallback.pacManEatPillsAndItems(location, "ice");
         itemManager.removeItem(ItemType.Ice, location);
+        if(version.equals("multiverse")) {
+          monsterManager.freezeMonsters();
+        }
       }
     }
 

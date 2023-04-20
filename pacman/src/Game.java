@@ -44,9 +44,10 @@ public class Game extends GameGrid
     // Draw grid
     GGBackground bg = getBg();
     grid.drawGrid(this, bg);
-    
+
     // Setup Components
     monsterManager = new MonsterManager(this, itemManager);
+    monsterManager.createPacActor(this);
 
     //Setup Random seeds
     seed = Integer.parseInt(properties.getProperty("seed"));
