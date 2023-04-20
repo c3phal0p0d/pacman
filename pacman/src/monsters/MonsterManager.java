@@ -3,37 +3,43 @@ package src.monsters;
 import ch.aplu.jgamegrid.*;
 
 import src.*;
-import src.items.Gold;
+import src.Game;
 import src.items.Item;
+import src.items.ItemManager;
 
 import java.util.ArrayList;
 import java.util.Properties;
 
 public class MonsterManager {
 
-    private Game game;
-
     private Properties properties;
 
     private ArrayList<Monster> monsters = new ArrayList<Monster>();
 
+    private ItemManager itemManager;
+
+    private PacActor pacActor;
+
     // Creating an instance of monster manager creates all the monsters of the game along with it.
-    public MonsterManager(Game game, Properties properties, ArrayList<Item> goldPieces) {
+    public MonsterManager(Game game, ItemManager itemManager) {
 
-        this.game = game;
         this.properties = game.getProperties();
+        this.itemManager = itemManager;
 
-        createSimpleMonsters();
+
+        createTroll(game);
+        createTX5(game);
 
         // Multiverse exclusive monsters
         String version = properties.getProperty("version");
         if (version.equals("multiverse")) {
-            createMultiverseMonsters(goldPieces);
+            createWizard(game);
+            createOrion(game);
+            createAlien(game);
         }
     }
 
-    private void createSimpleMonsters() {
-
+    private void createTroll(Game game) {
         // Create Troll
         Troll troll = new Troll(this);
         String[] trollLocations = properties.getProperty("Troll.location").split(",");
@@ -41,7 +47,9 @@ public class MonsterManager {
         int trollY = Integer.parseInt(trollLocations[1]);
         game.addActor(troll, new Location(trollX, trollY), Location.NORTH);
         monsters.add(troll);
+    }
 
+    private void createTX5(Game game) {
         // Create TX5
         TX5 tx5 = new TX5(this);
         String[] tx5Locations = properties.getProperty("TX5.location").split(",");
@@ -52,7 +60,7 @@ public class MonsterManager {
         monsters.add(tx5);
     }
 
-    private void createMultiverseMonsters(ArrayList<Item> goldPieces) {
+    private void createWizard(Game game) {
         // Create Wizard
         Wizard wizard = new Wizard(this);
         String[] wizardLocations = properties.getProperty("Wizard.location").split(",");
@@ -60,15 +68,20 @@ public class MonsterManager {
         int wizardY = Integer.parseInt(wizardLocations[1]);
         game.addActor(wizard, new Location(wizardX, wizardY), Location.NORTH);
         monsters.add(wizard);
+    }
 
+    private void createOrion(Game game) {
         // Create Orion
+        ArrayList<Item> goldPieces = itemManager.getGoldPieces();
         Orion orion = new Orion(this, goldPieces);
         String[] orionLocations = properties.getProperty("Orion.location").split(",");
         int orionX = Integer.parseInt(orionLocations[0]);
         int orionY = Integer.parseInt(orionLocations[1]);
         game.addActor(orion, new Location(orionX, orionY), Location.NORTH);
         monsters.add(orion);
+    }
 
+    private void createAlien(Game game) {
         // Create Alien
         Alien alien = new Alien(this);
         String[] alienLocations = properties.getProperty("Alien.location").split(",");
@@ -126,9 +139,4 @@ public class MonsterManager {
         }
         return false;
     }
-
-    public Game getGame() {
-        return game;
-    }
-
 }

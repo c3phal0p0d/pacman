@@ -41,8 +41,8 @@ public class Game extends GameGrid
     itemManager.setMaxPillsAndItems(itemManager.countPillsAndItems());
 
     //Setup for auto test
-    pacActor.setPropertyMoves(properties.getProperty("PacMan.move"));
-    pacActor.setAuto(Boolean.parseBoolean(properties.getProperty("PacMan.isAuto")));
+    pacActor.setPropertyMoves(properties.getProperty("PacMan.move")); // can be moved
+    pacActor.setAuto(Boolean.parseBoolean(properties.getProperty("PacMan.isAuto"))); // can be moved
     itemManager.loadPillAndItemsLocations();
 
     // Draw grid
@@ -50,16 +50,16 @@ public class Game extends GameGrid
     grid.drawGrid(bg);
     
     // Setup Components
-    monsterManager = new MonsterManager(this, properties, itemManager.getGoldPieces());
+    monsterManager = new MonsterManager(this, itemManager);
 
     //Setup Random seeds
     seed = Integer.parseInt(properties.getProperty("seed"));
-    pacActor.setSeed(seed);
+    pacActor.setSeed(seed); // can be moved
     monsterManager.setSeed(seed);
-    addKeyRepeatListener(pacActor.getPlayerController());
+    addKeyRepeatListener(pacActor.getPlayerController()); // can be moved
     setKeyRepeatPeriod(150);
     monsterManager.setSlowDown(3);
-    pacActor.setSlowDown(3);
+    pacActor.setSlowDown(3); // can be moved
 
     //Run the game
     doRun();
@@ -71,15 +71,15 @@ public class Game extends GameGrid
     boolean hasPacmanEatAllPills;
     itemManager.setupPillAndItemsLocations();
     do {
-      hasPacmanBeenHit = monsterManager.hasThereBeenACollision(pacActor);
-      hasPacmanEatAllPills = pacActor.getNbPills() >= itemManager.getMaxPillsAndItems();
+      hasPacmanBeenHit = monsterManager.hasThereBeenACollision(pacActor); // can be moved
+      hasPacmanEatAllPills = pacActor.getNbPills() >= itemManager.getMaxPillsAndItems(); // can be moved
       delay(10);
     } while(!hasPacmanBeenHit && !hasPacmanEatAllPills);
     delay(120);
 
-    Location loc = pacActor.getLocation();
+    Location loc = pacActor.getLocation(); // can be moved
     monsterManager.stopMonsters();
-    pacActor.removeSelf();
+    pacActor.removeSelf(); // can be moved
 
     String title = "";
     if (hasPacmanBeenHit) {
