@@ -46,6 +46,7 @@ public class Orion extends ShortestDistanceMonster {
         else { // Find new target
             currentTarget = findClosestItem();
         }
+        gameCallback.monsterLocationChanged(this);
     }
 
     private Item findClosestItem() {

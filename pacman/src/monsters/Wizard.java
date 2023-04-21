@@ -41,6 +41,7 @@ public class Wizard extends RandomWalkMonster {
             // Move hasn't been found, check next direction
             turn(45);
         }
+        gameCallback.monsterLocationChanged(this);
     }
 
     @Override
@@ -53,6 +54,7 @@ public class Wizard extends RandomWalkMonster {
         Location next = getNextMoveLocation();
         if (wizardCanMove(next)) {
             setLocation(next);
+            gameCallback.monsterLocationChanged(this);
         }
         else {
             walkApproach();

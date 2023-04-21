@@ -165,8 +165,4 @@ public class MonsterManager {
     public void removePacActor() {
         pacActor.removeSelf();
     }
-
-    public ItemManager getItemManager() {
-        return itemManager;
-    }
 }

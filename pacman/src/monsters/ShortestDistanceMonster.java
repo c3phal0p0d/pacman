@@ -54,5 +54,6 @@ public abstract class ShortestDistanceMonster extends Monster {
             Location newLocation = candidates.get(index).location();
             setLocation(newLocation);
         }
+        gameCallback.monsterLocationChanged(this);
     }
 }
