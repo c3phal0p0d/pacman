@@ -24,6 +24,8 @@ public abstract class Monster extends Actor
 
   protected int numVertCells;
 
+  private boolean isFrozen = false;
+
   public Monster(GameCallback gameCallback, MonsterType type, int numHorzCells, int numVertCells)
   {
     super("sprites/" + type.getImageName());
@@ -85,6 +87,7 @@ public abstract class Monster extends Actor
 
   public void stopMoving(int seconds) {
     this.stopMoving = true;
+    this.isFrozen = true;
     Timer timer = new Timer(); // Instantiate Timer Object
     int SECOND_TO_MILLISECONDS = 1000;
     final Monster monster = this;
@@ -92,21 +95,24 @@ public abstract class Monster extends Actor
       @Override
       public void run() {
         monster.stopMoving = false;
+        monster.isFrozen = false;
       }
     }, seconds * SECOND_TO_MILLISECONDS);
   }
 
   public void makeFurious(int seconds) {
-    this.isFurious = true;
-    Timer timer = new Timer(); // Instantiate Timer Object
-    int SECOND_TO_MILLISECONDS = 1000;
-    final Monster monster = this;
-    timer.schedule(new TimerTask() {
-      @Override
-      public void run() {
-        monster.isFurious = false;
-      }
-    }, seconds * SECOND_TO_MILLISECONDS);
+    if(!isFrozen) { // Monster can't be furious if frozen
+      this.isFurious = true;
+      Timer timer = new Timer(); // Instantiate Timer Object
+      int SECOND_TO_MILLISECONDS = 1000;
+      final Monster monster = this;
+      timer.schedule(new TimerTask() {
+        @Override
+        public void run() {
+          monster.isFurious = false;
+        }
+      }, seconds * SECOND_TO_MILLISECONDS);
+    }
   }
 
   // Getter and Setter Methods
