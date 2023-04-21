@@ -16,8 +16,7 @@ public class ItemManager {
     private ArrayList<Item> pills = new ArrayList<Item>();
     private ArrayList<Location> propertyPillLocations = new ArrayList<>();
     private ArrayList<Location> propertyGoldLocations = new ArrayList<>();
-    private PacManGameGrid grid;
-    int maxPillsAndItems;
+    private int maxPillsAndItems;
 
     /**
      * INSTANTIATES an instance of 'ItemManager'.
@@ -69,7 +68,7 @@ public class ItemManager {
      * @param game      The instance of the game to add the pill onto
      */
     public void putPill(Location location, Game game){
-        Item pill = new Item(this, location, ItemType.Pill);
+        Item pill = new Item(location, ItemType.Pill);
         pills.add(pill);
         game.addActor(pill, location);
     }
@@ -80,7 +79,7 @@ public class ItemManager {
      * @param game      The instance of the game to add the gold item onto
      */
     public void putGold(Location location, Game game){
-        Item gold = new Item(this, location, ItemType.Gold);
+        Item gold = new Item(location, ItemType.Gold);
         goldPieces.add(gold);
         game.addActor(gold, location);
     }
@@ -91,7 +90,7 @@ public class ItemManager {
      * @param game      The instance of the game to add the ice item onto
      */
     public void putIce(Location location, Game game){
-        Item ice = new Item(this, location,ItemType.Ice);
+        Item ice = new Item(location,ItemType.Ice);
         iceCubes.add(ice);
         game.addActor(ice, location);
     }

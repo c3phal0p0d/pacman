@@ -8,19 +8,16 @@ public class Item extends Actor {
     // ATTRIBUTES:
     private Location location;
     private ItemType type;
-    protected ItemManager itemManager;
     private boolean claimed;
 
     /**
      * INSTANTIATES an instance of 'Item'.
-     * @param itemManager   The manager responsible for item creation, placement & removal
      * @param location      The coordinates of the item on the grid
      * @param type          The enumeration the item is (i.e. Pill, Gold or Ice)
      */
-    public Item(ItemManager itemManager, Location location, ItemType type) {
+    public Item(Location location, ItemType type) {
         super(type.getImageName());
         this.location = location;
-        this.itemManager = itemManager;
         this.type = type;
     }
 
