@@ -1,11 +1,9 @@
-package src.monsters;
+package src.actor;
 
 import ch.aplu.jgamegrid.Location;
-import src.Game;
 import src.utility.GameCallback;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Wizard extends RandomWalkMonster {
 

@@ -1,4 +1,4 @@
-package src.monsters;
+package src.actor;
 
 import ch.aplu.jgamegrid.Location;
 import src.utility.GameCallback;

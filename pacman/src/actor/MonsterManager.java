@@ -1,11 +1,10 @@
-package src.monsters;
+package src.actor;
 
 import ch.aplu.jgamegrid.*;
 
-import src.*;
 import src.Game;
-import src.items.Item;
-import src.items.ItemManager;
+import src.actor.items.Item;
+import src.actor.items.ItemManager;
 
 import java.util.ArrayList;
 import java.util.Properties;

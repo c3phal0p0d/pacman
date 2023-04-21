@@ -1,4 +1,4 @@
-package src.items;
+package src.actor.items;
 
 import ch.aplu.jgamegrid.Actor;
 import ch.aplu.jgamegrid.Location;

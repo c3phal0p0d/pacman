@@ -3,8 +3,8 @@
 package src;
 
 import ch.aplu.jgamegrid.*;
-import src.items.ItemManager;
-import src.monsters.MonsterManager;
+import src.actor.items.ItemManager;
+import src.actor.MonsterManager;
 import src.utility.GameCallback;
 
 import java.awt.*;
@@ -33,7 +33,6 @@ public class Game extends GameGrid
     setSimulationPeriod(100);
     setTitle("[PacMan in the Multiverse]");
 
-    // Setup Components
     itemManager = new ItemManager();
     grid = new PacManGameGrid(nbHorzCells, nbVertCells);
     itemManager.setupPillAndItemsLocations(this);
@@ -44,15 +43,11 @@ public class Game extends GameGrid
     GGBackground bg = getBg();
     grid.drawGrid(this, bg);
 
-    // Setup Components
-    monsterManager = new MonsterManager(this, itemManager);
-    monsterManager.createPacActor(this);
+    createMonsterManager(seed);
 
     //Setup Random seeds
     seed = Integer.parseInt(properties.getProperty("seed"));
-    monsterManager.setSeed(seed);
     setKeyRepeatPeriod(150);
-    monsterManager.setSlowDown(3);
 
     //Run the game
     doRun();
@@ -64,8 +59,6 @@ public class Game extends GameGrid
     boolean hasPacmanEatAllPills;
 
     do {
-
-
       hasPacmanBeenHit = monsterManager.hasThereBeenACollision();
       hasPacmanEatAllPills = monsterManager.hasEatenAllPills();
       delay(10);
@@ -91,7 +84,17 @@ public class Game extends GameGrid
     doPause();
   }
 
+  private void createMonsterManager(int seed) {
+    monsterManager = new MonsterManager(this, itemManager);
+    monsterManager.createPacActor(this);
+    monsterManager.setSeed(seed);
+    monsterManager.setSlowDown(3);
+  }
+
   // Getter Methods
+  public PacManGameGrid getGrid() {
+    return grid;
+  }
 
   public Properties getProperties() {
     return properties;
@@ -102,10 +105,6 @@ public class Game extends GameGrid
   public int getNumVertCells(){ return this.nbVertCells; }
 
   public GameCallback getGameCallback() { return gameCallback; }
-
-  public PacManGameGrid getGrid() {
-    return grid;
-  }
   
   public ItemManager getItemManager(){
     return itemManager;

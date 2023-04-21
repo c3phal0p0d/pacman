@@ -1,10 +1,7 @@
-package src.monsters;
+package src.actor;
 
 import ch.aplu.jgamegrid.Location;
-import src.Game;
 import src.utility.GameCallback;
-
-import java.util.ArrayList;
 
 public class Alien extends ShortestDistanceMonster {
 

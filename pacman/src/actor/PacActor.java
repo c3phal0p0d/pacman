@@ -1,12 +1,12 @@
 // PacActor.java
 // Used for PacMan
-package src;
+package src.actor;
 
 import ch.aplu.jgamegrid.*;
-import src.items.Item;
-import src.items.ItemManager;
-import src.items.ItemType;
-import src.monsters.MonsterManager;
+import src.Game;
+import src.actor.items.Item;
+import src.actor.items.ItemManager;
+import src.actor.items.ItemType;
 import src.utility.GameCallback;
 
 import java.awt.Color;

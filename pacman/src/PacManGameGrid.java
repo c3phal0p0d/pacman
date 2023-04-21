@@ -2,6 +2,7 @@
 package src;
 
 import ch.aplu.jgamegrid.*;
+import src.Game;
 
 import java.awt.*;
 

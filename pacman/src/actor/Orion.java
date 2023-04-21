@@ -1,10 +1,9 @@
-package src.monsters;
+package src.actor;
 
 import ch.aplu.jgamegrid.Location;
-import src.Game;
 
 import java.util.ArrayList;
-import src.items.Item;
+import src.actor.items.Item;
 import src.utility.GameCallback;
 
 public class Orion extends ShortestDistanceMonster {

@@ -1,4 +1,4 @@
-package src.items;
+package src.actor.items;
 
 import ch.aplu.jgamegrid.Location;
 import src.Game;
@@ -16,6 +16,7 @@ public class ItemManager {
     private ArrayList<Item> pills = new ArrayList<Item>();
     private ArrayList<Location> propertyPillLocations = new ArrayList<>();
     private ArrayList<Location> propertyGoldLocations = new ArrayList<>();
+    private PacManGameGrid grid;
     int maxPillsAndItems;
 
     /**

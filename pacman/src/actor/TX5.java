@@ -1,7 +1,6 @@
-package src.monsters;
+package src.actor;
 
 import ch.aplu.jgamegrid.Location;
-import src.LocationVisitedList;
 import src.utility.GameCallback;
 
 import java.util.ArrayList;

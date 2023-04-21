@@ -1,12 +1,11 @@
 // Monster.java
 // Used for PacMan
-package src.monsters;
+package src.actor;
 
 import ch.aplu.jgamegrid.*;
 import java.awt.Color;
-import java.io.Console;
 import java.util.*;
-import src.Game;
+
 import src.utility.GameCallback;
 
 public abstract class Monster extends Actor

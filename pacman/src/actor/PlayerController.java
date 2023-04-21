@@ -1,4 +1,4 @@
-package src;
+package src.actor;
 
 import ch.aplu.jgamegrid.GGKeyRepeatListener;
 import ch.aplu.jgamegrid.Location;

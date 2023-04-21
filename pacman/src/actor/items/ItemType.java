@@ -1,4 +1,4 @@
-package src.items;
+package src.actor.items;
 
 public enum ItemType {
     Gold,
