@@ -28,14 +28,14 @@ public class MonsterManager {
 
         // Simple version
         createTroll(game);
-        //createTX5(game);
+        createTX5(game);
 
         // Multiverse exclusive monsters
         String version = properties.getProperty("version");
         if (version.equals("multiverse")) {
-            //createWizard(game);
-            //createOrion(game);
-            //createAlien(game);
+            createWizard(game);
+            createOrion(game);
+            createAlien(game);
         }
     }
 
