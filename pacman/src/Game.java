@@ -3,124 +3,127 @@
 package src;
 
 import ch.aplu.jgamegrid.*;
-import src.items.ItemManager;
-import src.monsters.MonsterManager;
+import src.actor.items.ItemManager;
+import src.actor.EntityManager;
 import src.utility.GameCallback;
 
 import java.awt.*;
 import java.util.Properties;
 
+/**
+ * Type: Modified file
+ * Team Name: Thursday 11:00am Team 1
+ * Team Members:
+ *      - Jiachen Si (1085839)
+ *      - Natasha Chiorsac (1145264)
+ *      - Jude Thaddeau Data (1085613)
+ */
+
 public class Game extends GameGrid
 {
-  private final static int nbHorzCells = 20;
-  private final static int nbVertCells = 11;
-  private PacManGameGrid grid;
+    // ATTRIBUTES:
+    private final static int nbHorzCells = 20;
+    private final static int nbVertCells = 11;
+    private PacManGameGrid grid;
+    private EntityManager entityManager;
+    private ItemManager itemManager;
+    private GameCallback gameCallback;
+    private Properties properties;
+    private int seed = 30006;
 
-  private PacActor pacActor;
-  private MonsterManager monsterManager;
-  private ItemManager itemManager;
+    /**
+     * INSTANTIATES an instance of the 'Game' class.
+     * @param gameCallback  Used to ensure terminal output is correct
+     * @param properties    The CUSTOM settings of the game
+     */
+    public Game(GameCallback gameCallback, Properties properties)
+    {
+        // STEP 1: Setup game
+        super(nbHorzCells, nbVertCells, 20, false);
+        this.gameCallback = gameCallback;
+        this.properties = properties;
+        setSimulationPeriod(100);
+        setTitle("[PacMan in the Multiverse]");
 
-  private GameCallback gameCallback;
-  private Properties properties;
-  private int seed = 30006;
+        // STEP 2: Setup Components
+        itemManager = new ItemManager();
+        grid = new PacManGameGrid(nbHorzCells, nbVertCells);
+        itemManager.setupPillAndItemsLocations(this);
 
-  // Constructor
-  public Game(GameCallback gameCallback, Properties properties)
-  {
-    //Setup game
-    super(nbHorzCells, nbVertCells, 20, false);
-    this.gameCallback = gameCallback;
-    this.properties = properties;
-    setSimulationPeriod(100);
-    setTitle("[PacMan in the Multiverse]");
+        // STEP 3: Setup for auto test
+        itemManager.loadPillAndItemsLocations(properties);
+        itemManager.setMaxPillsAndItems(this);
 
-    // Setup Components
-    itemManager = new ItemManager(this);
-    grid = new PacManGameGrid(this, nbHorzCells, nbVertCells);
-    pacActor = new PacActor(this);
-    itemManager.setMaxPillsAndItems(itemManager.countPillsAndItems());
+        // STEP 4: Draw grid
+        GGBackground bg = getBg();
+        grid.drawGrid(this, bg);
 
-    //Setup for auto test
-    pacActor.setPropertyMoves(properties.getProperty("PacMan.move"));
-    pacActor.setAuto(Boolean.parseBoolean(properties.getProperty("PacMan.isAuto")));
-    itemManager.loadPillAndItemsLocations();
+        // STEP 5: Initialise entities
+        createEntityManager(seed);
 
-    // Draw grid
-    GGBackground bg = getBg();
-    grid.drawGrid(bg);
-    
-    // Setup Components
-    monsterManager = new MonsterManager(this, properties, itemManager.getGoldPieces());
+        // STEP 6: Setup Random seeds
+        seed = Integer.parseInt(properties.getProperty("seed"));
+        setKeyRepeatPeriod(150);
 
-    //Setup Random seeds
-    seed = Integer.parseInt(properties.getProperty("seed"));
-    pacActor.setSeed(seed);
-    monsterManager.setSeed(seed);
-    addKeyRepeatListener(pacActor.getPlayerController());
-    setKeyRepeatPeriod(150);
-    monsterManager.setSlowDown(3);
-    pacActor.setSlowDown(3);
+        // STEP 7: Run the game
+        doRun();
+        show();
 
-    //Run the game
-    doRun();
-    show();
+        // STEP 8: Loop to look for collision in the application thread
+        boolean hasPacmanBeenHit;
+        boolean hasPacmanEatAllPills;
+        do {
+            hasPacmanBeenHit = entityManager.hasThereBeenACollision();
+            hasPacmanEatAllPills = entityManager.hasEatenAllPills();
+            delay(10);
+        } while(!hasPacmanBeenHit && !hasPacmanEatAllPills);
 
-    // Loop to look for collision in the application thread
-    // This makes it improbable that we miss a hit
-    boolean hasPacmanBeenHit;
-    boolean hasPacmanEatAllPills;
-    itemManager.setupPillAndItemsLocations();
-    do {
-      hasPacmanBeenHit = monsterManager.hasThereBeenACollision(pacActor);
-      hasPacmanEatAllPills = pacActor.getNbPills() >= itemManager.getMaxPillsAndItems();
-      delay(10);
-    } while(!hasPacmanBeenHit && !hasPacmanEatAllPills);
-    delay(120);
+        // STEP 9: Game is finished, terminate the entities
+        delay(120);
+        Location loc = entityManager.getPacActorLocation();
+        entityManager.stopMonsters();
+        entityManager.removePacActor();
 
-    Location loc = pacActor.getLocation();
-    monsterManager.stopMonsters();
-    pacActor.removeSelf();
-
-    String title = "";
-    if (hasPacmanBeenHit) {
-      bg.setPaintColor(Color.red);
-      title = "GAME OVER";
-      addActor(new Actor("sprites/explosion3.gif"), loc);
-    } else if (hasPacmanEatAllPills) {
-      bg.setPaintColor(Color.yellow);
-      title = "YOU WIN";
+        // STEP 10: Display the outcome of the game
+        String title = "";
+        if (hasPacmanBeenHit) {
+            bg.setPaintColor(Color.red);
+            title = "GAME OVER";
+            addActor(new Actor("sprites/explosion3.gif"), loc);
+        } else if (hasPacmanEatAllPills) {
+            bg.setPaintColor(Color.yellow);
+            title = "YOU WIN";
+        }
+        setTitle(title);
+        gameCallback.endOfGame(title);
+        doPause();
     }
-    setTitle(title);
-    gameCallback.endOfGame(title);
 
-    doPause();
-  }
+    /**
+     * INSTANTIATES an instance of the Entity Manager.
+     * @param seed  RNG seed for 'PacActor'
+     */
+    private void createEntityManager(int seed) {
+        entityManager = new EntityManager(this, itemManager);
+        entityManager.createPacActor(this);
+        entityManager.setSeed(seed);
+        entityManager.setSlowDown(3);
+    }
 
-  // Getter Methods
-
-  public Properties getProperties() {
-    return properties;
-  }
-
-  public int getNumHorzCells(){ return this.nbHorzCells; }
-
-  public int getNumVertCells(){ return this.nbVertCells; }
-
-  public GameCallback getGameCallback() { return gameCallback; }
-
-  public PacManGameGrid getGrid() {
-    return grid;
-  }
-
-  public PacActor getPacActor() {
-    return pacActor;
-  }
-  
-  public ItemManager getItemManager(){
-    return itemManager;
-  }
-
-  public MonsterManager getMonsterManager() {
-    return monsterManager;
-  }
+    // GETTER methods:
+    public PacManGameGrid getGrid() {
+        return grid;
+    }
+    public Properties getProperties() {
+        return properties;
+    }
+    public int getNumHorzCells(){ return this.nbHorzCells; }
+    public int getNumVertCells(){ return this.nbVertCells; }
+    public GameCallback getGameCallback() { return gameCallback; }
+    public ItemManager getItemManager(){
+        return itemManager;
+    }
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
 }
