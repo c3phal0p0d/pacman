@@ -1,5 +1,14 @@
 package src.actor.items;
 
+/**
+ * Type: New file
+ * Team Name: Thursday 11:00am Team 1
+ * Team Members:
+ *      - Jiachen Si (1085839)
+ *      - Natasha Chiorsac (1145264)
+ *      - Jude Thaddeau Data (1085613)
+ */
+
 public enum ItemType {
     Gold,
     Ice,

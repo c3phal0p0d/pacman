@@ -15,226 +15,255 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Type: Modified file
+ * Team Name: Thursday 11:00am Team 1
+ * Team Members:
+ *      - Jiachen Si (1085839)
+ *      - Natasha Chiorsac (1145264)
+ *      - Jude Thaddeau Data (1085613)
+ */
+
 public class PacActor extends Actor implements LocationVisitedList
 {
-  private static final int nbSprites = 4;
-  private int idSprite = 0;
-  private int nbPills = 0;
-  private int score = 0;
-  private ArrayList<Location> visitedList = new ArrayList<Location>();
-  private List<String> propertyMoves = new ArrayList<>();
-  private int propertyMoveIndex = 0;
-  private int seed;
-  private Random randomiser = new Random();
-  private PlayerController playerController;
-  private String version;
-  private EntityManager entityManager;
-  private ItemManager itemManager;
-  private GameCallback gameCallback;
-  private int numHorzCells;
-  private int numVertCells;
+    // ATTRIBUTES:
+    private static final int nbSprites = 4;
+    private int idSprite = 0;
+    private int nbPills = 0;
+    private int score = 0;
+    private ArrayList<Location> visitedList = new ArrayList<Location>();
+    private List<String> propertyMoves = new ArrayList<>();
+    private int propertyMoveIndex = 0;
+    private int seed;
+    private Random randomiser = new Random();
+    private PlayerController playerController;
+    private String version;
+    private EntityManager entityManager;
+    private ItemManager itemManager;
+    private GameCallback gameCallback;
+    private int numHorzCells;
+    private int numVertCells;
+    private boolean isAuto = false;
 
+    /**
+     * INSTANTIATES an instance of 'PacActor'.
+     * @param game Contains the information associated with 'PacActor' attributes
+     */
+    public PacActor(Game game)
+    {
+        // STEP 1: Assign attributes
+        super(true, "sprites/pacpix.gif", nbSprites);  // Rotatable
+        this.version = game.getProperties().getProperty("version");
+        this.gameCallback = game.getGameCallback();
+        this.numHorzCells = game.getNumHorzCells();
+        this.numVertCells = game.getNumVertCells();
+        this.entityManager = game.getEntityManager();
+        this.itemManager = game.getItemManager();
+        this.playerController = new PlayerController(this);
 
-
-  public PacActor(Game game)
-  {
-    super(true, "sprites/pacpix.gif", nbSprites);  // Rotatable
-    this.version = game.getProperties().getProperty("version");
-    this.gameCallback = game.getGameCallback();
-    this.numHorzCells = game.getNumHorzCells();
-    this.numVertCells = game.getNumVertCells();
-    this.entityManager = game.getEntityManager();
-    this.itemManager = game.getItemManager();
-    this.playerController = new PlayerController(this);
-
-    // Setup PacActor
-    String[] pacManLocations = game.getProperties().getProperty("PacMan.location").split(",");
-    int pacManX = Integer.parseInt(pacManLocations[0]);
-    int pacManY = Integer.parseInt(pacManLocations[1]);
-    game.addActor(this, new Location(pacManX, pacManY));
-  }
-  private boolean isAuto = false;
-
-  public void act()
-  {
-    show(idSprite);
-    idSprite++;
-    if (idSprite == nbSprites)
-      idSprite = 0;
-
-    if (isAuto) {
-      moveInAutoMode();
-    }
-    gameCallback.pacManLocationChanged(getLocation(), score, nbPills);
-  }
-
-  private Location closestPillLocation() {
-    int currentDistance = 1000;
-    Location currentLocation = null;
-    List<Location> pillAndItemLocations = itemManager.getPillAndItemLocations();
-    for (Location location: pillAndItemLocations) {
-      int distanceToPill = location.getDistanceTo(getLocation());
-      if (distanceToPill < currentDistance) {
-        currentLocation = location;
-        currentDistance = distanceToPill;
-      }
+        // STEP 2: Set up locations
+        String[] pacManLocations = game.getProperties().getProperty("PacMan.location").split(",");
+        int pacManX = Integer.parseInt(pacManLocations[0]);
+        int pacManY = Integer.parseInt(pacManLocations[1]);
+        game.addActor(this, new Location(pacManX, pacManY));
     }
 
-    return currentLocation;
-  }
+    /**
+     * Responsible for DIRECTING movement of Entities
+     */
+    public void act()
+    {
+        show(idSprite);
+        idSprite++;
+        if (idSprite == nbSprites)
+            idSprite = 0;
 
-  private void followPropertyMoves() {
-    String currentMove = propertyMoves.get(propertyMoveIndex);
-    switch(currentMove) {
-      case "R":
-        turn(90);
-        break;
-      case "L":
-        turn(-90);
-        break;
-      case "M":
-        Location next = getNextMoveLocation();
-        if (canMove(next)) {
-          setLocation(next);
-          eatPill(next);
+        if (isAuto) {
+            moveInAutoMode();
         }
-        break;
+        gameCallback.pacManLocationChanged(getLocation(), score, nbPills);
     }
-    propertyMoveIndex++;
-  }
 
-  private void moveInAutoMode() {
-    if (propertyMoves.size() > propertyMoveIndex) {
-      followPropertyMoves();
-      return;
+    /**
+     * CALCULATES the closest pill location the 'PacActor' is closest to.
+     * @return  The 'Location' of the closest pill
+     */
+    private Location closestPillLocation() {
+        int currentDistance = 1000;
+        Location currentLocation = null;
+        List<Location> pillAndItemLocations = itemManager.getPillAndItemLocations();
+        for (Location location: pillAndItemLocations) {
+            int distanceToPill = location.getDistanceTo(getLocation());
+            if (distanceToPill < currentDistance) {
+                currentLocation = location;
+                currentDistance = distanceToPill;
+            }
+        }
+        return currentLocation;
     }
-    Location closestPill = closestPillLocation();
-    double oldDirection = getDirection();
 
-    Location.CompassDirection compassDir =
-            getLocation().get4CompassDirectionTo(closestPill);
-    Location next = getLocation().getNeighbourLocation(compassDir);
-    setDirection(compassDir);
-    if (!isVisited(next, visitedList) && canMove(next)) {
-      setLocation(next);
-    } else {
-      // normal movement
-      int sign = randomiser.nextDouble() < 0.5 ? 1 : -1;
-      setDirection(oldDirection);
-      turn(sign * 90);  // Try to turn left/right
-      next = getNextMoveLocation();
-      if (canMove(next)) {
-        setLocation(next);
-      } else {
-        setDirection(oldDirection);
-        next = getNextMoveLocation();
-        if (canMove(next)) // Try to move forward
-        {
-          setLocation(next);
+    /**
+     * HELPER function for making an AUTOMATED 'PacActor'
+     */
+    private void followPropertyMoves() {
+        String currentMove = propertyMoves.get(propertyMoveIndex);
+        switch(currentMove) {
+            case "R":
+                turn(90);
+                break;
+            case "L":
+                turn(-90);
+                break;
+            case "M":
+                Location next = getNextMoveLocation();
+                if (canMove(next)) {
+                    setLocation(next);
+                    eatPill(next);
+                }
+                break;
+        }
+        propertyMoveIndex++;
+    }
+
+    /**
+     * LOGIC for moving the 'PacActor' automatically.
+     */
+    private void moveInAutoMode() {
+        if (propertyMoves.size() > propertyMoveIndex) {
+            followPropertyMoves();
+            return;
+        }
+        Location closestPill = closestPillLocation();
+        double oldDirection = getDirection();
+
+        Location.CompassDirection compassDir =
+                getLocation().get4CompassDirectionTo(closestPill);
+        Location next = getLocation().getNeighbourLocation(compassDir);
+        setDirection(compassDir);
+        if (!isVisited(next, visitedList) && canMove(next)) {
+            setLocation(next);
         } else {
-          setDirection(oldDirection);
-          turn(-sign * 90);  // Try to turn right/left
-          next = getNextMoveLocation();
-          if (canMove(next)) {
-            setLocation(next);
-          } else {
+            // normal movement
+            int sign = randomiser.nextDouble() < 0.5 ? 1 : -1;
             setDirection(oldDirection);
-            turn(180);  // Turn backward
+            turn(sign * 90);  // Try to turn left/right
             next = getNextMoveLocation();
-            setLocation(next);
-          }
+            if (canMove(next)) {
+                setLocation(next);
+            } else {
+                setDirection(oldDirection);
+                next = getNextMoveLocation();
+                if (canMove(next)) // Try to move forward
+                {
+                    setLocation(next);
+                } else {
+                    setDirection(oldDirection);
+                    turn(-sign * 90);  // Try to turn right/left
+                    next = getNextMoveLocation();
+                    if (canMove(next)) {
+                        setLocation(next);
+                    } else {
+                        setDirection(oldDirection);
+                        turn(180);  // Turn backward
+                        next = getNextMoveLocation();
+                        setLocation(next);
+                    }
+                }
+            }
         }
-      }
-    }
-    eatPill(next);
-    addVisitedList(next, visitedList);
-  }
-
-  protected boolean canMove(Location location)
-  {
-    // Checks if the player can traverse to the given tile.
-    Color c = getBackground().getColor(location);
-    if ( c.equals(Color.gray) || location.getX() >= numHorzCells
-            || location.getX() < 0 || location.getY() >= numVertCells || location.getY() < 0)
-      // Tile is grey or is outside the board
-      return false;
-    else
-      return true;
-  }
-
-  protected void eatPill(Location location)
-  {
-    Item item = itemManager.getItemByLocation(location);
-    if(item != null) {
-      if(item.isClaimed()) {
-        return;
-      }
-
-      ItemType type = item.getType();
-
-      if (type.equals(ItemType.Pill))
-      {
-        System.out.println("eat pill");
-
-        nbPills++;
-        score++;
-        gameCallback.pacManEatPillsAndItems(location, "pills");
-        itemManager.removeItem(ItemType.Pill, location);
-      } else if (type.equals(ItemType.Gold)) {
-
-        System.out.println("eat gold");
-
-        nbPills++;
-        score+= 5;
-        getBackground().fillCell(location, Color.lightGray);
-        gameCallback.pacManEatPillsAndItems(location, "gold");
-        itemManager.removeItem(ItemType.Gold, location);
-        if(version.equals("multiverse")) {
-          entityManager.makeFurious();
-        }
-      } else if (type.equals(ItemType.Ice)) {
-
-        System.out.println("eat ice");
-
-        getBackground().fillCell(location, Color.lightGray);
-        gameCallback.pacManEatPillsAndItems(location, "ice");
-        itemManager.removeItem(ItemType.Ice, location);
-        if(version.equals("multiverse")) {
-          entityManager.freezeMonsters();
-        }
-      }
+        eatPill(next);
+        addVisitedList(next, visitedList);
     }
 
-    String title = "[PacMan in the Multiverse] Current score: " + score;
-    gameGrid.setTitle(title);
-  }
-
-  // Getter and Setter Methods
-  public int getNbPills() {
-    return nbPills;
-  }
-
-  public void setAuto(boolean auto) {
-    isAuto = auto;
-  }
-
-  public boolean getAuto(){
-    return isAuto;
-  }
-
-  public void setSeed(int seed) {
-    this.seed = seed;
-    randomiser.setSeed(seed);
-  }
-
-  public void setPropertyMoves(String propertyMoveString) {
-    if (propertyMoveString != null) {
-      this.propertyMoves = Arrays.asList(propertyMoveString.split(","));
+    /**
+     * CHECKS if 'PacActor' can move towards a given location.
+     * @param   location    The location to check if 'PacActor' can move into
+     * @return  'true' if the move is possible, 'false' otherwise
+     */
+    protected boolean canMove(Location location)
+    {
+        // Checks if the player can traverse to the given tile.
+        Color c = getBackground().getColor(location);
+        if ( c.equals(Color.gray) || location.getX() >= numHorzCells
+                || location.getX() < 0 || location.getY() >= numVertCells || location.getY() < 0)
+            // Tile is grey or is outside the board
+            return false;
+        else
+            return true;
     }
-  }
 
-  public PlayerController getPlayerController(){
-    return playerController;
-  }
+    /**
+     * Handles the LOGIC whenever 'PacActor' touches a consumable item.
+     * @param location  The location of the consumable item
+     */
+    protected void eatPill(Location location)
+    {
+        // STEP 1: Get the location of the item to be eaten
+        Item item = itemManager.getItemByLocation(location);
 
+        // STEP 2: Only eat items that are present on the board
+        if (item != null) {
+
+            // CASE 3A: No item on the current location
+            if(item.isClaimed()) {
+                return;
+            }
+            ItemType type = item.getType();
+
+            // CASE 3B: Item is a PILL item
+            if (type.equals(ItemType.Pill))
+            {
+                nbPills++;
+                score++;
+                gameCallback.pacManEatPillsAndItems(location, "pills");
+                itemManager.removeItem(ItemType.Pill, location);
+
+            // CASE 3C: Item is a GOLD item
+            } else if (type.equals(ItemType.Gold)) {
+                nbPills++;
+                score+= 5;
+                getBackground().fillCell(location, Color.lightGray);
+                gameCallback.pacManEatPillsAndItems(location, "gold");
+                itemManager.removeItem(ItemType.Gold, location);
+                if(version.equals("multiverse")) {
+                    entityManager.makeFurious();
+                }
+
+            // CASE 3D: Item is an ICE item
+            } else if (type.equals(ItemType.Ice)) {
+                getBackground().fillCell(location, Color.lightGray);
+                gameCallback.pacManEatPillsAndItems(location, "ice");
+                itemManager.removeItem(ItemType.Ice, location);
+                if(version.equals("multiverse")) {
+                    entityManager.freezeMonsters();
+                }
+            }
+        }
+        // STEP 4: Update & display the current score
+        String title = "[PacMan in the Multiverse] Current score: " + score;
+        gameGrid.setTitle(title);
+    }
+
+    // GETTER & SETTER methods
+    public int getNbPills() {
+        return nbPills;
+    }
+    public void setAuto(boolean auto) {
+        isAuto = auto;
+    }
+    public boolean getAuto(){
+        return isAuto;
+    }
+    public void setSeed(int seed) {
+        this.seed = seed;
+        randomiser.setSeed(seed);
+    }
+    public void setPropertyMoves(String propertyMoveString) {
+        if (propertyMoveString != null) {
+            this.propertyMoves = Arrays.asList(propertyMoveString.split(","));
+        }
+    }
+    public PlayerController getPlayerController(){
+        return playerController;
+    }
 }

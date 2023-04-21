@@ -5,69 +5,95 @@ import src.utility.GameCallback;
 
 import java.awt.*;
 
+/**
+ * Type: New file
+ * Team Name: Thursday 11:00am Team 1
+ * Team Members:
+ *      - Jiachen Si (1085839)
+ *      - Natasha Chiorsac (1145264)
+ *      - Jude Thaddeau Data (1085613)
+ */
+
 public class Wizard extends RandomWalkMonster {
 
+    /**
+     * INSTANTIATES a new instance of 'Wizard'.
+     * @param gameCallback Used to display behaviour of the game
+     * @param numHorzCells The number of HORIZONTAL cells on the board
+     * @param numVertCells The number of VERTICAL cells on the board
+     */
     public Wizard(GameCallback gameCallback, int numHorzCells, int numVertCells) {
         super(gameCallback, MonsterType.Wizard, numHorzCells, numVertCells);
     }
 
-    /*
-    Wizard randomly select one of its neighbour locations (8 cells around the Wizard).
-        - If location is not a maze wall, move to that location.
-        - If location is a maze wall, check if adjacent location in same direction as selected location
-          is a wall or not:
-            - If wall, choose another location
-            - If not wall, walk through wall to adjacent location.
+    /**
+     * 'Wizard' walks randomly with addition of being able to phase through walls.
      */
     protected void walkApproach() {
 
-        // Randomly choose starting direction to search in
+        // STEP 1: Randomly choose starting direction to search in
         int upperbound = 7;
         int dirMultiple = randomiser.nextInt(upperbound);
         int newDirection = dirMultiple * 45;
         turn(newDirection);
 
-        // Check all directions
+        // STEP 2: Check all directions
         for (int i = 0; i < 8; i++) {
 
-            // Check adjacent tiles
+            // STEP 3: Check adjacent tiles
             Location nextLocation = getNextMoveLocation();
             if (wizardCanMove(nextLocation)) {
                 break;
             }
-
-            // Move hasn't been found, check next direction
+            // STEP 4: Move hasn't been found, check next direction
             turn(45);
         }
         gameCallback.monsterLocationChanged(this);
     }
 
+    /**
+     * Handles the LOGIC of when 'PacActor' consumes a GOLD item.
+     */
     @Override
     protected void furiousWalkApproach() {
 
-        // Move once
+        // STEP 1: Move once
         walkApproach();
 
-        // Try to travel in the same direction again
+        // CASE 2A: Try to travel in the same direction again
         Location next = getNextMoveLocation();
         if (wizardCanMove(next)) {
             setLocation(next);
             gameCallback.monsterLocationChanged(this);
-        }
-        else {
+
+        // CASE 2B: Travel elsewhere
+        } else {
             walkApproach();
         }
     }
 
+    /**
+     * CHECKS if the wizard can move or phase to a location.
+     * @param   nextLocation     The location to move towards
+     * @return  'true' if move is legal, 'false' otherwise
+     */
     private boolean wizardCanMove(Location nextLocation) {
-        if (canMove(nextLocation)) { // Location is not a maze wall
+
+        // CASE 1A: Location is NOT a maze WALL
+        if (canMove(nextLocation)) {
             setLocation(nextLocation);
             return true;
-        } else { // Location is a maze wall
+
+        // CASE 1B: Location is a maze wall
+        } else {
+
+            // STEP 2: Calculate the adjacent wall location to phase into
             Location.CompassDirection compassDir = getLocation().get4CompassDirectionTo(nextLocation);
             Location adjLocation = calcAdjacentLocation(nextLocation, compassDir);
             Color c = getBackground().getColor(adjLocation);
-            if (insideBorder(adjLocation) && !c.equals(Color.gray)) { // Inside border and not maze wall
+
+            // STEP 3: Check if the new location is within the board
+            if (insideBorder(adjLocation) && !c.equals(Color.gray)) {
                 setLocation(adjLocation);
                 return true;
             }
@@ -75,12 +101,22 @@ public class Wizard extends RandomWalkMonster {
         return false;
     }
 
+    /**
+     * CHECKS if a location is within the board
+     * @param   location  The location to check if it is inside the board
+     * @return  'true' if within the board, 'false' otherwise
+     */
     private boolean insideBorder(Location location) {
-        // Location is outside the grid border
         return location.getX() < numHorzCells && location.getX() >= 0 &&
                 location.getY() < numVertCells && location.getY() >= 0;
     }
 
+    /**
+     * CALCULATES the adjacent cell of a wall that the wizard can phase into.
+     * @param   next        The location of the wall
+     * @param   compassDir  The compass direction of the adjacent cell
+     * @return
+     */
     private Location calcAdjacentLocation(Location next, Location.CompassDirection compassDir) {
         int addX = 0;
         int addY = 0;

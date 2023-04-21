@@ -8,124 +8,158 @@ import java.util.*;
 
 import src.utility.GameCallback;
 
+/**
+ * Type: Modified file
+ * Team Name: Thursday 11:00am Team 1
+ * Team Members:
+ *      - Jiachen Si (1085839)
+ *      - Natasha Chiorsac (1145264)
+ *      - Jude Thaddeau Data (1085613)
+ */
+
 public abstract class Monster extends Actor
 {
-  protected MonsterType type;
+    // ATTRIBUTES:
+    protected MonsterType type;
+    private boolean stopMoving = false;
+    protected Random randomiser = new Random(0);
+    protected GameCallback gameCallback;
+    private boolean isFurious = false;
+    protected int numHorzCells;
+    protected int numVertCells;
+    private boolean isFrozen = false;
 
-  private boolean stopMoving = false;
-
-  protected Random randomiser = new Random(0);
-
-  protected GameCallback gameCallback;
-  private boolean isFurious = false;
-
-  protected int numHorzCells;
-
-  protected int numVertCells;
-
-  private boolean isFrozen = false;
-
-  public Monster(GameCallback gameCallback, MonsterType type, int numHorzCells, int numVertCells)
-  {
-    super("sprites/" + type.getImageName());
-    this.type = type;
-    this.gameCallback = gameCallback;
-    this.numHorzCells = numHorzCells;
-    this.numVertCells = numVertCells;
-  }
-
-  // This method is called upon every cycle of the jgamegrid simulation loop
-  public void act()
-  {
-    if (stopMoving) {
-      return;
+    /**
+     * INSTANTIATES an instance of 'Monster'.
+     * @param gameCallback  Used to display behaviour of the game
+     * @param type          The type of the monster
+     * @param numHorzCells  The number of HORIZONTAL cells on the board
+     * @param numVertCells  The number of VERTICAL cells on the board
+     */
+    public Monster(GameCallback gameCallback, MonsterType type, int numHorzCells, int numVertCells)
+    {
+        super("sprites/" + type.getImageName());
+        this.type = type;
+        this.gameCallback = gameCallback;
+        this.numHorzCells = numHorzCells;
+        this.numVertCells = numVertCells;
     }
 
-    if (isFurious) {
-      furiousWalkApproach();
-    } else {
-      walkApproach();
-    }
-
-    setHorzMirror(!(getDirection() > 150) || !(getDirection() < 210));
-  }
-
-  /*
-    When furious monsters determine the moving direction once based on their walking approach and move towards that
-    direction for 2 cells if possible. Otherwise, determining the new direction again using their own walking approach
-    until it can move by 2 cells.
-   */
-  protected void furiousWalkApproach() {
-
-    // Move once
-    walkApproach();
-
-    // Try to travel in the same direction again
-    Location next = getNextMoveLocation();
-    if (canMove(next)) {
-      setLocation(next);
-    }
-    else {
-      walkApproach();
-    }
-  }
-
-  protected abstract void walkApproach();
-
-
-  /*
-  Checks if the monster is able to move to a specified location. Returns true if yes, false if no.
-   */
-  protected boolean canMove(Location location)
-  {
-    Color c = getBackground().getColor(location);
-    return !c.equals(Color.gray) && location.getX() < numHorzCells
-            && location.getX() >= 0 && location.getY() < numVertCells
-            && location.getY() >= 0;
-  }
-
-  public void stopMoving(int seconds) {
-    this.stopMoving = true;
-    this.isFrozen = true;
-    Timer timer = new Timer(); // Instantiate Timer Object
-    int SECOND_TO_MILLISECONDS = 1000;
-    final Monster monster = this;
-    timer.schedule(new TimerTask() {
-      @Override
-      public void run() {
-        monster.stopMoving = false;
-        monster.isFrozen = false;
-      }
-    }, seconds * SECOND_TO_MILLISECONDS);
-  }
-
-  public void makeFurious(int seconds) {
-    if(!isFrozen) { // Monster can't be furious if frozen
-      this.isFurious = true;
-      Timer timer = new Timer(); // Instantiate Timer Object
-      int SECOND_TO_MILLISECONDS = 1000;
-      final Monster monster = this;
-      timer.schedule(new TimerTask() {
-        @Override
-        public void run() {
-          monster.isFurious = false;
+    /**
+     * EXECUTES the monster's board navigation logic every jgamegrid simulation loop
+     */
+    public void act()
+    {
+        // CASE A: 'PacActor' eats an ice item
+        if (stopMoving) {
+            return;
         }
-      }, seconds * SECOND_TO_MILLISECONDS);
+        // CASE B: 'PacActor' eats a gold item
+        if (isFurious) {
+            furiousWalkApproach();
+
+        // CASE C: Regular monster navigation algorithm
+        } else {
+            walkApproach();
+        }
+        setHorzMirror(!(getDirection() > 150) || !(getDirection() < 210));
     }
-  }
 
-  // Getter and Setter Methods
-  public MonsterType getType() {
-    return type;
-  }
+    /**
+     * EXECUTES the logic of when monsters move furiously as a response to 'PacActor' eating a gold item.
+     */
+    protected void furiousWalkApproach() {
 
-  public void setSeed(int seed) {
-    randomiser.setSeed(seed);
-  }
+        // STEP 1: Move accordingly
+        walkApproach();
 
-  public void setStopMoving(boolean stopMoving) {
-    this.stopMoving = stopMoving;
-  }
+        // CASE 2A: Attempt to travel the same direction again
+        Location next = getNextMoveLocation();
+        if (canMove(next)) {
+            setLocation(next);
+
+        // CASE 2B: Walk normally
+        } else {
+            walkApproach();
+        }
+    }
+
+    /**
+     * HANDLES the walking logic for each monster type.
+     */
+    protected abstract void walkApproach();
+
+
+    /**
+     * CHECKS if a monster can move in a given direction
+     * @param   location    The location the monster will attempt to move
+     * @return  'true' if the move is possible, 'false' otherwise
+     */
+    protected boolean canMove(Location location)
+    {
+        // STEP 1: Identify the type of cell the given location is
+        Color c = getBackground().getColor(location);
+
+        // STEP 2: Only cells that are within bounds & NOT walls are legal
+        return !c.equals(Color.gray) && location.getX() < numHorzCells
+                && location.getX() >= 0 && location.getY() < numVertCells
+                && location.getY() >= 0;
+    }
+
+    /**
+     * PAUSES the monsters on the current cell due to 'PacActor' eating an ICE item.
+     * @param seconds   The number of seconds to pause the monsters for
+     */
+    public void stopMoving(int seconds) {
+
+        // STEP 1: Update 'moving' flag
+        this.stopMoving = true;
+        this.isFrozen = true;
+
+        // STEP 2: Instantiate & run the timer for the desired number of seconds
+        Timer timer = new Timer(); // Instantiate Timer Object
+        int SECOND_TO_MILLISECONDS = 1000;
+        final Monster monster = this;
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                monster.stopMoving = false;
+                monster.isFrozen = false;
+            }
+        }, seconds * SECOND_TO_MILLISECONDS);
+    }
+
+    /**
+     * Makes the MONSTERS move faster for a desired number of seconds
+     * @param seconds   The number of seconds to keep the monsters in a furious state
+     */
+    public void makeFurious(int seconds) {
+
+        // STEP 1: Only freeze monster if NOT frozen
+        if(!isFrozen) {
+            this.isFurious = true;
+
+            // STEP 2: Instantiate Timer Object
+            Timer timer = new Timer();
+            int SECOND_TO_MILLISECONDS = 1000;
+            final Monster monster = this;
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    monster.isFurious = false;
+                }
+            }, seconds * SECOND_TO_MILLISECONDS);
+        }
+    }
+
+    // GETTER & SETTER methods:
+    public MonsterType getType() {
+        return type;
+    }
+    public void setSeed(int seed) {
+        randomiser.setSeed(seed);
+    }
+    public void setStopMoving(boolean stopMoving) {
+        this.stopMoving = stopMoving;
+    }
 }
-
-

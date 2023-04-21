@@ -7,6 +7,15 @@ import src.PacManGameGrid;
 import java.util.ArrayList;
 import java.util.Properties;
 
+/**
+ * Type: New file
+ * Team Name: Thursday 11:00am Team 1
+ * Team Members:
+ *      - Jiachen Si (1085839)
+ *      - Natasha Chiorsac (1145264)
+ *      - Jude Thaddeau Data (1085613)
+ */
+
 public class ItemManager {
 
     // ATTRIBUTES:

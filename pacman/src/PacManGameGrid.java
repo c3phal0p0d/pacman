@@ -2,9 +2,17 @@
 package src;
 
 import ch.aplu.jgamegrid.*;
-import src.Game;
 
 import java.awt.*;
+
+/**
+ * Type: Modified file
+ * Team Name: Thursday 11:00am Team 1
+ * Team Members:
+ *      - Jiachen Si (1085839)
+ *      - Natasha Chiorsac (1145264)
+ *      - Jude Thaddeau Data (1085613)
+ */
 
 public class PacManGameGrid
 {
@@ -62,7 +70,7 @@ public class PacManGameGrid
     /**
      * CONVERTS a character representing an element in the maze to a corresponding integer
      * @param   c     A cell in the 'mazeArray'
-     * @return  An INTEGER where 0 represents a Wall, 1 for a PILL, 2 for EMPTY space, 3 for GOLD items & 4 for \
+     * @return  An INTEGER where 0 represents a Wall, 1 for a PILL, 2 for EMPTY space, 3 for GOLD items & 4 for
      *          ICE items.
      */
     private int toInt(char c)
