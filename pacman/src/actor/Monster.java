@@ -23,6 +23,7 @@ public abstract class Monster extends Actor
     protected MonsterType type;
     private boolean stopMoving = false;
     protected Random randomiser = new Random(0);
+
     protected GameCallback gameCallback;
     private boolean isFurious = false;
     protected int numHorzCells;

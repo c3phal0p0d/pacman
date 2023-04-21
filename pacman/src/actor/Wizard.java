@@ -35,20 +35,50 @@ public class Wizard extends RandomWalkMonster {
         int upperbound = 7;
         int dirMultiple = randomiser.nextInt(upperbound);
         int newDirection = dirMultiple * 45;
-        turn(newDirection);
+        //setDirection(0);
+        setDirection(newDirection);
 
         // STEP 2: Check all directions
         for (int i = 0; i < 8; i++) {
 
             // STEP 3: Check adjacent tiles
             Location nextLocation = getNextMoveLocation();
-            if (wizardCanMove(nextLocation)) {
+
+            // CASE 1A: Location is NOT a maze wall
+            if (canMove(nextLocation)) {
+                setLocation(nextLocation);
                 break;
             }
+            // CASE 1B: Location is a maze wall
+            else {
+                // STEP 2: Calculate the adjacent wall location to phase into
+                Location adjLocation = getAdjLocation(nextLocation);
+
+                // STEP 3: Check if the new location is within the board
+                if (adjLocation != null) {
+                    setLocation(adjLocation);
+                    break;
+                }
+            }
+
             // STEP 4: Move hasn't been found, check next direction
             turn(45);
         }
         gameCallback.monsterLocationChanged(this);
+    }
+
+    private Location getAdjLocation(Location nextLocation) {
+        // STEP 1: Calculate the adjacent location to teleport to
+        Location.CompassDirection compassDir = getLocation().getCompassDirectionTo(nextLocation);
+        Location adjLocation = calcAdjacentLocation(nextLocation, compassDir);
+        Color c = getBackground().getColor(adjLocation);
+
+        // STEP 2: Check if the new location is within the board
+        if (insideBorder(adjLocation) && !c.equals(Color.gray)) {
+            return adjLocation;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -60,45 +90,26 @@ public class Wizard extends RandomWalkMonster {
         // STEP 1: Move once
         walkApproach();
 
-        // CASE 2A: Try to travel in the same direction again
+        // STEP 2: Try to travel in the same direction again
         Location next = getNextMoveLocation();
-        if (wizardCanMove(next)) {
+
+        // CASE 2A: Location is NOT a maze wall
+        if (canMove(next)) {
             setLocation(next);
             gameCallback.monsterLocationChanged(this);
-
-        // CASE 2B: Travel elsewhere
-        } else {
-            walkApproach();
         }
-    }
-
-    /**
-     * CHECKS if the wizard can move or phase to a location.
-     * @param   nextLocation     The location to move towards
-     * @return  'true' if move is legal, 'false' otherwise
-     */
-    private boolean wizardCanMove(Location nextLocation) {
-
-        // CASE 1A: Location is NOT a maze WALL
-        if (canMove(nextLocation)) {
-            setLocation(nextLocation);
-            return true;
-
-        // CASE 1B: Location is a maze wall
-        } else {
-
-            // STEP 2: Calculate the adjacent wall location to phase into
-            Location.CompassDirection compassDir = getLocation().get4CompassDirectionTo(nextLocation);
-            Location adjLocation = calcAdjacentLocation(nextLocation, compassDir);
-            Color c = getBackground().getColor(adjLocation);
-
-            // STEP 3: Check if the new location is within the board
-            if (insideBorder(adjLocation) && !c.equals(Color.gray)) {
-                setLocation(adjLocation);
-                return true;
+        // CASE 2B: Location is NOT a maze wall
+        else {
+            Location adj = getAdjLocation(next);
+            // CASE 2B-A: Adjacent location is legal
+            if (getAdjLocation(next) != null) {
+                setLocation(adj);
+                gameCallback.monsterLocationChanged(this);
+            // CASE 2B-B: Adjacent location is legal
+            } else {
+                walkApproach();
             }
         }
-        return false;
     }
 
     /**
@@ -122,26 +133,31 @@ public class Wizard extends RandomWalkMonster {
         int addY = 0;
         int nextX = next.getX();
         int nextY = next.getY();
+
+        if(compassDir.equals(Location.CompassDirection.SOUTHEAST)) {
+            System.out.println("pog");
+        }
+
         switch (compassDir) {
-            case NORTH -> addY = 1;
+            case NORTH -> addY = -1;
             case NORTHEAST -> {
                 addX = 1;
-                addY = 1;
+                addY = -1;
             }
             case EAST -> addX = 1;
             case SOUTHEAST -> {
                 addX = 1;
-                addY = -1;
+                addY = 1;
             }
-            case SOUTH -> addY = -1;
+            case SOUTH -> addY = 1;
             case SOUTHWEST -> {
                 addX = -1;
-                addY = -1;
+                addY = 1;
             }
             case WEST -> addX = -1;
             case NORTHWEST -> {
                 addX = -1;
-                addY = 1;
+                addY = -1;
             }
         }
         return new Location(nextX + addX, nextY + addY);
