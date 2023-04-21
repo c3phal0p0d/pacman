@@ -36,10 +36,9 @@ public class Game extends GameGrid
     // Setup Components
     itemManager = new ItemManager();
     grid = new PacManGameGrid(nbHorzCells, nbVertCells);
-    itemManager.setMaxPillsAndItems(itemManager.countPillsAndItems(this));
-
-    //Setup for auto test
+    itemManager.setupPillAndItemsLocations(this);
     itemManager.loadPillAndItemsLocations(properties);
+    itemManager.setMaxPillsAndItems(this);
 
     // Draw grid
     GGBackground bg = getBg();
@@ -64,7 +63,6 @@ public class Game extends GameGrid
     boolean hasPacmanBeenHit;
     boolean hasPacmanEatAllPills;
 
-    itemManager.setupPillAndItemsLocations(this);
     do {
 
 

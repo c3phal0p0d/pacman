@@ -204,7 +204,10 @@ public class ItemManager {
     public ArrayList<Location> getPillAndItemLocations() { return pillAndItemLocations; }
     public int getMaxPillsAndItems() { return maxPillsAndItems; }
     public ArrayList<Item> getGoldPieces() { return this.goldPieces; }
-    public void setMaxPillsAndItems(int maxPillsAndItems){ this.maxPillsAndItems = maxPillsAndItems; }
+    public void setMaxPillsAndItems(Game game){
+        maxPillsAndItems =  countPillsAndItems(game);
+        System.out.println(maxPillsAndItems);
+    }
     public ArrayList<Location> getPropertyPillLocations() { return propertyPillLocations; }
     public ArrayList<Location> getPropertyGoldLocations() { return propertyGoldLocations; }
 
