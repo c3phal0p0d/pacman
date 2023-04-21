@@ -28,7 +28,7 @@ public class PacActor extends Actor implements LocationVisitedList
   private Random randomiser = new Random();
   private PlayerController playerController;
   private String version;
-  private MonsterManager monsterManager;
+  private EntityManager entityManager;
   private ItemManager itemManager;
   private GameCallback gameCallback;
   private int numHorzCells;
@@ -43,7 +43,7 @@ public class PacActor extends Actor implements LocationVisitedList
     this.gameCallback = game.getGameCallback();
     this.numHorzCells = game.getNumHorzCells();
     this.numVertCells = game.getNumVertCells();
-    this.monsterManager = game.getMonsterManager();
+    this.entityManager = game.getEntityManager();
     this.itemManager = game.getItemManager();
     this.playerController = new PlayerController(this);
 
@@ -190,7 +190,7 @@ public class PacActor extends Actor implements LocationVisitedList
         gameCallback.pacManEatPillsAndItems(location, "gold");
         itemManager.removeItem(ItemType.Gold, location);
         if(version.equals("multiverse")) {
-          monsterManager.makeFurious();
+          entityManager.makeFurious();
         }
       } else if (type.equals(ItemType.Ice)) {
 
@@ -200,7 +200,7 @@ public class PacActor extends Actor implements LocationVisitedList
         gameCallback.pacManEatPillsAndItems(location, "ice");
         itemManager.removeItem(ItemType.Ice, location);
         if(version.equals("multiverse")) {
-          monsterManager.freezeMonsters();
+          entityManager.freezeMonsters();
         }
       }
     }

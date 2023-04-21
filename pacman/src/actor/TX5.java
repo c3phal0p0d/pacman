@@ -9,15 +9,15 @@ public class TX5 extends RandomWalkMonster implements LocationVisitedList {
 
     private ArrayList<Location> visitedList = new ArrayList<Location>();
 
-    private MonsterManager monsterManager;
+    private EntityManager entityManager;
 
-    public TX5 (GameCallback gameCallback, MonsterManager monsterManager, int numHorzCells, int numVertCells) {
+    public TX5 (GameCallback gameCallback, EntityManager entityManager, int numHorzCells, int numVertCells) {
         super(gameCallback, MonsterType.TX5, numHorzCells, numVertCells);
-        this.monsterManager = monsterManager;
+        this.entityManager = entityManager;
     }
 
     protected void walkApproach() {
-        Location pacLocation = monsterManager.getPacActorLocation();
+        Location pacLocation = entityManager.getPacActorLocation();
         double oldDirection = getDirection();
         Location.CompassDirection compassDir = getLocation().get4CompassDirectionTo(pacLocation);
         Location next = getLocation().getNeighbourLocation(compassDir);

@@ -4,7 +4,7 @@ package src;
 
 import ch.aplu.jgamegrid.*;
 import src.actor.items.ItemManager;
-import src.actor.MonsterManager;
+import src.actor.EntityManager;
 import src.utility.GameCallback;
 
 import java.awt.*;
@@ -16,7 +16,7 @@ public class Game extends GameGrid
   private final static int nbVertCells = 11;
   private PacManGameGrid grid;
 
-  private MonsterManager monsterManager;
+  private EntityManager entityManager;
   private ItemManager itemManager;
 
   private GameCallback gameCallback;
@@ -43,7 +43,7 @@ public class Game extends GameGrid
     GGBackground bg = getBg();
     grid.drawGrid(this, bg);
 
-    createMonsterManager(seed);
+    createEntityManager(seed);
 
     //Setup Random seeds
     seed = Integer.parseInt(properties.getProperty("seed"));
@@ -59,15 +59,15 @@ public class Game extends GameGrid
     boolean hasPacmanEatAllPills;
 
     do {
-      hasPacmanBeenHit = monsterManager.hasThereBeenACollision();
-      hasPacmanEatAllPills = monsterManager.hasEatenAllPills();
+      hasPacmanBeenHit = entityManager.hasThereBeenACollision();
+      hasPacmanEatAllPills = entityManager.hasEatenAllPills();
       delay(10);
     } while(!hasPacmanBeenHit && !hasPacmanEatAllPills);
     delay(120);
 
-    Location loc = monsterManager.getPacActorLocation();
-    monsterManager.stopMonsters();
-    monsterManager.removePacActor();
+    Location loc = entityManager.getPacActorLocation();
+    entityManager.stopMonsters();
+    entityManager.removePacActor();
 
     String title = "";
     if (hasPacmanBeenHit) {
@@ -84,11 +84,11 @@ public class Game extends GameGrid
     doPause();
   }
 
-  private void createMonsterManager(int seed) {
-    monsterManager = new MonsterManager(this, itemManager);
-    monsterManager.createPacActor(this);
-    monsterManager.setSeed(seed);
-    monsterManager.setSlowDown(3);
+  private void createEntityManager(int seed) {
+    entityManager = new EntityManager(this, itemManager);
+    entityManager.createPacActor(this);
+    entityManager.setSeed(seed);
+    entityManager.setSlowDown(3);
   }
 
   // Getter Methods
@@ -110,7 +110,7 @@ public class Game extends GameGrid
     return itemManager;
   }
 
-  public MonsterManager getMonsterManager() {
-    return monsterManager;
+  public EntityManager getEntityManager() {
+    return entityManager;
   }
 }

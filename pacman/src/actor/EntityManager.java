@@ -9,7 +9,7 @@ import src.actor.items.ItemManager;
 import java.util.ArrayList;
 import java.util.Properties;
 
-public class MonsterManager {
+public class EntityManager {
 
     private Properties properties;
 
@@ -20,7 +20,7 @@ public class MonsterManager {
     private PacActor pacActor;
 
     // Creating an instance of monster manager creates all the monsters of the game along with it.
-    public MonsterManager(Game game, ItemManager itemManager) {
+    public EntityManager(Game game, ItemManager itemManager) {
 
         this.properties = game.getProperties();
         this.itemManager = itemManager;
