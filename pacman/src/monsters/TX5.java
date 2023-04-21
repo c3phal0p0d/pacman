@@ -24,10 +24,8 @@ public class TX5 extends RandomWalkMonster implements LocationVisitedList {
         Location next = getLocation().getNeighbourLocation(compassDir);
         setDirection(compassDir);
 
-
         if (!isVisited(next, visitedList) && canMove(next)) {
             setLocation(next);
-            System.out.println("next new");
         } else {
             next = randomWalk(oldDirection);
         }

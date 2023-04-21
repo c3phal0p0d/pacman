@@ -49,7 +49,7 @@ public abstract class ShortestDistanceMonster extends Monster {
         if (size == 1) { // Only 1 candidate
             setLocation(candidates.get(0).location());
         } else if (size > 1) { // Randomly choose one
-            int index = randomiser.nextInt(size - 1);
+            int index = randomiser.nextInt(size);
 
             Location newLocation = candidates.get(index).location();
             setLocation(newLocation);
