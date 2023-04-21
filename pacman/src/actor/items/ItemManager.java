@@ -215,7 +215,6 @@ public class ItemManager {
     public ArrayList<Item> getGoldPieces() { return this.goldPieces; }
     public void setMaxPillsAndItems(Game game){
         maxPillsAndItems =  countPillsAndItems(game);
-        System.out.println(maxPillsAndItems);
     }
     public ArrayList<Location> getPropertyPillLocations() { return propertyPillLocations; }
     public ArrayList<Location> getPropertyGoldLocations() { return propertyGoldLocations; }

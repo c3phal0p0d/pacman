@@ -45,7 +45,7 @@ public class TX5 extends RandomWalkMonster implements LocationVisitedList {
         setDirection(compassDir);
 
         // CASE 2A: Can follow PacActor
-        if (!isVisited(next, visitedList) && canMove(next)) {
+        if (!isVisited(next, visitedList) && canMove(next, getBackground(), numHorzCells, numVertCells)) {
             setLocation(next);
 
         // CASE 2B: Behaves like a Troll

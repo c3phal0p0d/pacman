@@ -70,7 +70,8 @@ public class PlayerController implements GGKeyRepeatListener {
                 break;
         }
         // STEP 5: Execute the move if it is valid
-        if (next != null && pacActor.canMove(next))
+        if (next != null && pacActor.canMove(next, pacActor.getBackground(),
+                                             pacActor.getNbHorzCells(), pacActor.getNbVertCells()))
         {
             pacActor.setLocation(next);
             pacActor.eatPill(next);

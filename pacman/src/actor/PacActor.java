@@ -24,7 +24,7 @@ import java.util.Random;
  *      - Jude Thaddeau Data (1085613)
  */
 
-public class PacActor extends Actor implements LocationVisitedList
+public class PacActor extends Actor implements LocationVisitedList, CanMove
 {
     // ATTRIBUTES:
     private static final int nbSprites = 4;
@@ -116,7 +116,7 @@ public class PacActor extends Actor implements LocationVisitedList
                 break;
             case "M":
                 Location next = getNextMoveLocation();
-                if (canMove(next)) {
+                if (canMove(next, getBackground(), numHorzCells, numVertCells)) {
                     setLocation(next);
                     eatPill(next);
                 }
@@ -140,7 +140,7 @@ public class PacActor extends Actor implements LocationVisitedList
                 getLocation().get4CompassDirectionTo(closestPill);
         Location next = getLocation().getNeighbourLocation(compassDir);
         setDirection(compassDir);
-        if (!isVisited(next, visitedList) && canMove(next)) {
+        if (!isVisited(next, visitedList) && canMove(next, getBackground(), numHorzCells, numVertCells)) {
             setLocation(next);
         } else {
             // normal movement
@@ -148,19 +148,19 @@ public class PacActor extends Actor implements LocationVisitedList
             setDirection(oldDirection);
             turn(sign * 90);  // Try to turn left/right
             next = getNextMoveLocation();
-            if (canMove(next)) {
+            if (canMove(next, getBackground(), numHorzCells, numVertCells)) {
                 setLocation(next);
             } else {
                 setDirection(oldDirection);
                 next = getNextMoveLocation();
-                if (canMove(next)) // Try to move forward
+                if (canMove(next, getBackground(), numHorzCells, numVertCells)) // Try to move forward
                 {
                     setLocation(next);
                 } else {
                     setDirection(oldDirection);
                     turn(-sign * 90);  // Try to turn right/left
                     next = getNextMoveLocation();
-                    if (canMove(next)) {
+                    if (canMove(next, getBackground(), numHorzCells, numVertCells)) {
                         setLocation(next);
                     } else {
                         setDirection(oldDirection);
@@ -173,23 +173,6 @@ public class PacActor extends Actor implements LocationVisitedList
         }
         eatPill(next);
         addVisitedList(next, visitedList);
-    }
-
-    /**
-     * CHECKS if 'PacActor' can move towards a given location.
-     * @param   location    The location to check if 'PacActor' can move into
-     * @return  'true' if the move is possible, 'false' otherwise
-     */
-    protected boolean canMove(Location location)
-    {
-        // Checks if the player can traverse to the given tile.
-        Color c = getBackground().getColor(location);
-        if ( c.equals(Color.gray) || location.getX() >= numHorzCells
-                || location.getX() < 0 || location.getY() >= numVertCells || location.getY() < 0)
-            // Tile is grey or is outside the board
-            return false;
-        else
-            return true;
     }
 
     /**

@@ -41,7 +41,7 @@ public abstract class RandomWalkMonster extends Monster {
         Location next = getNextMoveLocation();
 
         // CASE 3A: The new direction is VALID
-        if (canMove(next))
+        if (canMove(next, getBackground(), numHorzCells, numVertCells))
         {
             setLocation(next);
         }
@@ -53,7 +53,7 @@ public abstract class RandomWalkMonster extends Monster {
             next = getNextMoveLocation();
 
             // STEP 6: Try to move forward
-            if (canMove(next))
+            if (canMove(next, getBackground(), numHorzCells, numVertCells))
             {
                 setLocation(next);
             }
@@ -66,7 +66,7 @@ public abstract class RandomWalkMonster extends Monster {
                 // STEP 9: Try to turn right/left
                 turn(-sign * 90);
                 next = getNextMoveLocation();
-                if (canMove(next))
+                if (canMove(next, getBackground(), numHorzCells, numVertCells))
                 {
                     setLocation(next);
                 }

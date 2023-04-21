@@ -45,7 +45,7 @@ public class Wizard extends RandomWalkMonster {
             Location nextLocation = getNextMoveLocation();
 
             // CASE 1A: Location is NOT a maze wall
-            if (canMove(nextLocation)) {
+            if (canMove(nextLocation, getBackground(), numHorzCells, numVertCells)) {
                 setLocation(nextLocation);
                 break;
             }
@@ -94,7 +94,7 @@ public class Wizard extends RandomWalkMonster {
         Location next = getNextMoveLocation();
 
         // CASE 2A: Location is NOT a maze wall
-        if (canMove(next)) {
+        if (canMove(next, getBackground(), numHorzCells, numVertCells)) {
             setLocation(next);
             gameCallback.monsterLocationChanged(this);
         }
@@ -133,10 +133,6 @@ public class Wizard extends RandomWalkMonster {
         int addY = 0;
         int nextX = next.getX();
         int nextY = next.getY();
-
-        if(compassDir.equals(Location.CompassDirection.SOUTHEAST)) {
-            System.out.println("pog");
-        }
 
         switch (compassDir) {
             case NORTH -> addY = -1;

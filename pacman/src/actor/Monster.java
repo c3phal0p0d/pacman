@@ -17,7 +17,7 @@ import src.utility.GameCallback;
  *      - Jude Thaddeau Data (1085613)
  */
 
-public abstract class Monster extends Actor
+public abstract class Monster extends Actor implements CanMove
 {
     // ATTRIBUTES:
     protected MonsterType type;
@@ -76,7 +76,7 @@ public abstract class Monster extends Actor
 
         // CASE 2A: Attempt to travel the same direction again
         Location next = getNextMoveLocation();
-        if (canMove(next)) {
+        if (canMove(next, getBackground(), numHorzCells, numVertCells)) {
             setLocation(next);
 
         // CASE 2B: Walk normally
@@ -89,23 +89,6 @@ public abstract class Monster extends Actor
      * HANDLES the walking logic for each monster type.
      */
     protected abstract void walkApproach();
-
-
-    /**
-     * CHECKS if a monster can move in a given direction
-     * @param   location    The location the monster will attempt to move
-     * @return  'true' if the move is possible, 'false' otherwise
-     */
-    protected boolean canMove(Location location)
-    {
-        // STEP 1: Identify the type of cell the given location is
-        Color c = getBackground().getColor(location);
-
-        // STEP 2: Only cells that are within bounds & NOT walls are legal
-        return !c.equals(Color.gray) && location.getX() < numHorzCells
-                && location.getX() >= 0 && location.getY() < numVertCells
-                && location.getY() >= 0;
-    }
 
     /**
      * PAUSES the monsters on the current cell due to 'PacActor' eating an ICE item.

@@ -50,7 +50,7 @@ public abstract class ShortestDistanceMonster extends Monster {
             Location nextLocation = getNextMoveLocation();
 
             // STEP 3: Found a location that is not a wall
-            if (canMove(nextLocation)) {
+            if (canMove(nextLocation, getBackground(), numHorzCells, numVertCells)) {
                 int distance = nextLocation.getDistanceTo(target);
                 LocationDistance candidate = new LocationDistance(nextLocation, distance);
 
